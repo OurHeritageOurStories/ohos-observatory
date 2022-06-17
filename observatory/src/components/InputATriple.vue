@@ -1,0 +1,88 @@
+<script>
+
+export default{
+    data(){
+        return{
+            post: null,
+            html_response: null
+        };
+    },
+    methods:{
+        post_new_triple(){
+            if(this.newDataSubject && this.newDataPredicate && this.newDataObject){ //js "" and null are both false so this works to check both
+                const requestOptions = {
+                    method: "POST",
+                    header: {"Content-Type":"text/plain"},
+                    body: "<:" + this.newDataSubject + "> " + 
+                    "<:" + this.newDataPredicate + "> " + 
+                    "<:" + this.newDataObject + "> .", 
+                };
+                fetch('api/graph?', requestOptions) 
+                    .then(function(response){
+                        build_alert(response.status);
+                    })
+            } else {
+                this.build_alert("missing data")
+            }
+        },
+        build_alert(code){
+            switch (code){
+                case 200:
+                    alert("Sucsessfuly entered the new triple");
+                    break;
+                case 500:
+                    alert("Please ensure you have entered text in all three boxes. If you have entered punctuation, please remove it and try again.");
+                    break;
+                case "missing data":
+                    alert("Please insure you have put text in each of the three boxes.");
+                    break;
+                default:
+                    alert("Something went wrong, please refresh the page and try again")
+            }
+        }
+    }
+}
+</script>
+
+<template>
+
+<div id="insert_triple_grid">
+
+    <p id="subject_title">Subject</p>
+    <input v-model="newDataSubject" /> 
+    <p id="predicate_title">Predicate</p>
+    <input v-model="newDataPredicate" />
+    <p id="object_title">Object</p>
+    <input v-model="newDataObject" /> 
+    <button @click="post_new_triple">Insert new triple into the graph</button>
+
+</div>
+
+</template>
+
+<style>
+#insert_triple_grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    padding: 5px;
+}
+#subject_title{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+#predicate_title{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+#object_title{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+</style>
