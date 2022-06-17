@@ -49,12 +49,12 @@ export default{
 <div id="insert_triple_grid">
 
     <p id="subject_title">Subject</p>
-    <input v-model="newDataSubject" /> 
+    <input v-model="newDataSubject" id="newDataSubject" /> 
     <p id="predicate_title">Predicate</p>
-    <input v-model="newDataPredicate" />
+    <input v-model="newDataPredicate" id="newDataPredicate" />
     <p id="object_title">Object</p>
-    <input v-model="newDataObject" /> 
-    <button @click="post_new_triple">Insert new triple into the graph</button>
+    <input v-model="newDataObject" id="newDataObject"/> 
+    <button @click="post_new_triple" id="post_new_triple">Insert new triple into the graph</button>
 
 </div>
 
@@ -73,16 +73,40 @@ export default{
     grid-row-start: 1;
     grid-row-end: 2;
 }
+#newDataSubject{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
 #predicate_title{
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 2;
 }
+#newDataPredicate{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
 #object_title{
     grid-column-start: 3;
     grid-column-end: 4;
     grid-row-start: 1;
     grid-row-end: 2;
+}
+#newDataObject{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+#post_new_triple{
+    grid-column-start: 4;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 3;
 }
 </style>
