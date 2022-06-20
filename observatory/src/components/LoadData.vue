@@ -65,8 +65,7 @@ export default{
                     alert("If you have seen this message, please note down how and let the OHOS TNA team know - it should be unreachable from the UI!")
             }
         }
-    },
-    emits:['selected_data']
+    }
 }
 </script>
 
