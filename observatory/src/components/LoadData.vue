@@ -28,7 +28,7 @@ export default{
             fetch('api/graph?DROP ALL',{
                 method:"DELETE"
             })
-                .then(response=>this.update_data(choice))
+                .then(response=>this.update_data(choice))//only update the data AFTER we have deleted it. Or we could be updating the data, then emptying the database. Which leaves us with nothing. 
         },
         update_data(choice){ //then re-fill it with the data we want to look at            
             switch(choice){ 
