@@ -6,8 +6,7 @@ export default{
             manufactured_data:null,
             playground_data:null,
             ai_lab_data_updated:null,
-            al_lab_data_first:null,
-            test:null
+            al_lab_data_first:null
         };
     },
     created(){

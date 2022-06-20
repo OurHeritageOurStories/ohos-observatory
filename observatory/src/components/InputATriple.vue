@@ -3,8 +3,7 @@
 export default{
     data(){
         return{
-            post: null,
-            html_response: null
+            post: null
         };
     },
     methods:{
