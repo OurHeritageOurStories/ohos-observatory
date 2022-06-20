@@ -1,11 +1,6 @@
 <script>
 
 export default{
-    data(){
-        return{
-            post: null
-        };
-    },
     methods:{
         post_new_triple(){
             var result_status
