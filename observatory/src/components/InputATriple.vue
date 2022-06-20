@@ -9,6 +9,7 @@ export default{
     },
     methods:{
         post_new_triple(){
+            var result_status
             if(this.newDataSubject && this.newDataPredicate && this.newDataObject){ //js "" and null are both false so this works to check both
                 const requestOptions = {
                     method: "POST",
@@ -19,11 +20,12 @@ export default{
                 };
                 fetch('api/graph?', requestOptions) 
                     .then(function(response){
-                        build_alert(response.status);
+                        result_status = response.status;
                     })
             } else {
-                this.build_alert("missing data")
+                result_status = "missing data";
             }
+            this.build_alert(result_status);
         },
         build_alert(code){
             switch (code){
