@@ -1,67 +1,65 @@
 <script>
 
-//var links_to_data = {
-//    "manufactured":"https://raw.githubusercontent.com/nationalarchives/ohos-poc-1/main/OHOS-PoC/docs/test%20data%20options/multimedia%20types%20triples?token=GHSAT0AAAAAABU6DE6TWYSLNBN3MSYECYXQYVMR24A",
-//    //"playground":"https://raw.githubusercontent.com/nationalarchives/ohos/main/data/HC%20extract%20images%20-%20direct%20image%20references?token=GHSAT0AAAAAABU6DE6TOY43BCN2SDMJXKC6YVMROLA",
-//    "playground":"@/assets/datasets/playground.nt",
-//    "ai_lab":"awaiting PR"/
-//}
-
-//var playground_dataset = ('@/assets/datasets/multimedia types triples.nt')
-//var ai_lab_dataset = require('@')
-
-//var playground_dataset = 'src/assets/datasets/playground.nt'
-
 export default{
     data(){
         return{
-            //test: '/src/assets/datasets/multimedia types triples.nt'
-            test:null,
-            upcheck:null
+            manufactured_data:null,
+            playground_data:null,
+            ai_lab_data_updated:null,
+            al_lab_data_first:null,
+            test:null
         };
     },
     created(){
         fetch('/src/assets/datasets/multimedia types triples.nt')
             .then(response=>response.text())
-            .then(response=>(this.test=response));
-        fetch('api/graph?query=SELECT * {?s ?p ?o}',{
-            headers:{"Accept":"application/sparql-results+json"}
-        })
-            .then(response=>response.json())
-            .then(response=>(this.upcheck=response));
+            .then(response=>(this.manufactured_data=response));
+        fetch('/src/assets/datasets/playground.nt')
+            .then(response=>response.text())
+            .then(response=>(this.playground_data=response));
+        fetch('/src/assets/datasets/ai_lab_2.ttl')
+            .then(response=>response.text())
+            .then(response=>(this.ai_lab_data_updated=response));
+        fetch('/src/assets/datasets/ai_lab_1.ttl')
+            .then(response=>response.text())
+            .then(response=>(this.al_lab_data_first=response));
     },
     methods:{
         update_data(choice){
-            //var data;
-            //fetch()
-            fetch('api/graph?DROP ALL')//empty the database
-            switch(choice){ //then re-fill it with the data we want to look at
+
+            //first, empty the database
+            fetch('api/graph?DROP ALL',{
+                method:"DELETE"
+            })
+            
+            //then re-fill it with the data we want to look at
+            switch(choice){ 
                 case "manufactured":
                     fetch('api/graph?',{
                         method:"POST",
                         headers:{"Content-Type":"text/plain"},
-                        body:'/src/assets/datasets/multimedia types triples.nt'
+                        body:this.manufactured_data
                     })
                     break;
                 case "playground":
-                    //var file;
-                    //fetch("https://raw.githubusercontent.com/nationalarchives/ohos/main/data/HC%20extract%20images%20-%20direct%20image%20references?token=GHSAT0AAAAAABU6DE6TOY43BCN2SDMJXKC6YVMROLA")
-                    //    .then(response=>(console.log(response)));
-                    //fetch('exaple.com',{
                     fetch('api/graph?',{
                         method:"POST",
                         headers:{"Content-Type":"text/plain"},
-                        ////body:'@/src/assets/datasets/playground data images.nt'
-                        //body:'/assets/datasets/playground.nt'
-                        body: this.test
-                        //body:links_to_data.playground
+                        body: this.playground_data
                     });
                     break;
                 case "ai_lab":
                     fetch('api/graph?',{
                         method:"POST",
                         headers:{"Content-Type":"application/x-turtle-RDR"},
-                        body:'/src/assets/datasets/AI lab output 9 6 22.ttl'
+                        body:this.ai_lab_data_updated
+                    })
+                    break;
+                case "ai_lab_initial_data":
+                    fetch('api/graph?',{
+                        method:"POST",
+                        headers:{"Content-Type":"application/x-turtle-RDR"},
+                        body:this.al_lab_data_first
                     })
                     break;
                 default:
@@ -88,13 +86,16 @@ export default{
     </div>
 
     <div>
+        <input type="radio" id="ai_lab_initial_data" name="data_set" value="ai_lab_initial_data" @click="update_data('ai_lab_initial_data')">
+        <label for="ai_lab_initial_data">Ai Lab initial dataset</label>
+    </div>
+
+    <div>
         <input type="radio" id="ai_lab" name="data_set" value="ai_lab" @click="update_data('ai_lab')">
-        <label for="ai_lab">Ai Lab</label>
+        <label for="ai_lab">Ai Lab second dataset</label>
     </div>
 
 </fieldset>
-
-<pre>{{ upcheck }}</pre>---ggggggggggggg
 
 </template>
 

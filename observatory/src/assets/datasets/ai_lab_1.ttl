@@ -1,0 +1,1113 @@
+@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:1cb26039-0d5e-484f-a022-8149f522b85a tanc:text "181 Charlestown Road. The Grove"^^xsd:string .
+:4cb87712-93c1-4459-a42a-4b72ed35429a tanc:text "3 Quay Road"^^xsd:string .
+<<:4cb87712-93c1-4459-a42a-4b72ed35429a tanc:mentions <http://dbpedia.org/resource/Wharf>>> tanc:similarity 0.976958508837222;
+		 tanc:start 2 ;
+		 tanc:end 11 ;
+		 tanc:support 2088 .
+:b5db193f-6920-4155-b75b-cd87468c58a4 tanc:text "News cutting re unveiling of Charlestown War Memorial from Cornish Guardian 1923"^^xsd:string .
+<<:b5db193f-6920-4155-b75b-cd87468c58a4 tanc:mentions <http://dbpedia.org/resource/Cornish_Guardian>>> tanc:similarity 0.9999999999997868;
+		 tanc:start 59 ;
+		 tanc:end 75 ;
+		 tanc:support 38 .
+:e3dbc8b2-5f31-4dcf-88cf-56dca83897e7 tanc:text "RNLB Amelia being craned into Museum"^^xsd:string .
+<<:e3dbc8b2-5f31-4dcf-88cf-56dca83897e7 tanc:mentions <http://dbpedia.org/resource/Royal_National_Lifeboat_Institution>>> tanc:similarity 0.9999999900468879;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:Organisation ;
+		 tanc:start 0 ;
+		 tanc:end 11 ;
+		 tanc:support 1673 .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:7ba2cbb7-0d93-4a59-928b-b88791006430 tanc:text "Broad Meadow House. Quay Road"^^xsd:string .
+<<:7ba2cbb7-0d93-4a59-928b-b88791006430 tanc:mentions <http://dbpedia.org/resource/Broad_Meadow>>> tanc:similarity 0.9999827265853882;
+		 rdfs:type Wikidata:Q486972 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:Settlement ;
+		 tanc:start 0 ;
+		 tanc:end 12 ;
+		 tanc:support 4 .
+<<:7ba2cbb7-0d93-4a59-928b-b88791006430 tanc:mentions <http://dbpedia.org/resource/Wharf>>> tanc:similarity 0.9794090494429105;
+		 tanc:start 20 ;
+		 tanc:end 29 ;
+		 tanc:support 2088 .
+:906f8887-5e07-4552-b3ee-e5731208f2bb tanc:text "1933 Emily Warbrick unloading cement before moving across the dock to load with clay."^^xsd:string .
+:95f0106e-d9d6-4c5b-87fb-b0fe9961e51a tanc:text "3 The Old Smokehouse"^^xsd:string .
+<<:95f0106e-d9d6-4c5b-87fb-b0fe9961e51a tanc:mentions <http://dbpedia.org/resource/Smokehouse>>> tanc:similarity 0.9999995035434945;
+		 tanc:start 2 ;
+		 tanc:end 20 ;
+		 tanc:support 998 .
+:339d4286-2e66-4c8c-a2eb-2b734598f749 tanc:text "Car Park"^^xsd:string .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:7a2cb4e4-3881-43f5-bdda-be7e7729b774 tanc:text "Polmear Farm sign"^^xsd:string .
+<<:7a2cb4e4-3881-43f5-bdda-be7e7729b774 tanc:mentions <http://dbpedia.org/resource/Polmear,_Cornwall>>> tanc:similarity 0.9239610413342225;
+		 tanc:start 0 ;
+		 tanc:end 12 ;
+		 tanc:support 12 .
+:c0712a78-1457-4a35-8f0f-50b8d5ad2dbb tanc:text "78 Charlestown Road"^^xsd:string .
+:e35966e3-b3aa-4962-91f2-017d0c3b420b tanc:text "35 Quay Road"^^xsd:string .
+<<:e35966e3-b3aa-4962-91f2-017d0c3b420b tanc:mentions <http://dbpedia.org/resource/Wharf>>> tanc:similarity 0.976958508837222;
+		 tanc:start 3 ;
+		 tanc:end 12 ;
+		 tanc:support 2088 .
+:75e27f76-889b-42b9-83a1-6d69fc781bfe tanc:text "1991 to 1998 Restoration and Expansion"^^xsd:string .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:33e2591c-e4b7-40f5-a9da-97fc53aa6f76 tanc:text "1981 to 1991 Restoration"^^xsd:string .
+:27730d45-b20b-4b8f-abaa-41d361fbeb43 tanc:text "1998 to 2019 Transformation of the Pier"^^xsd:string .
+<<:27730d45-b20b-4b8f-abaa-41d361fbeb43 tanc:mentions <http://dbpedia.org/resource/Pier>>> tanc:similarity 0.9981287597408242;
+		 tanc:start 35 ;
+		 tanc:end 39 ;
+		 tanc:support 3391 .
+:d23bdf89-59c8-4af7-87d3-b024742c11c1 tanc:text "1891 to 1970 Public Administration"^^xsd:string .
+:84722058-d2b6-4c0e-9361-b49374c2948f tanc:text "1971 to 1981 Campaign to Save the Pier"^^xsd:string .
+<<:84722058-d2b6-4c0e-9361-b49374c2948f tanc:mentions <http://dbpedia.org/resource/Pier>>> tanc:similarity 0.9971269237849667;
+		 tanc:start 30 ;
+		 tanc:end 38 ;
+		 tanc:support 3391 .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:cdcbea71-6ac3-4e3f-8150-233e21c79548 tanc:text "Waterloo House Collection"^^xsd:string .
+<<:cdcbea71-6ac3-4e3f-8150-233e21c79548 tanc:mentions <http://dbpedia.org/resource/United_States_House_of_Representatives>>> tanc:similarity 0.9561798095180137;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q11204 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:Legislature ;
+		 tanc:start 0 ;
+		 tanc:end 25 ;
+		 tanc:support 52515 .
+:A16670039 tanc:text "Clevedon Pier and Heritage Trust Community Archive"^^xsd:string .
+<<:A16670039 tanc:mentions <http://dbpedia.org/resource/Cultural_heritage>>> tanc:similarity 0.9950898872529987;
+		 tanc:start 9 ;
+		 tanc:end 32 ;
+		 tanc:support 3025 .
+<<:A16670039 tanc:mentions <http://dbpedia.org/resource/Archive>>> tanc:similarity 0.9841297255470149;
+		 tanc:start 43 ;
+		 tanc:end 50 ;
+		 tanc:support 2711 .
+:8134d297-09a8-4185-989d-fc9ca88e9161 tanc:text "Pre-1850 to 1891 Construction"^^xsd:string .
+:4e158e71-37f9-4cbb-a15b-bf3e18c9c4f4 tanc:text "Local History Collections"^^xsd:string .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:ed837528-64dc-47e6-a036-9e01121a612b tanc:text "The Pier Collection"^^xsd:string .
+<<:ed837528-64dc-47e6-a036-9e01121a612b tanc:mentions <http://dbpedia.org/resource/Pier>>> tanc:similarity 0.9961395416405149;
+		 tanc:start 0 ;
+		 tanc:end 19 ;
+		 tanc:support 3391 .
+:c04b4146-06a0-4ecd-a8ed-5738810c5f36 tanc:text "Business Archive"^^xsd:string .
+:6abd4f06-36d0-4c45-b04c-3a01697b1298 tanc:text "E-mail from John Allbutt 10/03/2002 concerning the sale of a very scarce Welsh one guinea Crickhowell bank note to be sold at auction"^^xsd:string .
+<<:6abd4f06-36d0-4c45-b04c-3a01697b1298 tanc:mentions <http://dbpedia.org/resource/Clifford_Allbutt>>> tanc:similarity 0.9999999255149447;
+		 rdfs:type <http://xmlns.com/foaf/0.1/person> ;
+		 rdfs:type Wikidata:Q901 ;
+		 rdfs:type Wikidata:Q729 ;
+		 rdfs:type Wikidata:Q5 ;
+		 rdfs:type Wikidata:Q215627 ;
+		 rdfs:type Wikidata:Q19088 ;
+		 rdfs:type DUL:NaturalPerson ;
+		 rdfs:type Schema:Person ;
+		 rdfs:type DBpedia:Species ;
+		 rdfs:type DBpedia:Person ;
+		 rdfs:type DBpedia:Eukaryote ;
+		 rdfs:type DBpedia:Animal ;
+		 rdfs:type DBpedia:Scientist ;
+		 tanc:start 12 ;
+		 tanc:end 24 ;
+		 tanc:support 42 .
+<<:6abd4f06-36d0-4c45-b04c-3a01697b1298 tanc:mentions <http://dbpedia.org/resource/Crickhowell>>> tanc:similarity 0.9999999977534344;
+		 rdfs:type Wikidata:Q486972 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:Settlement ;
+		 tanc:start 90 ;
+		 tanc:end 101 ;
+		 tanc:support 182 .
+:d4859b4a-88fb-4640-9186-9b1ec12250bc tanc:text "Extracts - Partrishow Church"^^xsd:string .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:e710ef98-79df-49ce-aa66-8e9c51b32b2b tanc:text "Short Historical Notes on Crickhowell  -  A D Muir"^^xsd:string .
+<<:e710ef98-79df-49ce-aa66-8e9c51b32b2b tanc:mentions <http://dbpedia.org/resource/Crickhowell>>> tanc:similarity 0.9999999306118663;
+		 rdfs:type Wikidata:Q486972 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:Settlement ;
+		 tanc:start 26 ;
+		 tanc:end 37 ;
+		 tanc:support 182 .
+:f6422ea0-1a3d-4f67-90d1-7db80aa7a97a tanc:text "Blackpool Trip - sept 1956  arranged by Mrs Salter,  Ffawyddog"^^xsd:string .
+<<:f6422ea0-1a3d-4f67-90d1-7db80aa7a97a tanc:mentions <http://dbpedia.org/resource/Tang_Sanzang>>> tanc:similarity 0.9884254962719744;
+		 rdfs:type Wikidata:Q95074 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:FictionalCharacter ;
+		 tanc:start 10 ;
+		 tanc:end 14 ;
+		 tanc:support 364 .
+:5d27dedb-10c6-4e27-963d-3fe0435a7763 tanc:text "Turpil Stone Glanusk  (now in Brecon Museun)        1989"^^xsd:string .
+<<:5d27dedb-10c6-4e27-963d-3fe0435a7763 tanc:mentions <http://dbpedia.org/resource/Stone_Age>>> tanc:similarity 0.9999885594179462;
+		 tanc:start 7 ;
+		 tanc:end 12 ;
+		 tanc:support 2189 .
+<<:5d27dedb-10c6-4e27-963d-3fe0435a7763 tanc:mentions <http://dbpedia.org/resource/Brecon>>> tanc:similarity 0.9813847609696909;
+		 rdfs:type Wikidata:Q486972 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:Settlement ;
+		 tanc:start 30 ;
+		 tanc:end 43 ;
+		 tanc:support 1789 .
+:e132e613-7150-4b8f-8253-623e8024e9f2 tanc:text "Research Project - Pugh family of Cwmdu - Karen Shaw"^^xsd:string .
+<<:e132e613-7150-4b8f-8253-623e8024e9f2 tanc:mentions <http://dbpedia.org/resource/Karen_people>>> tanc:similarity 0.9537682921102375;
+		 rdfs:type Wikidata:Q41710 ;
+		 rdfs:type DBpedia:EthnicGroup ;
+		 tanc:start 42 ;
+		 tanc:end 52 ;
+		 tanc:support 1526 .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:2cc84d7e-5a70-40ae-96ad-36229b291b43 tanc:text "Garn Coch Llangattock    SO 213 177      1988"^^xsd:string .
+<<:2cc84d7e-5a70-40ae-96ad-36229b291b43 tanc:mentions <http://dbpedia.org/resource/Cochlin>>> tanc:similarity 0.9999965052451887;
+		 rdfs:type Wikidata:Q7187 ;
+		 rdfs:type Wikidata:Q206229 ;
+		 rdfs:type DBpedia:Gene ;
+		 rdfs:type DBpedia:Biomolecule ;
+		 rdfs:type DBpedia:HumanGene ;
+		 tanc:start 0 ;
+		 tanc:end 21 ;
+		 tanc:support 7 .
+:3c266951-434e-4286-9b62-f6b9c50ee137 tanc:text "Article in CDAC Newsletter February 2013 - The Crickhowell Industrail Exhibition of 1893 - Pamela Redwood"^^xsd:string .
+:c862ae51-c9da-4134-98c4-7c284a408213 tanc:text "Maps - D 3/C. D 4/C. Eastern Brecon Beacons National Park 2000-02"^^xsd:string .
+<<:c862ae51-c9da-4134-98c4-7c284a408213 tanc:mentions <http://dbpedia.org/resource/Brecon_Beacons>>> tanc:similarity 0.9037045334990256;
+		 rdfs:type Wikidata:Q473972 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:ProtectedArea ;
+		 tanc:start 21 ;
+		 tanc:end 57 ;
+		 tanc:support 364 .
+:39680aa0-5318-4586-9693-9708185a5198 tanc:text "Breconshire Education Committee - Handbook of Regulations for the District Committees, Managers of Council and Non-Provided Schools, Teachers &c.  Breconshire Schools and Llangenny Expenditure   1912"^^xsd:string .
+<<:39680aa0-5318-4586-9693-9708185a5198 tanc:mentions <http://dbpedia.org/resource/Brecknockshire>>> tanc:similarity 0.9991504947986547;
+		 rdfs:type Wikidata:Q3455524 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type Schema:AdministrativeArea ;
+		 rdfs:type DBpedia:Region ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:AdministrativeRegion ;
+		 tanc:start 0 ;
+		 tanc:end 31 ;
+		 tanc:support 602 .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:e767df0b-3d4a-45da-a5dd-6b65c6ac3435 tanc:text "Research Project - Susan Barker researching Whitney family"^^xsd:string .
+<<:e767df0b-3d4a-45da-a5dd-6b65c6ac3435 tanc:mentions <http://dbpedia.org/resource/Susan_Barker>>> tanc:similarity 0.9791704717982426;
+		 rdfs:type <http://xmlns.com/foaf/0.1/person> ;
+		 rdfs:type Wikidata:Q729 ;
+		 rdfs:type Wikidata:Q5 ;
+		 rdfs:type Wikidata:Q36180 ;
+		 rdfs:type Wikidata:Q215627 ;
+		 rdfs:type Wikidata:Q19088 ;
+		 rdfs:type DUL:NaturalPerson ;
+		 rdfs:type Schema:Person ;
+		 rdfs:type DBpedia:Species ;
+		 rdfs:type DBpedia:Person ;
+		 rdfs:type DBpedia:Eukaryote ;
+		 rdfs:type DBpedia:Animal ;
+		 rdfs:type DBpedia:Writer ;
+		 tanc:start 19 ;
+		 tanc:end 31 ;
+		 tanc:support 3 .
+:c970ec73-4217-48f4-8c45-d8ceb925db01 tanc:text "HARVEY Victor"^^xsd:string .
+:39151f6c-a6b8-46f1-8233-5d0f5e2fc6fe tanc:text "Jim Doble"^^xsd:string .
+:98003208-4f60-4030-870e-756567ee77a7 tanc:text "Tithe map copy"^^xsd:string .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:8953ceed-4517-4b4a-b857-18d069738556 tanc:text "UPSHALL Thomas Edwin"^^xsd:string .
+:408c9955-ea6c-4aab-a9bd-1f4b07a135a7 tanc:text "Tithe map copy with field names"^^xsd:string .
+:49ee4126-4abe-4fa9-aa9e-315488801876 tanc:text "GREY Walter George"^^xsd:string .
+<<:49ee4126-4abe-4fa9-aa9e-315488801876 tanc:mentions <http://dbpedia.org/resource/Walter_F._George>>> tanc:similarity 0.9996989981266154;
+		 rdfs:type <http://xmlns.com/foaf/0.1/person> ;
+		 rdfs:type Wikidata:Q82955 ;
+		 rdfs:type Wikidata:Q729 ;
+		 rdfs:type Wikidata:Q5 ;
+		 rdfs:type Wikidata:Q215627 ;
+		 rdfs:type Wikidata:Q19088 ;
+		 rdfs:type DUL:NaturalPerson ;
+		 rdfs:type Schema:Person ;
+		 rdfs:type DBpedia:Species ;
+		 rdfs:type DBpedia:Person ;
+		 rdfs:type DBpedia:Eukaryote ;
+		 rdfs:type DBpedia:Animal ;
+		 rdfs:type DBpedia:Politician ;
+		 tanc:start 5 ;
+		 tanc:end 18 ;
+		 tanc:support 114 .
+:84cf6d05-25da-45a6-a6ef-7c84adc9e1bb tanc:text "GREEN Allen John"^^xsd:string .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:4e903434-3d6a-466d-b559-f6a561aa24ec tanc:text "Any Charlton"^^xsd:string .
+<<:4e903434-3d6a-466d-b559-f6a561aa24ec tanc:mentions <http://dbpedia.org/resource/Charlton_Athletic_F.C.>>> tanc:similarity 0.9526754548305743;
+		 rdfs:type Wikidata:Q476028 ;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:SportsClub ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:SoccerClub ;
+		 tanc:start 4 ;
+		 tanc:end 12 ;
+		 tanc:support 4904 .
+:116827c5-eea7-4503-a8d9-1f4b5af68dea tanc:text "World War Two men who Died"^^xsd:string .
+<<:116827c5-eea7-4503-a8d9-1f4b5af68dea tanc:mentions <http://dbpedia.org/resource/World_War_II>>> tanc:similarity 0.9999909627413586;
+		 rdfs:type Wikidata:Q1656682 ;
+		 rdfs:type DUL:Event ;
+		 rdfs:type Schema:Event ;
+		 rdfs:type DBpedia:SocietalEvent ;
+		 rdfs:type DBpedia:Event ;
+		 rdfs:type DBpedia:MilitaryConflict ;
+		 tanc:start 0 ;
+		 tanc:end 13 ;
+		 tanc:support 270512 .
+:7b6bfb6d-285b-4bc9-8bcd-738f6655ff2b tanc:text "WADMAN Henry (Harry) Bracher"^^xsd:string .
+<<:7b6bfb6d-285b-4bc9-8bcd-738f6655ff2b tanc:mentions <http://dbpedia.org/resource/Harry_Potter>>> tanc:similarity 0.9314924389831987;
+		 tanc:start 7 ;
+		 tanc:end 28 ;
+		 tanc:support 6066 .
+:9c739910-e9ca-4715-b43f-bed4ce2adbf1 tanc:text "SOUTHWAY Arthur John"^^xsd:string .
+<<:9c739910-e9ca-4715-b43f-bed4ce2adbf1 tanc:mentions <http://dbpedia.org/resource/King_Arthur>>> tanc:similarity 0.9925900202743168;
+		 tanc:start 9 ;
+		 tanc:end 20 ;
+		 tanc:support 5440 .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:6908b122-c715-47ea-b875-63bd3fcdd66d tanc:text "Lttr from Jim Cattermole."^^xsd:string .
+<<:6908b122-c715-47ea-b875-63bd3fcdd66d tanc:mentions <http://dbpedia.org/resource/Lee_Cattermole>>> tanc:similarity 0.9999991372783539;
+		 rdfs:type <http://xmlns.com/foaf/0.1/person> ;
+		 rdfs:type Wikidata:Q937857 ;
+		 rdfs:type Wikidata:Q729 ;
+		 rdfs:type Wikidata:Q5 ;
+		 rdfs:type Wikidata:Q215627 ;
+		 rdfs:type Wikidata:Q19088 ;
+		 rdfs:type DUL:NaturalPerson ;
+		 rdfs:type Schema:Person ;
+		 rdfs:type DBpedia:Species ;
+		 rdfs:type DBpedia:Person ;
+		 rdfs:type DBpedia:Eukaryote ;
+		 rdfs:type DBpedia:Athlete ;
+		 rdfs:type DBpedia:Animal ;
+		 rdfs:type DBpedia:SoccerPlayer ;
+		 tanc:start 10 ;
+		 tanc:end 24 ;
+		 tanc:support 79 .
+:8d41c409-37d4-4003-966e-cef87a9f29be tanc:text "E.W. Wallington, Private Sec. to the Queen"^^xsd:string .
+<<:8d41c409-37d4-4003-966e-cef87a9f29be tanc:mentions <http://dbpedia.org/resource/Wallington_railway_station>>> tanc:similarity 0.9567974221331252;
+		 rdfs:type Wikidata:Q719456 ;
+		 rdfs:type DBpedia:Infrastructure ;
+		 rdfs:type DBpedia:ArchitecturalStructure ;
+		 rdfs:type DBpedia:Station ;
+		 tanc:start 0 ;
+		 tanc:end 16 ;
+		 tanc:support 57 .
+:c487d33e-1309-4ada-890d-fe7bc8b66bac tanc:text "Workers Nat. Hsg. Council: Leaflet No.18 Housing & the War."^^xsd:string .
+<<:c487d33e-1309-4ada-890d-fe7bc8b66bac tanc:mentions <http://dbpedia.org/resource/Workforce>>> tanc:similarity 0.999612665199907;
+		 tanc:start 0 ;
+		 tanc:end 7 ;
+		 tanc:support 1935 .
+<<:c487d33e-1309-4ada-890d-fe7bc8b66bac tanc:mentions <http://dbpedia.org/resource/Nat_Wolff>>> tanc:similarity 0.9999971669560125;
+		 rdfs:type <http://xmlns.com/foaf/0.1/person> ;
+		 rdfs:type Wikidata:Q729 ;
+		 rdfs:type Wikidata:Q5 ;
+		 rdfs:type Wikidata:Q215627 ;
+		 rdfs:type Wikidata:Q19088 ;
+		 rdfs:type DUL:NaturalPerson ;
+		 rdfs:type Schema:Person ;
+		 rdfs:type DBpedia:Species ;
+		 rdfs:type DBpedia:Eukaryote ;
+		 rdfs:type DBpedia:Animal ;
+		 rdfs:type DBpedia:Person ;
+		 tanc:start 8 ;
+		 tanc:end 11 ;
+		 tanc:support 207 .
+:c2b23164-da14-4580-b9aa-0821e7386cc4 tanc:text "TS. & MS. French & English texts of res. on reparations by I. F. T. U. Bureau: French orig. text; English trans.; French MS. draft or variant."^^xsd:string .
+<<:c2b23164-da14-4580-b9aa-0821e7386cc4 tanc:mentions <http://dbpedia.org/resource/French_language>>> tanc:similarity 0.9749928539405428;
+		 rdfs:type Wikidata:Q315 ;
+		 rdfs:type Schema:Language ;
+		 rdfs:type DBpedia:Language ;
+		 tanc:start 10 ;
+		 tanc:end 16 ;
+		 tanc:support 70929 .
+<<:c2b23164-da14-4580-b9aa-0821e7386cc4 tanc:mentions <http://dbpedia.org/resource/English_language>>> tanc:similarity 0.9979073084982378;
+		 rdfs:type Wikidata:Q315 ;
+		 rdfs:type Schema:Language ;
+		 rdfs:type DBpedia:Language ;
+		 tanc:start 19 ;
+		 tanc:end 26 ;
+		 tanc:support 86169 .
+<<:c2b23164-da14-4580-b9aa-0821e7386cc4 tanc:mentions <http://dbpedia.org/resource/French_language>>> tanc:similarity 0.9749928539405428;
+		 rdfs:type Wikidata:Q315 ;
+		 rdfs:type Schema:Language ;
+		 rdfs:type DBpedia:Language ;
+		 tanc:start 79 ;
+		 tanc:end 85 ;
+		 tanc:support 70929 .
+<<:c2b23164-da14-4580-b9aa-0821e7386cc4 tanc:mentions <http://dbpedia.org/resource/English_language>>> tanc:similarity 0.9979073084982378;
+		 rdfs:type Wikidata:Q315 ;
+		 rdfs:type Schema:Language ;
+		 rdfs:type DBpedia:Language ;
+		 tanc:start 98 ;
+		 tanc:end 105 ;
+		 tanc:support 86169 .
+<<:c2b23164-da14-4580-b9aa-0821e7386cc4 tanc:mentions <http://dbpedia.org/resource/French_language>>> tanc:similarity 0.9749928539405428;
+		 rdfs:type Wikidata:Q315 ;
+		 rdfs:type Schema:Language ;
+		 rdfs:type DBpedia:Language ;
+		 tanc:start 114 ;
+		 tanc:end 120 ;
+		 tanc:support 70929 .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:bef242c3-2274-42b8-8663-8f2395fd1149 tanc:text "Cumberland Miners' Assoc. (Andrew Sharp)"^^xsd:string .
+<<:bef242c3-2274-42b8-8663-8f2395fd1149 tanc:mentions <http://dbpedia.org/resource/Cumberland>>> tanc:similarity 0.9679344572031513;
+		 rdfs:type Wikidata:Q3455524 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type Schema:AdministrativeArea ;
+		 rdfs:type DBpedia:Region ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:AdministrativeRegion ;
+		 tanc:start 0 ;
+		 tanc:end 25 ;
+		 tanc:support 3379 .
+<<:bef242c3-2274-42b8-8663-8f2395fd1149 tanc:mentions <http://dbpedia.org/resource/Sharp_Corporation>>> tanc:similarity 0.9938939483761443;
+		 rdfs:type Wikidata:Q4830453 ;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:Company ;
+		 tanc:start 27 ;
+		 tanc:end 39 ;
+		 tanc:support 889 .
+:14fe1015-ca23-4cae-8259-fc0c44fa67b0 tanc:text "Stoke on Trent C. of A. : query re extension of scope."^^xsd:string .
+:4f7185a6-3687-4dd9-8487-1fb015e68df0 tanc:text ""^^xsd:string .
+:46c5d962-34d5-4a17-9271-a7b1a75a73bf tanc:text "Cmd.3730: Maps to accompany Internatl. Load Line Convention H.M.S.O."^^xsd:string .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:ae83f6da-866b-4779-88c1-65a27da274a8 tanc:text "Telegram correspondence Paul Faure and Gillies re invitation by Lord Cecil for RUP"^^xsd:string .
+<<:ae83f6da-866b-4779-88c1-65a27da274a8 tanc:mentions <http://dbpedia.org/resource/Paul_Faure_(politician)>>> tanc:similarity 0.9850885817529778;
+		 tanc:start 24 ;
+		 tanc:end 34 ;
+		 tanc:support 23 .
+<<:ae83f6da-866b-4779-88c1-65a27da274a8 tanc:mentions <http://dbpedia.org/resource/Rational_Unified_Process>>> tanc:similarity 0.981077604435058;
+		 tanc:start 79 ;
+		 tanc:end 82 ;
+		 tanc:support 98 .
+:4ecb07b9-ca63-4a7a-9d26-5275fa44f8d4 tanc:text "Tyne Dist. Cttee., Carpenters' & Jnrs.' Socs. (Thos. Wilkinson): is forwarding payment."^^xsd:string .
+<<:4ecb07b9-ca63-4a7a-9d26-5275fa44f8d4 tanc:mentions <http://dbpedia.org/resource/The_Carpenters>>> tanc:similarity 1.0;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q215380 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type Schema:MusicGroup ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Group ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:Band ;
+		 tanc:start 19 ;
+		 tanc:end 37 ;
+		 tanc:support 1189 .
+<<:4ecb07b9-ca63-4a7a-9d26-5275fa44f8d4 tanc:mentions <http://dbpedia.org/resource/Geoffrey_Wilkinson>>> tanc:similarity 0.9999998466598303;
+		 rdfs:type <http://xmlns.com/foaf/0.1/person> ;
+		 rdfs:type Wikidata:Q901 ;
+		 rdfs:type Wikidata:Q729 ;
+		 rdfs:type Wikidata:Q5 ;
+		 rdfs:type Wikidata:Q215627 ;
+		 rdfs:type Wikidata:Q19088 ;
+		 rdfs:type DUL:NaturalPerson ;
+		 rdfs:type Schema:Person ;
+		 rdfs:type DBpedia:Species ;
+		 rdfs:type DBpedia:Person ;
+		 rdfs:type DBpedia:Eukaryote ;
+		 rdfs:type DBpedia:Animal ;
+		 rdfs:type DBpedia:Scientist ;
+		 tanc:start 53 ;
+		 tanc:end 62 ;
+		 tanc:support 102 .
+:3f94f741-ab54-48b3-af7c-fcd6a8d2d6de tanc:text "W.O. (Contracts)"^^xsd:string .
+:f55f4e49-1462-4425-92b4-4e4b5d7f4e46 tanc:text "Woolhope Transactions 1977"^^xsd:string .
+<<:f55f4e49-1462-4425-92b4-4e4b5d7f4e46 tanc:mentions <http://dbpedia.org/resource/Woolhope>>> tanc:similarity 0.9999999504047151;
+		 rdfs:type Wikidata:Q486972 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:Settlement ;
+		 tanc:start 0 ;
+		 tanc:end 21 ;
+		 tanc:support 42 .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:fb75b1b6-d952-4abc-9362-cb2d22ccd740 tanc:text "Leintwardine map 1903"^^xsd:string .
+:c8b7666c-d954-45c1-988c-4a4ad16f9ed5 tanc:text "Evacuees to Leintwardine and district"^^xsd:string .
+<<:c8b7666c-d954-45c1-988c-4a4ad16f9ed5 tanc:mentions <http://dbpedia.org/resource/Leintwardine>>> tanc:similarity 0.9996898889228498;
+		 rdfs:type Wikidata:Q486972 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:Settlement ;
+		 tanc:start 12 ;
+		 tanc:end 24 ;
+		 tanc:support 96 .
+:f719f0f9-e9a3-4491-9925-83677e056c4b tanc:text "War Memorial Plaque dedication in St. Mary's, Leintwardine"^^xsd:string .
+<<:f719f0f9-e9a3-4491-9925-83677e056c4b tanc:mentions <http://dbpedia.org/resource/Saint>>> tanc:similarity 0.9999950863582042;
+		 tanc:start 34 ;
+		 tanc:end 37 ;
+		 tanc:support 9954 .
+<<:f719f0f9-e9a3-4491-9925-83677e056c4b tanc:mentions <http://dbpedia.org/resource/Leintwardine>>> tanc:similarity 0.9997201949459507;
+		 rdfs:type Wikidata:Q486972 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:Settlement ;
+		 tanc:start 46 ;
+		 tanc:end 58 ;
+		 tanc:support 96 .
+:23dab373-1f35-44ee-84ae-fa394f49fd74 tanc:text "Emma Ford collection"^^xsd:string .
+<<:23dab373-1f35-44ee-84ae-fa394f49fd74 tanc:mentions <http://dbpedia.org/resource/Ford_Motor_Company>>> tanc:similarity 0.9977926531224293;
+		 rdfs:type Wikidata:Q4830453 ;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:Company ;
+		 tanc:start 0 ;
+		 tanc:end 9 ;
+		 tanc:support 25638 .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:b069fa75-11ea-4612-a8f8-8e0d34e80a4a tanc:text "Overton's Builders 1913 Day Book"^^xsd:string .
+<<:b069fa75-11ea-4612-a8f8-8e0d34e80a4a tanc:mentions <http://dbpedia.org/resource/Overton-on-Dee>>> tanc:similarity 0.9995889854359163;
+		 rdfs:type Wikidata:Q486972 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:Settlement ;
+		 tanc:start 0 ;
+		 tanc:end 18 ;
+		 tanc:support 64 .
+:8d542644-02cd-41d1-b6fa-06b6af5552e9 tanc:text "Group police photograph believed to have been taken outside Broadward Hall c.1900"^^xsd:string .
+<<:8d542644-02cd-41d1-b6fa-06b6af5552e9 tanc:mentions <http://dbpedia.org/resource/Broadward>>> tanc:similarity 0.9999999427593042;
+		 rdfs:type Wikidata:Q486972 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:Settlement ;
+		 tanc:start 60 ;
+		 tanc:end 74 ;
+		 tanc:support 22 .
+:d298175d-e491-4522-bbdf-8d093cc180f1 tanc:text "Leintwardine archaeological map"^^xsd:string .
+:28b919cf-c89e-4e57-b619-8dc60719bd0c tanc:text "Domesday Book entries relating to Leintwardine"^^xsd:string .
+<<:28b919cf-c89e-4e57-b619-8dc60719bd0c tanc:mentions <http://dbpedia.org/resource/Domesday_Book>>> tanc:similarity 0.9999999967666895;
+		 tanc:start 0 ;
+		 tanc:end 13 ;
+		 tanc:support 10659 .
+<<:28b919cf-c89e-4e57-b619-8dc60719bd0c tanc:mentions <http://dbpedia.org/resource/Leintwardine>>> tanc:similarity 0.9999978526310577;
+		 rdfs:type Wikidata:Q486972 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:Settlement ;
+		 tanc:start 34 ;
+		 tanc:end 46 ;
+		 tanc:support 96 .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:394d97e4-bdad-48dd-b635-cc77e6254b0d tanc:text "The funeral of Father Philip Garrett, one-time priest of Leintwardine."^^xsd:string .
+<<:394d97e4-bdad-48dd-b635-cc77e6254b0d tanc:mentions <http://dbpedia.org/resource/Garrett_P.I.>>> tanc:similarity 0.9276984008168447;
+		 tanc:start 22 ;
+		 tanc:end 36 ;
+		 tanc:support 476 .
+<<:394d97e4-bdad-48dd-b635-cc77e6254b0d tanc:mentions <http://dbpedia.org/resource/Leintwardine>>> tanc:similarity 0.9998186631927541;
+		 rdfs:type Wikidata:Q486972 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:Settlement ;
+		 tanc:start 57 ;
+		 tanc:end 69 ;
+		 tanc:support 96 .
+:459f3ce6-d031-4387-86de-7d49105034f9 tanc:text "1903 Aston"^^xsd:string .
+:ce4a48c0-063b-473b-980c-6c959460e88e tanc:text "Customer prescription book, 1857-1882"^^xsd:string .
+:7c3643fa-4670-4c53-92d4-bb0f473ab946 tanc:text "Funeral account and expenses"^^xsd:string .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:e8f92d7b-055c-41c8-b406-592979936148 tanc:text "Register of probates of wills and letters of administration"^^xsd:string .
+:34845b37-bed1-46fd-b7dc-9eb4a2752cc8 tanc:text "Bundle of correspondence relating to the estate of the late John Melliar"^^xsd:string .
+:32a2ece6-e6e2-46f2-ba09-bf1863d0ffbc tanc:text "Case for the opinion of George Lake Russell concerning the estate of John Melliar"^^xsd:string .
+:36a1687b-03e7-45b2-8dfa-e68049d12cf5 tanc:text "Basket specification book"^^xsd:string .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:2f33a1ce-868e-449b-a852-7c9afad0f079 tanc:text "Probate of the will and codicils of John Melliar, deceased"^^xsd:string .
+:a5af76e8-5053-4115-ba8c-df09b08b9f1f tanc:text "Registers of securities"^^xsd:string .
+:3d037b79-e14d-4fd3-b52b-2ba7b9daf282 tanc:text "Formulae books"^^xsd:string .
+:152d2a4b-6645-497e-a3aa-ff1c1982f652 tanc:text "RECORDS OF THE ROYAL NATIONAL LIFEBOAT INSTITUTION (SHERBORNE AND DISTRICT BRANCH)"^^xsd:string .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:385a81f8-da95-4506-9659-6862c79bf91f tanc:text "Bundle of correspondence relating to the estate of the late John Melliar"^^xsd:string .
+:83a309a3-bd0f-4afb-982f-2cbe2a98c6fa tanc:text "Private Richard Charles ADNITT
+Suffolk Regiment 63820"^^xsd:string .
+<<:83a309a3-bd0f-4afb-982f-2cbe2a98c6fa tanc:mentions <http://dbpedia.org/resource/Suffolk_Regiment>>> tanc:similarity 1.0;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q176799 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:MilitaryUnit ;
+		 tanc:start 31 ;
+		 tanc:end 47 ;
+		 tanc:support 470 .
+:fb11b90b-57b7-46c6-8501-9bf2d44b0f38 tanc:text "Private Alfred SMITH
+Northamptonshire Regiment"^^xsd:string .
+<<:fb11b90b-57b7-46c6-8501-9bf2d44b0f38 tanc:mentions <http://dbpedia.org/resource/Northamptonshire_Regiment>>> tanc:similarity 0.9999999602470461;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q176799 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:MilitaryUnit ;
+		 tanc:start 21 ;
+		 tanc:end 46 ;
+		 tanc:support 368 .
+:821d709d-bdab-429a-94a9-40be7c0b62a3 tanc:text "Amphillis Twigden, born in Spratton, UK"^^xsd:string .
+<<:821d709d-bdab-429a-94a9-40be7c0b62a3 tanc:mentions <http://dbpedia.org/resource/Spratton>>> tanc:similarity 0.9999999398469601;
+		 rdfs:type Wikidata:Q486972 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:Settlement ;
+		 tanc:start 27 ;
+		 tanc:end 35 ;
+		 tanc:support 43 .
+<<:821d709d-bdab-429a-94a9-40be7c0b62a3 tanc:mentions <http://dbpedia.org/resource/United_Kingdom>>> tanc:similarity 0.973216547435436;
+		 rdfs:type Wikidata:Q6256 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type Schema:Country ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:Country ;
+		 tanc:start 37 ;
+		 tanc:end 39 ;
+		 tanc:support 174100 .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:12c43b36-0720-4dd8-9a81-0b689d19721d tanc:text "Private Frank PAGE
+Northamptonshire Regiment 5207
+Royal Army Medical Corps"^^xsd:string .
+<<:12c43b36-0720-4dd8-9a81-0b689d19721d tanc:mentions <http://dbpedia.org/resource/Northamptonshire_Regiment>>> tanc:similarity 0.9999999999019593;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q176799 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:MilitaryUnit ;
+		 tanc:start 19 ;
+		 tanc:end 44 ;
+		 tanc:support 368 .
+<<:12c43b36-0720-4dd8-9a81-0b689d19721d tanc:mentions <http://dbpedia.org/resource/Royal_Army_Medical_Corps>>> tanc:similarity 1.0;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q176799 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:MilitaryUnit ;
+		 tanc:start 50 ;
+		 tanc:end 74 ;
+		 tanc:support 2922 .
+:84588910-b372-4252-86c0-5c537ba78700 tanc:text "Gunner John CRANE
+276th Siege Battery, Royal Garrison Artillery 174842"^^xsd:string .
+<<:84588910-b372-4252-86c0-5c537ba78700 tanc:mentions <http://dbpedia.org/resource/John_Crane_Group>>> tanc:similarity 0.9999999999593996;
+		 rdfs:type Wikidata:Q4830453 ;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:Company ;
+		 tanc:start 7 ;
+		 tanc:end 17 ;
+		 tanc:support 26 .
+<<:84588910-b372-4252-86c0-5c537ba78700 tanc:mentions <http://dbpedia.org/resource/Artillery_battery>>> tanc:similarity 0.9995104970670844;
+		 tanc:start 24 ;
+		 tanc:end 37 ;
+		 tanc:support 5554 .
+<<:84588910-b372-4252-86c0-5c537ba78700 tanc:mentions <http://dbpedia.org/resource/Royal_Garrison_Artillery>>> tanc:similarity 0.9992152262814832;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q176799 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:MilitaryUnit ;
+		 tanc:start 39 ;
+		 tanc:end 63 ;
+		 tanc:support 945 .
+:ef75a803-28cd-41f9-9995-fe33dd3f29eb tanc:text "Sergeant William Higgs MARTIN, DCM
+5th Battalion Royal Irish Lancers 3161"^^xsd:string .
+<<:ef75a803-28cd-41f9-9995-fe33dd3f29eb tanc:mentions <http://dbpedia.org/resource/Lancer>>> tanc:similarity 0.9956923843821699;
+		 tanc:start 35 ;
+		 tanc:end 68 ;
+		 tanc:support 435 .
+:a429ed50-98c1-4f8f-b6e2-ec49414b334d tanc:text "Private William Henry SPEECHLEY
+1st Battalion, Northamptonshire Regiment 8383"^^xsd:string .
+<<:a429ed50-98c1-4f8f-b6e2-ec49414b334d tanc:mentions <http://dbpedia.org/resource/Northamptonshire_Regiment>>> tanc:similarity 1.0;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q176799 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:MilitaryUnit ;
+		 tanc:start 47 ;
+		 tanc:end 72 ;
+		 tanc:support 368 .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:6ae9b391-1d61-4d2d-aadd-a31fe8f03708 tanc:text "Private James Walter WYKES (known as Walter) Military Police, Northamptonshire Regiment 10587 
+Royal Berkshire Regiment 37462
+Labour Corps, Agricultural Unit 497346"^^xsd:string .
+<<:6ae9b391-1d61-4d2d-aadd-a31fe8f03708 tanc:mentions <http://dbpedia.org/resource/Military_police>>> tanc:similarity 0.9999558971935534;
+		 tanc:start 45 ;
+		 tanc:end 60 ;
+		 tanc:support 1964 .
+<<:6ae9b391-1d61-4d2d-aadd-a31fe8f03708 tanc:mentions <http://dbpedia.org/resource/Northamptonshire_Regiment>>> tanc:similarity 1.0;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q176799 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:MilitaryUnit ;
+		 tanc:start 62 ;
+		 tanc:end 87 ;
+		 tanc:support 368 .
+<<:6ae9b391-1d61-4d2d-aadd-a31fe8f03708 tanc:mentions <http://dbpedia.org/resource/Royal_Berkshire_Regiment>>> tanc:similarity 1.0;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q176799 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:MilitaryUnit ;
+		 tanc:start 95 ;
+		 tanc:end 119 ;
+		 tanc:support 319 .
+<<:6ae9b391-1d61-4d2d-aadd-a31fe8f03708 tanc:mentions <http://dbpedia.org/resource/Royal_Pioneer_Corps>>> tanc:similarity 0.9999999999255635;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q176799 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:MilitaryUnit ;
+		 tanc:start 126 ;
+		 tanc:end 138 ;
+		 tanc:support 377 .
+<<:6ae9b391-1d61-4d2d-aadd-a31fe8f03708 tanc:mentions <http://dbpedia.org/resource/Police_of_The_Wire>>> tanc:similarity 0.9359212592269794;
+		 tanc:start 140 ;
+		 tanc:end 157 ;
+		 tanc:support 814 .
+:73a874ad-5c58-44a9-8d74-21fdc5f61f8d tanc:text "Private Ernest John Roberts WYKES
+51st Battalion Royal Sussex Regiment 255524"^^xsd:string .
+<<:73a874ad-5c58-44a9-8d74-21fdc5f61f8d tanc:mentions <http://dbpedia.org/resource/John_Roberts>>> tanc:similarity 0.9999999853936857;
+		 rdfs:type <http://xmlns.com/foaf/0.1/person> ;
+		 rdfs:type Wikidata:Q82955 ;
+		 rdfs:type Wikidata:Q729 ;
+		 rdfs:type Wikidata:Q5 ;
+		 rdfs:type Wikidata:Q215627 ;
+		 rdfs:type Wikidata:Q19088 ;
+		 rdfs:type DUL:NaturalPerson ;
+		 rdfs:type Schema:Person ;
+		 rdfs:type DBpedia:Species ;
+		 rdfs:type DBpedia:Person ;
+		 rdfs:type DBpedia:Eukaryote ;
+		 rdfs:type DBpedia:Animal ;
+		 rdfs:type DBpedia:Politician ;
+		 tanc:start 8 ;
+		 tanc:end 27 ;
+		 tanc:support 1138 .
+<<:73a874ad-5c58-44a9-8d74-21fdc5f61f8d tanc:mentions <http://dbpedia.org/resource/Royal_Sussex_Regiment>>> tanc:similarity 1.0;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q176799 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:MilitaryUnit ;
+		 tanc:start 49 ;
+		 tanc:end 70 ;
+		 tanc:support 468 .
+:e5410db1-6e5f-4895-aff5-0688240cef6d tanc:text "Private Stephen PAGE
+9th Battalion, Kings Royal Rifle Corps A205123 and 22nd Training Reserve 6485"^^xsd:string .
+<<:e5410db1-6e5f-4895-aff5-0688240cef6d tanc:mentions <http://dbpedia.org/resource/1st_Northamptonshire_Rifle_Volunteer_Corps>>> tanc:similarity 0.9998837058856742;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q176799 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:MilitaryUnit ;
+		 tanc:start 21 ;
+		 tanc:end 34 ;
+		 tanc:support 38 .
+<<:e5410db1-6e5f-4895-aff5-0688240cef6d tanc:mentions <http://dbpedia.org/resource/Eldora_Speedway>>> tanc:similarity 0.9999950012671827;
+		 tanc:start 36 ;
+		 tanc:end 59 ;
+		 tanc:support 290 .
+<<:e5410db1-6e5f-4895-aff5-0688240cef6d tanc:mentions <http://dbpedia.org/resource/British_Army_First_World_War_reserve_brigades>>> tanc:similarity 0.9999999999998863;
+		 tanc:start 72 ;
+		 tanc:end 93 ;
+		 tanc:support 64 .
+:ced10df3-82d9-4165-91be-5c253ad6032d tanc:text "Private Reginald Raymond HODGE(S)
+1st Battalion, East Yorkshire Regiment 31457
+7th Battalion, Suffolk Regiment 24525"^^xsd:string .
+<<:ced10df3-82d9-4165-91be-5c253ad6032d tanc:mentions <http://dbpedia.org/resource/Raymond_Asquith>>> tanc:similarity 0.9843287192626557;
+		 tanc:start 8 ;
+		 tanc:end 32 ;
+		 tanc:support 119 .
+<<:ced10df3-82d9-4165-91be-5c253ad6032d tanc:mentions <http://dbpedia.org/resource/East_Yorkshire_Regiment>>> tanc:similarity 1.0;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q176799 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:MilitaryUnit ;
+		 tanc:start 49 ;
+		 tanc:end 72 ;
+		 tanc:support 401 .
+<<:ced10df3-82d9-4165-91be-5c253ad6032d tanc:mentions <http://dbpedia.org/resource/Leeds_Rifles>>> tanc:similarity 0.9929124945635867;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q176799 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:MilitaryUnit ;
+		 tanc:start 79 ;
+		 tanc:end 92 ;
+		 tanc:support 120 .
+<<:ced10df3-82d9-4165-91be-5c253ad6032d tanc:mentions <http://dbpedia.org/resource/Suffolk_Regiment>>> tanc:similarity 1.0;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q176799 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:MilitaryUnit ;
+		 tanc:start 94 ;
+		 tanc:end 110 ;
+		 tanc:support 470 .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:3b6928bd-7ac5-4cc1-a7a2-010566b810d3 tanc:text "Pattern Weavers' Society"^^xsd:string .
+<<:3b6928bd-7ac5-4cc1-a7a2-010566b810d3 tanc:mentions <http://dbpedia.org/resource/Pattern_Weavers'_Society>>> tanc:similarity 1.0;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q178790 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:TradeUnion ;
+		 tanc:start 0 ;
+		 tanc:end 24 ;
+		 tanc:support 2 .
+:61381c7d-8220-4e25-8b9e-17db7f7b81a7 tanc:text "Amalgamated Weavers' Association"^^xsd:string .
+<<:61381c7d-8220-4e25-8b9e-17db7f7b81a7 tanc:mentions <http://dbpedia.org/resource/Amalgamated_Weavers'_Association>>> tanc:similarity 1.0;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q178790 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:TradeUnion ;
+		 tanc:start 0 ;
+		 tanc:end 32 ;
+		 tanc:support 75 .
+:e15e5669-96d2-4aef-ba0d-cbe165593966 tanc:text "Roberts-Arundel Strike Committee papers"^^xsd:string .
+<<:e15e5669-96d2-4aef-ba0d-cbe165593966 tanc:mentions <http://dbpedia.org/resource/Strike_action>>> tanc:similarity 0.9997119148211908;
+		 tanc:start 0 ;
+		 tanc:end 32 ;
+		 tanc:support 8026 .
+:5130833e-0047-4ed9-ab0a-ccfae0fc72ff tanc:text "Unity Theatre"^^xsd:string .
+<<:5130833e-0047-4ed9-ab0a-ccfae0fc72ff tanc:mentions <http://dbpedia.org/resource/Glasgow_Unity_Theatre>>> tanc:similarity 0.9946128066695045;
+		 tanc:start 0 ;
+		 tanc:end 13 ;
+		 tanc:support 28 .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:f0ffe86d-7663-4237-ae3e-d1e4c84f2497 tanc:text "Ward and Goldstone; Volex"^^xsd:string .
+<<:f0ffe86d-7663-4237-ae3e-d1e4c84f2497 tanc:mentions <http://dbpedia.org/resource/Wards_and_electoral_divisions_of_the_United_Kingdom>>> tanc:similarity 0.9009335153260571;
+		 tanc:start 0 ;
+		 tanc:end 18 ;
+		 tanc:support 5484 .
+:ceb91b84-fd65-4a1e-aa90-af66187cbe02 tanc:text "Manchester Early Dwellings Research Group papers"^^xsd:string .
+<<:ceb91b84-fd65-4a1e-aa90-af66187cbe02 tanc:mentions <http://dbpedia.org/resource/Manchester>>> tanc:similarity 0.9983629160262509;
+		 rdfs:type Wikidata:Q515 ;
+		 rdfs:type Wikidata:Q486972 ;
+		 rdfs:type Schema:Place ;
+		 rdfs:type Schema:City ;
+		 rdfs:type DBpedia:Settlement ;
+		 rdfs:type DBpedia:PopulatedPlace ;
+		 rdfs:type DBpedia:Place ;
+		 rdfs:type DBpedia:Location ;
+		 rdfs:type DBpedia:City ;
+		 tanc:start 0 ;
+		 tanc:end 41 ;
+		 tanc:support 50203 .
+:7b64b6c7-7864-4dd9-8514-fb2d0fa417bd tanc:text "National Union of Furniture Trade Operatives (NUFTO)"^^xsd:string .
+<<:7b64b6c7-7864-4dd9-8514-fb2d0fa417bd tanc:mentions <http://dbpedia.org/resource/Furniture>>> tanc:similarity 0.9991858137648056;
+		 tanc:start 0 ;
+		 tanc:end 44 ;
+		 tanc:support 3094 .
+:8fea7d99-259b-44ed-97e3-43e5efabe26e tanc:text "Amalgamated Society of Wire Drawers and Kindred Workers"^^xsd:string .@prefix : <http://tanc.manchester.ac.uk/sample/> .
+@prefix tanc: <http://tanc.manchester.ac.uk/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix DBpedia: <http://dbpedia.org/ontology/> .
+@prefix Schema: <http://schema.org/> .
+@prefix Wikidata: <https://www.wikidata.org/wiki/> .
+@prefix DUL: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+
+:e65b6165-0742-4095-b037-3bbe0162303b tanc:text "National Union of Dyers, Bleachers and Textile Workers"^^xsd:string .
+<<:e65b6165-0742-4095-b037-3bbe0162303b tanc:mentions <http://dbpedia.org/resource/Textile>>> tanc:similarity 0.94804332132867;
+		 tanc:start 0 ;
+		 tanc:end 54 ;
+		 tanc:support 8051 .
+:1aa8aabd-d020-463a-8496-a260921f0f40 tanc:text "Amalgamated Society of Lithographic Artists, Designers, Engravers and Process Workers (SLADE)"^^xsd:string .
+<<:1aa8aabd-d020-463a-8496-a260921f0f40 tanc:mentions <http://dbpedia.org/resource/Lithography>>> tanc:similarity 0.9999999999685656;
+		 tanc:start 0 ;
+		 tanc:end 85 ;
+		 tanc:support 4079 .
+<<:1aa8aabd-d020-463a-8496-a260921f0f40 tanc:mentions <http://dbpedia.org/resource/Slade_School_of_Fine_Art>>> tanc:similarity 0.952685701946981;
+		 rdfs:type Wikidata:Q43229 ;
+		 rdfs:type Wikidata:Q3918 ;
+		 rdfs:type Wikidata:Q24229398 ;
+		 rdfs:type Wikidata:Q2385804 ;
+		 rdfs:type DUL:SocialPerson ;
+		 rdfs:type DUL:Agent ;
+		 rdfs:type Schema:Organization ;
+		 rdfs:type Schema:EducationalOrganization ;
+		 rdfs:type Schema:CollegeOrUniversity ;
+		 rdfs:type DBpedia:Organisation ;
+		 rdfs:type DBpedia:EducationalInstitution ;
+		 rdfs:type DBpedia:Agent ;
+		 rdfs:type DBpedia:University ;
+		 tanc:start 87 ;
+		 tanc:end 92 ;
+		 tanc:support 1331 .
+:aed3089e-22fb-4615-ac7a-59e1462b078b tanc:text "National Union of Musical Instrument Makers and Organ Builders Trade Society"^^xsd:string .
+<<:aed3089e-22fb-4615-ac7a-59e1462b078b tanc:mentions <http://dbpedia.org/resource/Musical_instrument>>> tanc:similarity 0.9998643416614083;
+		 tanc:start 0 ;
+		 tanc:end 76 ;
+		 tanc:support 3835 .
