@@ -1,17 +1,32 @@
+<script>
+import SelectDataTab from './components/SelectDataTab.vue';
+
+export default{
+    components:{
+        SelectDataTab
+    },
+    data: function() { 
+      return {
+        activetab: '1' 
+        }
+    },
+}
+
+</script>
+
 <template>
 <div id="tabs" class="container">
   
     <div class="tabs">
-        <a v-on:click="activetab='1'" v-bind:class="[ activetab === '1' ? 'active' : '' ]">Tab 1</a>
+        <a v-on:click="activetab='1'" v-bind:class="[ activetab === '1' ? 'active' : '' ]">Select Data</a>
         <a v-on:click="activetab='2'" v-bind:class="[ activetab === '2' ? 'active' : '' ]">Tab 2</a>
         <a v-on:click="activetab='3'" v-bind:class="[ activetab === '3' ? 'active' : '' ]">Tab 3</a>
         <a v-on:click="activetab='4'" v-bind:class="[ activetab === '4' ? 'active' : '' ]">Tab 4</a>
     </div>
 
-<SelectDataTab/>
     <div class="content">
         <div v-if="activetab ==='1'" class="tabcontent">
-            <p>This is tab 1!</p>
+            <SelectDataTab />
         </div>
         <div v-if="activetab ==='2'" class="tabcontent">
             <p>This is tab 2!</p>
@@ -26,19 +41,6 @@
   
 </div>
 </template>
-
-<script>
-import SelectDataTab from './components/SelectDataTab.vue';
-
-export default({
-    el: '#tabs',
-    data: function() { 
-      return {
-        activetab: '1' 
-        }
-    },
-});
-</script>
 
 <style>
 * {
