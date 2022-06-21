@@ -1,7 +1,3 @@
-<script setup>
-import SelectDataTab from './components/SelectDataTab.vue';
-</script>
-
 <template>
 <div id="tabs" class="container">
   
@@ -32,6 +28,8 @@ import SelectDataTab from './components/SelectDataTab.vue';
 </template>
 
 <script>
+import SelectDataTab from './components/SelectDataTab.vue';
+
 export default({
     el: '#tabs',
     data: function() { 
