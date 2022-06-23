@@ -1,9 +1,11 @@
 <script>
 import SelectDataTab from './components/SelectDataTab.vue';
+import NetworkGraphTab from './components/NetworkGraphTab.vue';
 
 export default{
     components:{
-        SelectDataTab
+        SelectDataTab,
+        NetworkGraphTab
     },
     data: function() { 
       return {
@@ -19,7 +21,7 @@ export default{
   
     <div class="tabs">
         <a v-on:click="activetab='1'" v-bind:class="[ activetab === '1' ? 'active' : '' ]">Select Data</a>
-        <a v-on:click="activetab='2'" v-bind:class="[ activetab === '2' ? 'active' : '' ]">Tab 2</a>
+        <a v-on:click="activetab='2'" v-bind:class="[ activetab === '2' ? 'active' : '' ]">Graph View</a>
         <a v-on:click="activetab='3'" v-bind:class="[ activetab === '3' ? 'active' : '' ]">Tab 3</a>
         <a v-on:click="activetab='4'" v-bind:class="[ activetab === '4' ? 'active' : '' ]">Tab 4</a>
     </div>
@@ -29,7 +31,7 @@ export default{
             <SelectDataTab />
         </div>
         <div v-if="activetab ==='2'" class="tabcontent">
-            <p>This is tab 2!</p>
+            <NetworkGraphTab />
         </div>
         <div v-if="activetab ==='3'" class="tabcontent">
             <p>This is tab 3!</p>
