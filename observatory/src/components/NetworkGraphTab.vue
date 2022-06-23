@@ -71,18 +71,19 @@ export default{
                 
         },
         draw_graph(fetched_data){
-            var results = fetched_data.results;
-            var bindings = results.bindings;
-            for (let i = 0; i < bindings.length; i++){
-                let obj = bindings[i];
-                this.array_of_triples.push([obj.s.value, obj.p.value, obj.o.value]);
-                var sub = obj.s.value;
-                var pre = obj.p.value;
-                var obje = obj.o.value;
+            var results = fetched_data.split(" .");
+            for (let i = 0; i < results.length-1; i++){
+                let obj = results[i].split('<');
+                console.log(obj);
+                var sub = obj[1].slice(0,-2);
+                var pre = obj[2].slice(0,-2);
+                var obje = obj[3].slice(0,-2);
                 this.nodes[sub] = { name: sub };
                 this.nodes[obje] = { name: obje };
                 this.edges[i] = { source: sub, target: obje, label: pre };
             }
+            console.log(this.nodes);
+            console.log(this.edges);
         }
     }
 }
@@ -154,5 +155,16 @@ export default{
 
 </template>
 
-<style>
+<style lang="scss" scoped>
+// transitions when scaling on mouseover.
+.face-circle,
+.face-picture {
+  transition: all 0.1s linear;
+}
+
+// suppress image events so that mouse events are received
+// by the background circle.
+.face-picture {
+  pointer-events: none;
+}
 </style>
