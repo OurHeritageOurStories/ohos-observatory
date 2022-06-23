@@ -1,10 +1,15 @@
 <script>
 
 export default{
+    data(){
+        return{
+            code:null
+        };
+    },
     methods:{
         post_new_triple(){
             var result_status
-            if(this.newDataSubject && this.newDataPredicate && this.newDataObject){ //js "" and null are both false so this works to check both
+                if(this.newDataSubject && this.newDataPredicate && this.newDataObject){ //js "" and null are both false so this works to check both
                 const requestOptions = {
                     method: "POST",
                     header: {"Content-Type":"text/plain"},
@@ -16,10 +21,10 @@ export default{
                     .then(function(response){
                         result_status = response.status;
                     })
-            } else {
-                result_status = "missing data";
-            }
-            this.build_alert(result_status);
+                } else {
+                    result_status = "missing data";
+                }
+            this.build_alert(result_status);//!!!!!!!!!!!!!!!!async here
         },
         build_alert(code){
             switch (code){
@@ -35,6 +40,96 @@ export default{
                 default:
                     alert("Something went wrong, please refresh the page and try again")
             }
+        },
+        async_post_triple(){
+            return new Promise(resolve=>{
+                var result_status;
+                if(this.newDataSubject && this.newDataPredicate && this.newDataObject){ //js "" and null are both false so this works to check both
+                    const requestOptions = {
+                        method: "POST",
+                        header: {"Content-Type":"text/plain"},
+                        body: "<:" + this.newDataSubject + "> " + 
+                        "<:" + this.newDataPredicate + "> " + 
+                        "<:" + this.newDataObject + "> .", 
+                    };
+                    fetch('api/graph?', requestOptions) 
+                        .then(function(response){
+                            result_status = response.status;
+                        })
+                } else {
+                    result_status = "missing data";
+                }
+                //return result_status;
+                resolve(result_status);
+                //this.code = result_status;
+            })
+        },
+        async build_async_alert(){
+            var code = await this.async_post_triple();
+            //await this.async_post_triple();
+            switch (code){
+                case 200:
+                    alert("Sucsessfuly entered the new triple");
+                    break;
+                case 500:
+                    alert("Please ensure you have entered text in all three boxes. If you have entered punctuation, please remove it and try again.");
+                    break;
+                case "missing data":
+                    alert("Please insure you have put text in each of the three boxes.");
+                    break;
+                case 404:
+                    alert("404, probably a bad Kong setup. If you are not TNA OHOS team and have seen this, please let TNA OHOS team know.")
+                    break;
+                default:
+                    alert("Smamat went wrong, please refresh the page and try again")
+            }
+        },
+        post_triple_promise(subjectString, predicateString, objectString){
+            let promise = new Promise(function (resolve, reject){
+                //var result_status;
+                if(subjectString && predicateString && objectString){ //js "" and null are both false so this works to check both
+                    const requestOptions = {
+                        method: "POST",
+                        header: {"Content-Type":"text/plain"},
+                        body: "<:" + subjectString + "> " + 
+                        "<:" + predicateString + "> " + 
+                        "<:" + objectString + "> .", 
+                    };
+                    fetch('api/graph?', requestOptions) 
+                        .then(function(response){
+                            resolve(response.status);
+                        })
+                } else {
+                    reject("missing data");
+                }
+            });
+            return promise;
+        },
+        build_alert_promise(){
+            let promise = this.post_triple_promise(this.newDataSubject, this.newDataPredicate, this.newDataObject);
+            promise.then(
+                    (result)=>{
+                        switch (result){
+                            case 200:
+                                alert("Sucsessfuly entered the new triple");
+                                break;
+                            case 500:
+                                alert("Please ensure you have entered text in all three boxes. If you have entered punctuation, please remove it and try again.");
+                                break;
+                            case "missing data":
+                                alert("Please insure you have put text in each of the three boxes.");
+                                break;
+                            case 404:
+                                alert("404, probably a bad Kong setup. If you are not TNA OHOS team and have seen this, please let TNA OHOS team know.")
+                                break;
+                            default:
+                                alert("Something went wrong, please refresh the page and try again")
+                        }
+                    },
+                    (error) => {
+                        alert("Unclear how you got here. Please let the TNA OHOS team know. Error: IAT131.")
+                    }
+                )
         }
     }
 }
@@ -50,7 +145,7 @@ export default{
     <input v-model="newDataPredicate" id="newDataPredicate" />
     <p id="object_title">Object</p>
     <input v-model="newDataObject" id="newDataObject"/> 
-    <button @click="post_new_triple" id="post_new_triple">Insert new triple into the graph</button>
+    <button @click="build_alert_promise" id="post_new_triple">Insert new triple into the graph</button>
 
 </div>
 

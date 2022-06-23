@@ -2,11 +2,13 @@
 
 import InputATripleVue from "./InputATriple.vue";
 import LoadDataVue from "./LoadData.vue";
+import UploadDataFileVue from "./UploadDataFile.vue";
 
 export default{
     components:{
         InputATripleVue,
-        LoadDataVue
+        LoadDataVue,
+        UploadDataFileVue
     }
 }
 
@@ -20,6 +22,8 @@ export default{
     <InputATripleVue />
     <p>Choose which dataset you would prefer to see below</p>
     <LoadDataVue />
+    <p>If you would upload a file, please do so here</p>
+    <UploadDataFileVue />
 </div>
 
 
