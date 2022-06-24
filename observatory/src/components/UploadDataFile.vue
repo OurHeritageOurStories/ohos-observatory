@@ -1,16 +1,10 @@
 <script>
 
-//var input = document.querySelector('input[type="file"]')
-
-//var data = new FormData()
-
-
 export default{
     data(){
         return{
             return_data:null,
             insert_response:null,
-            //upload:null
         };
     },
     methods:{
@@ -23,7 +17,7 @@ export default{
                         if(response.status==200){
                             resolve()
                         } else {
-                            reject(error)
+                            reject("Non-200 response from the server")
                         }
                     })
                     .catch(error=>{
@@ -33,61 +27,48 @@ export default{
             return promise;
         },
         upload_data(){
-            var datafile = document.querySelector('input[type="file"]');
-            var upload = datafile.files[0];
-            let delete_data_promise = this.delete_current_data();
-            delete_data_promise.then(
-                (result)=>{
-                    fetch('api/graph?',{
-                            method:"POST",
-                            headers:{"Content-Type":"text/plain"},
-                            body:upload
-                        })
-                            .then(function(response){
-                                if(!response.status==200){
-                                   alert('Server side error');
-                                } else {
-                                    alert("Uploaded")
-                                }
+            let promise = this.delete_current_data();
+                promise.then(
+                    (result)=>{
+                        var datafile = document.querySelector('input[type="file"]');
+                        var uploaded = datafile.files[0];
+                        fetch('api/graph?',{
+                                method:"POST",
+                                headers:{"Content-Type":"text/plain"},
+                                body: uploaded,
                             })
-                            .catch(error=>{
-                                alert('Client side error while uploading');
-                            })
-                },
-                (error)=>{
-                    alert('Error while deleting');
-                }
-            )
-        },
-        //upload_file(){
-        //    var datafile = document.querySelector('input[type="file"]');
-        //    this.upload = datafile.files[0];
-        //    try{
-        //        this.upload_data();
-         //   }
-         //   catch (error){
-         //       console.log(error);
-         //       alert("Unexpected error occured. Please note down how you reached this message, and let the TNA OHOS team know. Error code: ");
-         //   }
-        //},
-        
+                                .then(function(response){
+                                    if(!response.status==200){
+                                    alert('Server side error');
+                                    } else {
+                                        alert("Uploaded")
+                                    }
+                                })
+                                .catch(error=>{
+                                    alert('Client side error while uploading');
+                                })
+                    },
+                    (error)=>{
+                        alert('Error while deleting'+error);
+                    }
+                )
+            },
     }
 }
 
 </script>
 
 <template>
-
-    <form>
+<div id="upload_form">
+    <form @submit.prevent="upload_data">
         <div>
             <label>Select file to upload</label>
             <input type="file">
         </div>
-        <button type="submit" @click="upload_data">Upload</button>
+        <button type="submit">Sumbit</button>
     </form>
+    </div>
     Please note, this upload is ephemeral. If you select a new dataset in any way, you will need to upload again. 
-
-    <pre>{{ response }} bbbbbbbbbb</pre>
 
 </template>
 

@@ -43,11 +43,13 @@ export default{
             });
             return promise;
         },
-        insert_data(){
+        insert_data(choice){
+            this.chosen_data=choice;
             let promise = this.delete_data_promise();
             promise.then(
                 (result)=>{
-                    switch(this.chosen_data){
+                    //let data_chosen=this.chosen_data;
+                    switch(choice){
                         case "manufactured":
                             fetch('api/graph?',{
                                 method:"POST",
@@ -77,24 +79,26 @@ export default{
                             })
                             break;
                         default:
-                            throw 'Unreachable error reached. Somehow, a non-chooseable option was chosen';
+                            //throw 'Unreachable error reached. Somehow, a non-chooseable option was chosen';
+                            alert("unreachable")
                     }
                 },
                 (error)=>{
-                    throw "Error in deleting the data: " + error;
+                    //throw "Error in deleting the data: " + error;
+                    alert(error)
                 }
             )
         },
-        update_data(choice){
-            this.chosen_data==choice;
-            try{
-                this.insert_data();
-            }
-            catch (error){
-                console.log(error);
-                alert("Something went wrong. Please note down how you reached this point, and let the TNA OHOS team know.")
-            }
-        }
+        //update_data(choice){
+            //this.chosen_data==choice;
+            //try{
+            //    this.insert_data();
+           // }
+            //catch (error){
+            //    console.log(error);
+            //    alert("Something went wrong. Please note down how you reached this point, and let the TNA OHOS team know.")
+           // }
+        //}
     }
 }
 
@@ -105,22 +109,22 @@ export default{
 <fieldset>
 
     <div>
-        <input type="radio" id="manufactured" name="data_set" value="manufactured" @click="update_data('manufactured')">
+        <input type="radio" id="manufactured" name="data_set" value="manufactured" @click="insert_data('manufactured')">
         <label for="manufactured">Manufactured</label>
     </div>
 
     <div>
-        <input type="radio" id="playground" name="data_set" value="playground" @click="update_data('playground')">
+        <input type="radio" id="playground" name="data_set" value="playground" @click="insert_data('playground')">
         <label for="playground">Playground</label>
     </div>
 
     <div>
-        <input type="radio" id="ai_lab_1" name="data_set" value="ai_lab_1" @click="update_data('ai_lab_1')">
+        <input type="radio" id="ai_lab_1" name="data_set" value="ai_lab_1" @click="insert_data('ai_lab_1')">
         <label for="ai_lab_1">Ai Lab initial dataset</label>
     </div>
 
     <div>
-        <input type="radio" id="ai_lab_2" name="data_set" value="ai_lab_2" @click="update_data('ai_lab_2')">
+        <input type="radio" id="ai_lab_2" name="data_set" value="ai_lab_2" @click="insert_data('ai_lab_2')">
         <label for="ai_lab_2">Ai Lab second dataset</label>
     </div>
 
