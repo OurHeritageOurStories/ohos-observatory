@@ -13,31 +13,7 @@ export default{
             upload:null
         };
     },
-    created(){
-
-    },
     methods:{
-        NOdelete_data(){
-            try{
-                var datafile =document.querySelector('input[type="file"]');
-                this.upload = datafile.files[0]; //  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!async here
-            } finally {
-            fetch('api/graph?DROP ALL',{
-                method:"DELETE"
-            })
-                .then(response=>(this.insert_response=response))
-                .then(response=>this.upload_data())
-            }
-        },
-        NOupload_data(){
-            fetch('api/graph?',{
-                method:"POST",
-                headers:{"Content-Type":"text/plain"},
-                body:this.upload
-            })
-                .then(response=>response.json())
-                .then(response=>(this.return_data=response))
-        },
         delete_current_data(){
             let promise = new Promise(function (resolve, reject){
                 fetch('api/graph?DROP ALL',{
@@ -56,47 +32,42 @@ export default{
             });
             return promise;
         },
-        upload_data_file(){
-            let promise = new Promise(function (resolve, reject){
-                let delete_data_promise = delete_current_data();
-                delete_data_promise.then(
-                    (result)=>{
-                        fetch('api/graph?',{
+        upload_data(){
+            let delete_data_promise = this.delete_current_data();
+            delete_data_promise.then(
+                (result)=>{
+                    fetch('api/graph?',{
                             method:"POST",
                             headers:{"Content-Type":"text/plain"},
                             body:this.upload
                         })
                             .then(function(response){
-                                if(response.status==200){
-                                    resolve()
-                                } else {
-                                    reject()
+                                if(!response.status==200){
+                                   throw 'Server side error';
                                 }
                             })
                             .catch(error=>{
-                                reject(error)
+                                throw 'Client side error';
                             })
-                    },
-                    (error)=>{
-                        reject(error)
-                    }
-                )
-            });
-            return promise;
+                },
+                (error)=>{
+                    throw 'Error while deleting';
+                }
+            )
         },
         upload_file(){
             var datafile = document.querySelector('input[type="file"]');
             this.upload = datafile.files[0];
-            let promise = this.upload_data_file();
-            promise.then(
-                (result)=>{
-                    alert("Uploaded. Please note this file is ephemeral - if you choose any other data, you will need to upload again.")
-                },
-                (error)=>{
-                    alert("Something went wrong. Please note down how you saw this and let the TNA OHOS team know. Error: ")
-                }
-            )
-        }
+            try{
+                this.upload_data();
+                alert("Sucsess");
+            }
+            catch (error){
+                console.log(error);
+                alert("Unexpected error occured. Please note down how you reached this message, and let the TNA OHOS team know. Error code: ");
+            }
+        },
+        
     }
 }
 

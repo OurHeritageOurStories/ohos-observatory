@@ -28,7 +28,7 @@ export default{
         },
         build_alert_promise(){
             if(this.newDataObject && this.newDataPredicate && this.newDataSubject){
-                let promise = this.post_triple_promisey(this.newDataObject, this.newDataPredicate, this.newDataObject);
+                let promise = this.post_triple_promise(this.newDataObject, this.newDataPredicate, this.newDataObject);
                 promise.then(
                     (result)=>{
                         switch(result){

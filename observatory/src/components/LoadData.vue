@@ -25,46 +25,6 @@ export default{
             .then(response=>(this.ai_lab_1=response));
     },
     methods:{
-        delete_data(choice){ //first, empty the database
-            fetch('api/graph?DROP ALL',{
-                method:"DELETE"
-            })
-                .then(response=>this.update_data(choice))//only update the data AFTER we have deleted it. Or we could be updating the data, then emptying the database. Which leaves us with nothing. 
-        },
-        update_data(choice){ //then re-fill it with the data we want to look at            
-            switch(choice){ 
-                case "manufactured":
-                    fetch('api/graph?',{
-                        method:"POST",
-                        headers:{"Content-Type":"text/plain"},
-                        body:this.manufactured_data
-                    })
-                    break;
-                case "playground":
-                    fetch('api/graph?',{
-                        method:"POST",
-                        headers:{"Content-Type":"text/plain"},
-                        body: this.playground_data
-                    });
-                    break;
-                case "ai_lab_2":
-                    fetch('api/graph?',{
-                        method:"POST",
-                        headers:{"Content-Type":"application/x-turtle-RDR"},
-                        body:this.ai_lab_2
-                    })
-                    break;
-                case "ai_lab_1":
-                    fetch('api/graph?',{
-                        method:"POST",
-                        headers:{"Content-Type":"application/x-turtle-RDR"},
-                        body:this.ai_lab_1
-                    })
-                    break;
-                default:
-                    alert("If you have seen this message, please note down how and let the OHOS TNA team know - it should be unreachable from the UI!")
-            }                
-        },
         delete_data_promise(){
             let promise = new Promise(function (resolve, reject){
                 fetch('api/graph?DROP ALL',{
@@ -74,7 +34,7 @@ export default{
                         if(response.status==200){
                             resolve()
                         } else {
-                            reject()
+                            reject("Non-200 response from the server")
                         }
                     })
                     .catch(error=>{
@@ -117,17 +77,23 @@ export default{
                             })
                             break;
                         default:
-                            alert("If you have seen this message, please note down how and let the OHOS TNA team know - it should be unreachable from the UI!") 
+                            throw 'Unreachable error reached. Somehow, a non-chooseable option was chosen';
                     }
                 },
                 (error)=>{
-                    alert("Something went wrong. Please note down how you saw this and let the TNA OHOS team know. Error: ")
+                    throw "Error in deleting the data: " + error;
                 }
             )
         },
         update_data(choice){
             this.chosen_data==choice;
-            this.insert_data();
+            try{
+                this.insert_data();
+            }
+            catch (error){
+                console.log(error);
+                alert("Something went wrong. Please note down how you reached this point, and let the TNA OHOS team know.")
+            }
         }
     }
 }
