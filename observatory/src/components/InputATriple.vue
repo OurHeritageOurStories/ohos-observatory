@@ -42,15 +42,23 @@ export default{
                                 alert("404, probably a bad Kong setup. If you are not TNA OHOS team and have seen this, please let TNA OHOS team know.")
                                 break;
                             default:
-                                alert("Something went wrong, please refresh the page and try again. Please let the TNA OHOS team know. Error: IAT119")
+                                alert("Something went wrong, please refresh the page and try again. Please let the TNA OHOS team know. Error: IAT45")
                         }
                     },
                     (error) => {
-                        alert("Unclear how you got here. Please let the TNA OHOS team know. Error: IAT123.")
+                        throw "Unclear how you got here. Please let the TNA OHOS team know. Error: IAT49."
                     }
                 );
             } else {
-                alert("Please insure you have put text in each of the three boxes.");
+                throw "Please insure you have put text in each of the three boxes.";
+            }
+        },
+        insert_the_triple(){
+            try{
+                this.build_alert_promise();
+            } catch (error){
+                console.log("error");
+                alert("Something went wrong. Please note down how you reached this point, and let the TNA OHOS team know.")
             }
         }
     }
@@ -67,7 +75,7 @@ export default{
     <input v-model="newDataPredicate" id="newDataPredicate" />
     <p id="object_title">Object</p>
     <input v-model="newDataObject" id="newDataObject"/> 
-    <button @click="build_alert_promise" id="post_new_triple">Insert new triple into the graph</button>
+    <button @click="insert_the_triple" id="post_new_triple">Insert new triple into the graph</button>
 
 </div>
 

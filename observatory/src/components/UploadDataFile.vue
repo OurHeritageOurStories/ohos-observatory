@@ -39,20 +39,28 @@ export default{
                             })
                                 .then(function(response){
                                     if(!response.status==200){
-                                    alert('Server side error');
+                                        throw 'Server side error UDF42';
                                     } else {
                                         alert("Uploaded")
                                     }
                                 })
                                 .catch(error=>{
-                                    alert('Client side error while uploading');
+                                    throw 'Client side error while uploading. UDF48';
                                 })
                     },
                     (error)=>{
-                        alert('Error while deleting'+error);
+                        throw 'Error while deleting'+error + "UDF52";
                     }
                 )
             },
+            upload_file(){
+                try{
+                    this.upload_data();
+                } catch (error){
+                    console.log("error");
+                    alert("Something went wrong. Please note down how you reached this point, and let the TNA OHOS team know.")
+                }
+            }
     }
 }
 
@@ -60,7 +68,7 @@ export default{
 
 <template>
 <div id="upload_form">
-    <form @submit.prevent="upload_data">
+    <form @submit.prevent="upload_file">
         <div>
             <label>Select file to upload</label>
             <input type="file">

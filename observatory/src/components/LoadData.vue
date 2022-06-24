@@ -6,8 +6,7 @@ export default{
             manufactured_data:null,
             playground_data:null,
             ai_lab_2:null,
-            ai_lab_1:null,
-            chosen_data:null
+            ai_lab_1:null
         };
     },
     created(){
@@ -48,7 +47,6 @@ export default{
             let promise = this.delete_data_promise();
             promise.then(
                 (result)=>{
-                    //let data_chosen=this.chosen_data;
                     switch(choice){
                         case "manufactured":
                             fetch('api/graph?',{
@@ -79,26 +77,23 @@ export default{
                             })
                             break;
                         default:
-                            //throw 'Unreachable error reached. Somehow, a non-chooseable option was chosen';
-                            alert("unreachable")
+                            throw 'Unreachable error reached. Somehow, a non-chooseable option was chosen. Error: UD80.';
                     }
                 },
                 (error)=>{
-                    //throw "Error in deleting the data: " + error;
-                    alert(error)
+                    throw "Error in deleting the data: " + error + "Error: UD84.";
                 }
             )
         },
-        //update_data(choice){
-            //this.chosen_data==choice;
-            //try{
-            //    this.insert_data();
-           // }
-            //catch (error){
-            //    console.log(error);
-            //    alert("Something went wrong. Please note down how you reached this point, and let the TNA OHOS team know.")
-           // }
-        //}
+        update_data(choice){
+            try{
+                this.insert_data(choice);
+            }
+            catch (error){
+                console.log(error);
+                alert("Something went wrong. Please note down how you reached this point, and let the TNA OHOS team know.")
+            }
+        }
     }
 }
 
