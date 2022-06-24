@@ -1,6 +1,12 @@
 <script lang="ts">
 
-import { Nodes, defineConfigs, Edges, Layers } from "v-network-graph"
+import { reactive, ref } from "vue"
+import * as vNG from "v-network-graph"
+import {
+  ForceLayout,
+  ForceNodeDatum,
+  ForceEdgeDatum,
+} from "v-network-graph/lib/force-layout"
 import LoadDataVue from "./LoadData.vue";
 
 
@@ -11,6 +17,24 @@ export default{
             nodes: {},
             edges: {},
             layouts: {},
+            configs: reactive(
+              vNG.defineConfigs({
+                view: {
+                  layoutHandler: new ForceLayout({
+                    positionFixedByDrag: false,
+                    positionFixedByClickWithAltKey: true,
+                  }),
+                },
+                node: {
+                  normal: {
+                    color: n => (n.id === "node0" ? "#ff0000" : "#4466cc"),
+                  },
+                  label: {
+                    visible: true,
+                  },
+                },
+              })
+            )
         };
     },
     created(){
