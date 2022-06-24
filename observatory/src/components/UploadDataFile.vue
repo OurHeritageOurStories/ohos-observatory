@@ -60,7 +60,6 @@ export default{
             this.upload = datafile.files[0];
             try{
                 this.upload_data();
-                alert("Sucsess");
             }
             catch (error){
                 console.log(error);
