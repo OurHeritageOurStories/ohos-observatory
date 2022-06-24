@@ -21,7 +21,7 @@ export default{
                 })
                     .then(function(response){
                         if(response.status==200){
-                            resolve(response.status)
+                            resolve()
                         } else {
                             reject(error)
                         }
@@ -41,13 +41,13 @@ export default{
                     fetch('api/graph?',{
                             method:"POST",
                             headers:{"Content-Type":"text/plain"},
-                            body:this.upload
+                            body:upload
                         })
                             .then(function(response){
                                 if(!response.status==200){
                                    alert('Server side error');
                                 } else {
-                                    alert("Sucsess")
+                                    alert("Uploaded")
                                 }
                             })
                             .catch(error=>{
