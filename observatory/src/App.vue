@@ -65,7 +65,7 @@ export default{
 }
 
     #sidebar {
-        right: 0px;
+        right: 10px;
         position: absolute;
         height: 100%;
     }
@@ -88,9 +88,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .container {  
     max-width: 80%;
-    left: 0px;
+    left: 10px;
     position: absolute;
-    margin: 40px auto;
+    margin: 20px auto;
 }
 
 .tabs {
