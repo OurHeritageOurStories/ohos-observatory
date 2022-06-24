@@ -38,11 +38,6 @@ export default{
         };
     },
     created(){
-        fetch('api/graph?',{
-                        method:"POST",
-                        headers:{"Content-Type":"text/plain"},
-                        body: this.playground_data
-                    });
         fetch('api/graph?query=SELECT * {?s ?p ?o}',{
             headers:{"Accept":"application/sparql-results+json"}
         })
@@ -52,7 +47,6 @@ export default{
     },
     methods:{
         draw_graph(fetched_data){
-            console.log(fetched_data.results);
             var results = fetched_data.results.bindings;
             for (let i = 0; i < results.length; i++){
                 let obj = results[i];
@@ -62,8 +56,6 @@ export default{
                 this.nodes[sub] = { name: sub };
                 this.nodes[obje] = { name: obje };
                 this.edges[i] = { source: sub, target: obje, label: pre };
-                this.layouts[sub] = {x:Math.random(), y:Math.random()};
-                this.layouts[obje] = {x:Math.random(), y:Math.random()};
             }
         }
     }
