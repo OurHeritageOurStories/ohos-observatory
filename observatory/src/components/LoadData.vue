@@ -43,7 +43,6 @@ export default{
             return promise;
         },
         insert_data(choice){
-            this.chosen_data=choice;
             let promise = this.delete_data_promise();
             promise.then(
                 (result)=>{
@@ -100,6 +99,7 @@ export default{
 </script>
 
 <template>
+
 
 <fieldset>
 
