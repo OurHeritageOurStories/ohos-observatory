@@ -22,7 +22,7 @@ export default{
                         }
                     })
                     .catch(error=>{
-                        reject(error)
+                        reject(error + "dave")
                     })
             });
             return promise;
@@ -31,10 +31,11 @@ export default{
             let promise = new Promise(function (resolve, reject){
                 var gathered_data = null;
                 var gathered_correctly = false;
-                var response_code = 0;
+                var response_code;
                 fetch(data_url)
                     .then(function(response){
-                        response_code=response.status
+                        response_code=response.status;
+                        //alert(response.status)
                     })
                     .then(response=>response.text())
                     .then(response=>gathered_data=response)
@@ -46,13 +47,13 @@ export default{
                     //    }
                     //})
                     .catch(error=>{
-                        reject(error)
+                        reject(error + "dlak;jdsfl;ka")
                     })
                 if (response_code==200){
                     resolve(gathered_data)
                 }
                 else {
-                    reject("Error non-200 response when gathering data")
+                    reject("error: " + response_code)
                 }
             });
             return promise            
