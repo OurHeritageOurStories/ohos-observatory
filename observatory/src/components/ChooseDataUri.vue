@@ -31,36 +31,36 @@ export default{
             let promise = new Promise(function (resolve, reject){
                 var gathered_data = null;
                 var gathered_correctly = false;
+                var response_code = 0;
                 fetch(data_url)
+                    .then(function(response){
+                        response_code=response.status
+                    })
                     .then(response=>response.text())
                     .then(response=>gathered_data=response)
-                    .then(function(response){
-                        if (response.status==200){
-                            gathered_correctly = true;
-                        } else {
-                            reject("Non-200 response from the server when gathering data") ///I THINK THIS KEEPS TRIGGERING BECAUSE raw.github just 404's on me
-                        }
-                    })
+                    //.then(function(response){
+                    //    if (response.status==200){
+                    //        gathered_correctly = true;
+                    //    } else {
+                    //        reject("Non-200 response from the server when gathering data") ///I THINK THIS KEEPS TRIGGERING BECAUSE raw.github just 404's on me
+                    //    }
+                    //})
                     .catch(error=>{
                         reject(error)
                     })
-                if (gathered_correctly){
+                if (response_code==200){
                     resolve(gathered_data)
+                }
+                else {
+                    reject("Error non-200 response when gathering data")
                 }
             });
             return promise            
         },
-        insert_data(){
-            let delete_data_promise = this.delete_current_data();
-            let gather_data_promise = this.gather_data(this.url_for_data);
-            Promise.all([delete_data_promise, gather_data_promise])
-                .then((values)=>{
-                    console.log(values)
-                })
-                .then(
-                    fetch('api/graph?',{
+        insert_data_actual(){
+            fetch('api/graph?',{
                         method:"POST",
-                        headers:{"Content-Type":selected_data_type},
+                        headers:{"Content-Type":this.selected_data_type},
                         body:this.data_gathered_to_insert
                     })
                         .then(function(response){
@@ -68,10 +68,35 @@ export default{
                                 throw "Failure while uploading data"
                             }
                         })
+        },
+        insert_data(){
+            let delete_data_promise = this.delete_current_data();
+            let gather_data_promise = this.gather_data(this.url_for_data);
+            Promise.all([delete_data_promise, gather_data_promise])
+                .then(
+                    this.insert_data_actual
                 )
                 .catch(error=>{
                     throw error
-                });
+                })
+                //.then((values)=>{
+                //    console.log(values)
+                //})
+                //.then(
+                //    fetch('api/graph?',{
+                //        method:"POST",
+                //        headers:{"Content-Type":data_type_header},
+                //        body:data_gathered
+                //    })
+                //        .then(function(response){
+                //            if(response.status!==200){
+                //                throw "Failure while uploading data"
+                //            }
+                //        })
+               // )
+                //.catch(error=>{
+                //    throw error
+                //});
         },
         data_type(choice){
             switch(choice){
