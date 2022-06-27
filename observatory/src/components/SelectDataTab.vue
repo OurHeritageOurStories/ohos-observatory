@@ -3,12 +3,14 @@
 import InputATripleVue from "./InputATriple.vue";
 import LoadDataVue from "./LoadData.vue";
 import UploadDataFileVue from "./UploadDataFile.vue";
+import ChooseDataUriVue from "./ChooseDataUri.vue";
 
 export default{
     components:{
         InputATripleVue,
         LoadDataVue,
-        UploadDataFileVue
+        UploadDataFileVue,
+        ChooseDataUriVue
     }
 }
 
@@ -24,6 +26,8 @@ export default{
     <LoadDataVue />
     <p>If you would upload a file, please do so here</p>
     <UploadDataFileVue />
+    <p>if you would like to load data from an external url, here</p>
+    <ChooseDataUriVue />
 </div>
 
 

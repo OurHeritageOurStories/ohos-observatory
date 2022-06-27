@@ -3,8 +3,9 @@
 export default{
     data(){
         return{
-            requested_url:null,
-            data_gathered_to_insert:null
+            url_for_data:null,
+            data_gathered_to_insert:null,
+            selected_data_type:null
         };
     },
     methods:{
@@ -26,28 +27,36 @@ export default{
             });
             return promise;
         },
-        gather_data(){
+        gather_data(data_url){
             let promise = new Promise(function (resolve, reject){
-                fetch(url)
+                var gathered_data = null;
+                var gathered_correctly = false;
+                fetch(data_url)
                     .then(response=>response.text())
-                    .then(response=>this.data_gathered_to_insert=response)
+                    .then(response=>gathered_data=response)
                     .then(function(response){
                         if (response.status==200){
-                            resolve()
+                            gathered_correctly = true;
                         } else {
-                            reject("Non-200 response from the server when gathering data")
+                            reject("Non-200 response from the server when gathering data") ///I THINK THIS KEEPS TRIGGERING BECAUSE raw.github just 404's on me
                         }
                     })
                     .catch(error=>{
                         reject(error)
                     })
+                if (gathered_correctly){
+                    resolve(gathered_data)
+                }
             });
             return promise            
         },
         insert_data(){
             let delete_data_promise = this.delete_current_data();
-            let gather_data_promise = this.gather_data();
+            let gather_data_promise = this.gather_data(this.url_for_data);
             Promise.all([delete_data_promise, gather_data_promise])
+                .then((values)=>{
+                    console.log(values)
+                })
                 .then(
                     fetch('api/graph?',{
                         method:"POST",
