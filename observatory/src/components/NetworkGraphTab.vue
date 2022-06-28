@@ -53,14 +53,12 @@ export default{
                 var sub = obj.s.value;
                 var pre = obj.p.value;
                 var obje = obj.o.value;
+                this.nodes[obje] = { name: obje };
+                this.edges[i] = { source: sub, target: obje, label: pre };
                 if(pre=="http://www.wikidata.org/prop/direct/P18")
                     this.nodes[sub] = { name: sub, face: obje };
                 else
-                    {
-                        this.nodes[sub] = { name: sub };
-                        this.nodes[obje] = { name: obje };
-                        this.edges[i] = { source: sub, target: obje, label: pre };
-                    }
+                    this.nodes[sub] = { name: sub };
             }
         }
     }
