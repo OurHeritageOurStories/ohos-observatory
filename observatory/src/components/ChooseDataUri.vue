@@ -28,10 +28,8 @@ export default{
             return promise;
         },
         gather_data(data_url){
-            var test_gathered;
             let promise = new Promise(function (resolve, reject){
                 var gathered_data = null;
-                var gathered_correctly = false;
                 var response_code;
                 fetch(data_url) 
                     .then(function(response){
@@ -46,25 +44,16 @@ export default{
                             reject("error, but if you've reached this one, you've solved the bug! : " + response_code)
                         }
                     })
-                    .then(response=>(response.text()))
                     .catch(error=>{
                         reject(error + "This one keeps getting triggered, and I cannot solve why")
                     })
-                //test_gathered = gathered_data;
             });
-            //this.data_gathered_to_insert = test_gathered;
             return promise            
         },
         insert_data_actual(){
             let gather_data_promise = this.gather_data(this.url_for_data);
-            var data_type_header = this.selected_data_type;//this is only x-turtle-rdr and I have no idea why
-            //var data_gathered = this.data_gathered_to_insert;
-            var data_gathered;
+            var data_type_header = this.selected_data_type;
             gather_data_promise.then(
-                //let var data_gathered = null,
-                //(val) =>{
-                //    data_gathered=val
-                //}, 
                 (result)=>{
                     fetch('api/graph?',{
                         method:"POST",
@@ -82,7 +71,7 @@ export default{
                 }
             )
         },
-        insert_data(){
+        insert_data_delete_stage(){
             let delete_data_promise = this.delete_current_data();
             delete_data_promise.then(
                 (result)=>{
@@ -109,7 +98,7 @@ export default{
         gather_from_url(){
             if(this.url_for_data && this.selected_data_type){
                 try{
-                    this.insert_data()
+                    this.insert_data_delete_stage()
                 } catch (error){
                     console.log(error);
                     alert("Something went wrong. Please note down how you reached this point and let the TNA OHOS team know. Error code: CDU72. " + error)
