@@ -36,7 +36,13 @@ export default{
                   },
                 },
               })
-            )
+            ),
+            eventHandlers: {
+              "node:click": ({ node }) => {
+                console.log("Harshad");
+                alert(node);
+              },
+            }
         };
     },
     created(){
@@ -66,6 +72,8 @@ export default{
                       .then(response => response.json())
                       .then(response => (this.nodeLabel=response))
                       .then(response => {
+                        console.log(this.nodeLabel.entities)
+                        console.log(ref);
                         console.log(this.nodeLabel.entities[ref]);
                       })
                       .catch(error => {
@@ -96,6 +104,7 @@ export default{
     :layouts="layouts"
     :configs="configs"
     :layers="layers"
+    :event-handlers="eventHandlers"
   >
     <defs>
       <clipPath id="faceCircle" clipPathUnits="objectBoundingBox">
