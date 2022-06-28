@@ -16,6 +16,8 @@ export default{
             playground_data:null,
             nodes: {},
             edges: {},
+            nodeLabel: {},
+            edgeLabel: {},
             layouts: {},
             configs: reactive(
               vNG.defineConfigs({
@@ -53,6 +55,24 @@ export default{
                 var sub = obj.s.value;
                 var pre = obj.p.value;
                 var obje = obj.o.value;
+                var refArray = sub.split("/");
+                var ref = refArray[refArray.length-1];
+                fetch(
+                      "https://www.wikidata.org/w/api.php?action=wbgetentities&props=labels&origin=*&format=json&&formatversion=2&ids="+ref,
+                      {
+                        method: "GET"
+                      }
+                    )
+                      .then(response => response.json())
+                      .then(response => (this.nodeLabel=response))
+                      .then(response => {
+                        console.log(this.nodeLabel.entities[ref]);
+                      })
+                      .catch(error => {
+                        console.log(error.message);
+                      });
+                refArray = pre.split("/");
+                ref = refArray[refArray.length-1];
                 if(pre=="http://www.wikidata.org/prop/direct/P18")
                     this.nodes[sub] = { name: sub, face: obje };
                 else
