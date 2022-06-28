@@ -22,12 +22,13 @@ export default{
                         }
                     })
                     .catch(error=>{
-                        reject(error + "dave")
+                        reject(error)
                     })
             });
             return promise;
         },
         gather_data(data_url){
+            var test_gathered;
             let promise = new Promise(function (resolve, reject){
                 var gathered_data = null;
                 var gathered_correctly = false;
@@ -35,34 +36,40 @@ export default{
                 fetch(data_url) 
                     .then(function(response){
                         response_code=response.status;
-                        gathered_data=response;
+                        gathered_data=response.text();
                     })
                     .then(function(response){
                         if (response_code==200){
-                            resolve()
+                            resolve(gathered_data)
                         }
                         else {
                             reject("error, but if you've reached this one, you've solved the bug! : " + response_code)
                         }
                     })
+                    .then(response=>(response.text()))
                     .catch(error=>{
                         reject(error + "This one keeps getting triggered, and I cannot solve why")
                     })
-                
+                //test_gathered = gathered_data;
             });
-            this.data_gathered_to_insert = this.gather_data;
+            //this.data_gathered_to_insert = test_gathered;
             return promise            
         },
         insert_data_actual(){
             let gather_data_promise = this.gather_data(this.url_for_data);
             var data_type_header = this.selected_data_type;//this is only x-turtle-rdr and I have no idea why
-            var data_gathered = this.data_gathered_to_insert;
+            //var data_gathered = this.data_gathered_to_insert;
+            var data_gathered;
             gather_data_promise.then(
+                //let var data_gathered = null,
+                //(val) =>{
+                //    data_gathered=val
+                //}, 
                 (result)=>{
                     fetch('api/graph?',{
                         method:"POST",
                         headers:{"Content-Type":data_type_header},
-                        body:data_gathered
+                        body:result
                     })
                         .then(function(response){
                             if(response.status!==200){
@@ -82,7 +89,7 @@ export default{
                     this.insert_data_actual();
                 },
                 (error)=>{
-                    throw error + "Error while deleting data"
+                    throw "Error while deleting data: " + error
                 }
             )
         },
@@ -90,10 +97,13 @@ export default{
             switch(choice){
                 case "n_triple":
                     this.selected_data_type = "text/plain";
+                    break;
                 case "turtle_rdr":
                     this.selected_data_type = "application/x-turtle-RDR";
+                    break;
                 default:
                     null;
+                    break;
             }
         },
         gather_from_url(){
