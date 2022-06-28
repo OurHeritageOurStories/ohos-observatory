@@ -32,16 +32,13 @@ export default{
                 var gathered_data = null;
                 var gathered_correctly = false;
                 var response_code;
-                fetch(data_url) //tried with method:"GET", this didn't solve it. The bug is here. In this line of code. Or somethign relating to it. It just constantly ends up at the catch a few lines down. 
+                fetch(data_url) 
                     .then(function(response){
                         response_code=response.status;
                         gathered_data=response;
                     })
-                    //.then(response=>response.text())
-                    //.then(response=>gathered_data=response)
                     .then(function(response){
                         if (response_code==200){
-                            //this.data_gathered_to_insert=gathered_data;
                             resolve()
                         }
                         else {
@@ -56,9 +53,9 @@ export default{
             this.data_gathered_to_insert = this.gather_data;
             return promise            
         },
-        insert_data_actual(){//see below
+        insert_data_actual(){
             let gather_data_promise = this.gather_data(this.url_for_data);
-            var data_type_header = this.selected_data_type;
+            var data_type_header = this.selected_data_type;//this is only x-turtle-rdr and I have no idea why
             var data_gathered = this.data_gathered_to_insert;
             gather_data_promise.then(
                 (result)=>{
@@ -78,7 +75,7 @@ export default{
                 }
             )
         },
-        insert_data(){//this used to be just one, with promise.all checking both gather data and delete data. Its currently split as part of the debugging, but this didn't seem to solve it
+        insert_data(){
             let delete_data_promise = this.delete_current_data();
             delete_data_promise.then(
                 (result)=>{
@@ -95,6 +92,8 @@ export default{
                     this.selected_data_type = "text/plain";
                 case "turtle_rdr":
                     this.selected_data_type = "application/x-turtle-RDR";
+                default:
+                    null;
             }
         },
         gather_from_url(){
