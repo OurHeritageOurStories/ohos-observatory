@@ -32,72 +32,62 @@ export default{
                 var gathered_data = null;
                 var gathered_correctly = false;
                 var response_code;
-                fetch(data_url)
+                fetch(data_url) //tried with method:"GET", this didn't solve it. The bug is here. In this line of code. Or somethign relating to it. It just constantly ends up at the catch a few lines down. 
                     .then(function(response){
                         response_code=response.status;
-                        //alert(response.status)
+                        gathered_data=response;
                     })
-                    .then(response=>response.text())
-                    .then(response=>gathered_data=response)
-                    //.then(function(response){
-                    //    if (response.status==200){
-                    //        gathered_correctly = true;
-                    //    } else {
-                    //        reject("Non-200 response from the server when gathering data") ///I THINK THIS KEEPS TRIGGERING BECAUSE raw.github just 404's on me
-                    //    }
-                    //})
+                    //.then(response=>response.text())
+                    //.then(response=>gathered_data=response)
+                    .then(function(response){
+                        if (response_code==200){
+                            //this.data_gathered_to_insert=gathered_data;
+                            resolve()
+                        }
+                        else {
+                            reject("error, but if you've reached this one, you've solved the bug! : " + response_code)
+                        }
+                    })
                     .catch(error=>{
-                        reject(error + "dlak;jdsfl;ka")
+                        reject(error + "This one keeps getting triggered, and I cannot solve why")
                     })
-                if (response_code==200){
-                    resolve(gathered_data)
-                }
-                else {
-                    reject("error: " + response_code)
-                }
+                
             });
+            this.data_gathered_to_insert = this.gather_data;
             return promise            
         },
-        insert_data_actual(){
-            fetch('api/graph?',{
+        insert_data_actual(){//see below
+            let gather_data_promise = this.gather_data(this.url_for_data);
+            var data_type_header = this.selected_data_type;
+            var data_gathered = this.data_gathered_to_insert;
+            gather_data_promise.then(
+                (result)=>{
+                    fetch('api/graph?',{
                         method:"POST",
-                        headers:{"Content-Type":this.selected_data_type},
-                        body:this.data_gathered_to_insert
+                        headers:{"Content-Type":data_type_header},
+                        body:data_gathered
                     })
                         .then(function(response){
                             if(response.status!==200){
                                 throw "Failure while uploading data"
                             }
                         })
+                },
+                (error)=>{
+                    throw "Error while gathering data" + error
+                }
+            )
         },
-        insert_data(){
+        insert_data(){//this used to be just one, with promise.all checking both gather data and delete data. Its currently split as part of the debugging, but this didn't seem to solve it
             let delete_data_promise = this.delete_current_data();
-            let gather_data_promise = this.gather_data(this.url_for_data);
-            Promise.all([delete_data_promise, gather_data_promise])
-                .then(
-                    this.insert_data_actual
-                )
-                .catch(error=>{
-                    throw error
-                })
-                //.then((values)=>{
-                //    console.log(values)
-                //})
-                //.then(
-                //    fetch('api/graph?',{
-                //        method:"POST",
-                //        headers:{"Content-Type":data_type_header},
-                //        body:data_gathered
-                //    })
-                //        .then(function(response){
-                //            if(response.status!==200){
-                //                throw "Failure while uploading data"
-                //            }
-                //        })
-               // )
-                //.catch(error=>{
-                //    throw error
-                //});
+            delete_data_promise.then(
+                (result)=>{
+                    this.insert_data_actual();
+                },
+                (error)=>{
+                    throw error + "Error while deleting data"
+                }
+            )
         },
         data_type(choice){
             switch(choice){
@@ -133,11 +123,11 @@ export default{
     <p id="data_type_radio_group">Please select what data_type it is</p>
     <fieldset>
         <div>
-            <input type="radio" id="n_triple" name="data_type" @click="data_type('n_triple')">
+            <input type="radio" id="n_triple" name="data_type" value="n_triple" @click="data_type('n_triple')">
             <label for="n_triple">Standard triples</label>
         </div>
         <div>
-            <input type="radio" id="turtle_star" name="data_type" @click="data_type('turtle_rdr')">
+            <input type="radio" id="turtle_star" name="data_type" value="turtle_rdr" @click="data_type('turtle_rdr')">
             <label for="turtle_star">Turtle star/x-turtle-rdr</label>
         </div>
     </fieldset>
