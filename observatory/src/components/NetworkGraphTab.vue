@@ -33,8 +33,21 @@ export default{
                     visible: true,
                   },
                 },
+                edge: {
+                  type: "curve",
+                  marker: {
+                    source: {
+                      type: "arrow",
+                    }
+                  },                  
+                },
               })
-            )
+            ),
+            eventHandlers: {
+              "node:click": ({ node }) => {
+                alert(node);
+              },
+            }
         };
     },
     created(){
@@ -53,9 +66,14 @@ export default{
                 var sub = obj.s.value;
                 var pre = obj.p.value;
                 var obje = obj.o.value;
-                this.nodes[sub] = { name: sub };
-                this.nodes[obje] = { name: obje };
+                this.nodes[obje] = { name: obje, face: "/src/assets/OHOS_Logo.png"};
                 this.edges[i] = { source: sub, target: obje, label: pre };
+                this.nodes[sub] = { name: sub, face: "/src/assets/OHOS_Logo.png"};                
+                if(pre=="http://www.wikidata.org/prop/direct/P18")
+                  {                
+                    this.nodes[obje] = { name: obje, face: obje };
+                    this.nodes[sub] = { name: sub, face: obje };                 
+                  }            
             }
         }
     }
@@ -71,6 +89,7 @@ export default{
     :layouts="layouts"
     :configs="configs"
     :layers="layers"
+    :event-handlers="eventHandlers"
   >
     <defs>
       <clipPath id="faceCircle" clipPathUnits="objectBoundingBox">
