@@ -53,13 +53,23 @@ export default{
                                 headers:{"Content-Type":"text/plain"},
                                 body:this.manufactured_data
                             })
+                                .then(function(response){
+                                    if (response.status==200){
+                                        alert("Data updated")
+                                    }
+                                })
                             break;
                         case "playground":
                             fetch('api/graph?',{
                                 method:"POST",
                                 headers:{"Content-Type":"text/plain"},
                                 body: this.playground_data
-                            });
+                            })
+                                .then(function(response){
+                                    if (response.status==200){
+                                        alert("Data updated")
+                                    }
+                                })
                             break;
                         case "ai_lab_2":
                             fetch('api/graph?',{
@@ -67,6 +77,11 @@ export default{
                                 headers:{"Content-Type":"application/x-turtle-RDR"},
                                 body:this.ai_lab_2
                             })
+                                .then(function(response){
+                                    if (response.status==200){
+                                        alert("Data updated")
+                                    }
+                                })
                             break;
                         case "ai_lab_1":
                             fetch('api/graph?',{
@@ -74,13 +89,18 @@ export default{
                                 headers:{"Content-Type":"application/x-turtle-RDR"},
                                 body:this.ai_lab_1
                             })
+                                .then(function(response){
+                                    if (response.status==200){
+                                        alert("Data updated")
+                                    }
+                                })
                             break;
                         default:
-                            throw 'Unreachable error reached. Somehow, a non-chooseable option was chosen. Error: UD80.';
+                            throw 'Unreachable error reached. Somehow, a non-chooseable option was chosen. Error: UD99.';
                     }
                 },
                 (error)=>{
-                    throw "Error in deleting the data: " + error + "Error: UD84.";
+                    throw "Error in deleting the data: " + error + "Error: UD103.";
                 }
             )
         },
@@ -90,7 +110,7 @@ export default{
             }
             catch (error){
                 console.log(error);
-                alert("Something went wrong. Please note down how you reached this point, and let the TNA OHOS team know.")
+                alert("Something went wrong while trying to load a pre-configured data-set. Please note down how you reached this point, and let the TNA OHOS team know. ERROR: " + error)
             }
         }
     }

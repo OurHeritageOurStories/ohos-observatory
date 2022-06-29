@@ -63,6 +63,8 @@ export default{
                         .then(function(response){
                             if(response.status!==200){
                                 throw "Failure while uploading data"
+                            } else {
+                                alert("Sucsessfuly updated the data")
                             }
                         })
                 },
@@ -71,7 +73,7 @@ export default{
                 }
             )
         },
-        insert_data_delete_stage(){
+        insert_data_delete_stage(){ //this and _actual can theoretically be one method and use promsie.all, but I think this way is a: more understandable, and b: more robust
             let delete_data_promise = this.delete_current_data();
             delete_data_promise.then(
                 (result)=>{
@@ -101,7 +103,7 @@ export default{
                     this.insert_data_delete_stage()
                 } catch (error){
                     console.log(error);
-                    alert("Something went wrong. Please note down how you reached this point and let the TNA OHOS team know. Error code: CDU72. " + error)
+                    alert("Something went wrong while gathering data from an external URL. Please note down how you reached this point and let the TNA OHOS team know. Error code: CDU72. " + error)
                 }
             } else {
                 alert("You need to put a URL and choose which data type it is before pressing the button")

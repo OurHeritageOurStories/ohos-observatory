@@ -20,22 +20,22 @@ export default{
 
 <div id="insert_data_tab">
     <div id="general_choose_data_tab_intro">
-        <h2>Please choose which data you would like to see, usign one of the four options below. </h2>
+        <h2>Please choose which data you would like to see, using one of the four options below. </h2>
         <p>You can come back and choose different data at any time!</p>
     </div>
     <h3 id="input_triple_heading">If you would like to insert a new triple into the current graph, please do so below</h3> 
     <div id="insert_triple_vue">
         <InputATripleVue />
     </div>
-    <h3 id="load_data_heading">Choose which dataset you would prefer to see below</h3>
+    <h3 id="load_data_heading">If you would prefer to see a pre-defined dataset, please choose from the set below</h3>
     <div id="load_data_vue">
         <LoadDataVue />
     </div>
-    <h3 id="upload_file_heading">If you would upload a file, please do so here</h3>
+    <h3 id="upload_file_heading">If you would upload a file containing a graph database, please do so here</h3>
     <div id="upload_file_vue">
         <UploadDataFileVue />
     </div>
-    <h3 id="choose_forign_url_heading">If you would like to load data from an external url, here</h3>
+    <h3 id="choose_forign_url_heading">If you would like to load a graph database from an external url, please do so here</h3>
     <div id="choose_forign_url_vue">
         <ChooseDataUriVue />
     </div>

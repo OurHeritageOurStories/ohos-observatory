@@ -46,19 +46,19 @@ export default{
                         }
                     },
                     (error) => {
-                        throw "Unclear how you got here. Please let the TNA OHOS team know. Error: IAT49."
+                        throw "Unclear how you got here. Please let the TNA OHOS team know. Error: IAT49." + error
                     }
                 );
             } else {
-                throw "Please insure you have put text in each of the three boxes.";
+                throw "Please ensure you have put text in each of the three boxes.";
             }
         },
         insert_the_triple(){
             try{
                 this.build_alert_promise();
             } catch (error){
-                console.log("error");
-                alert("Something went wrong. Please note down how you reached this point, and let the TNA OHOS team know.")
+                console.log(error);
+                alert("Something went wrong while inputting the triple. " + error)
             }
         }
     }

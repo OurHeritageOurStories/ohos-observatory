@@ -41,7 +41,7 @@ export default{
                                     if(!response.status==200){
                                         throw 'Server side error UDF42';
                                     } else {
-                                        alert("Uploaded")
+                                        alert("Uploaded the data")
                                     }
                                 })
                                 .catch(error=>{
@@ -57,8 +57,8 @@ export default{
                 try{
                     this.upload_data();
                 } catch (error){
-                    console.log("error");
-                    alert("Something went wrong. Please note down how you reached this point, and let the TNA OHOS team know.")
+                    console.log(error);
+                    alert("Something went wrong while uploading the datafile. " + error)
                 }
             }
     }
