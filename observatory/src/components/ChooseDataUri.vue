@@ -116,20 +116,24 @@ export default{
 
 <div id="insert_from_url">
 
-    <p id="url_for_input_title">If you would like to gather data from a plain text URL please put it here</p>
-    <input v-model="url_for_data" id="url_for_data"/>
-    <p id="data_type_radio_group">Please select what data_type it is</p>
-    <fieldset>
-        <div>
-            <input type="radio" id="n_triple" name="data_type" value="n_triple" @click="data_type('n_triple')">
-            <label for="n_triple">Standard triples</label>
-        </div>
-        <div>
-            <input type="radio" id="turtle_star" name="data_type" value="turtle_rdr" @click="data_type('turtle_rdr')">
-            <label for="turtle_star">Turtle star/x-turtle-rdr</label>
-        </div>
-    </fieldset>
-    <button @click="gather_from_url" id="gather_from_url">Insert data from a URL here. Notes: this data will be ephemeral. This data MUST be in plain  format - e.g. a raw.github URL</button>
+    <div id="input_the_url">
+        <input v-model="url_for_data" id="url_for_data"/>
+    </div>
+    <div id="select_the_headers">
+        <p id="data_type_radio_group">Please select what data_type it is</p>
+        <fieldset>
+            <div>
+                <input type="radio" id="n_triple" name="data_type" value="n_triple" @click="data_type('n_triple')">
+                <label for="n_triple">Standard triples</label>
+            </div>
+            <div>
+                <input type="radio" id="turtle_star" name="data_type" value="turtle_rdr" @click="data_type('turtle_rdr')">
+                <label for="turtle_star">Turtle star/x-turtle-rdr</label>
+            </div>
+        </fieldset>
+    </div>
+    <button @click="gather_from_url" id="gather_from_url">Insert data from a URL here. </button>
+    <p>-This data will be ephemeral. -This data MUST be in plain  format - e.g. a raw.github URL</p>
 
 </div>
 
@@ -137,4 +141,31 @@ export default{
 </template>
 
 <style>
+#insert_from_url{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    padding: 5px
+}
+#input_the_url{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    padding: 5px;
+}
+#select_the_headers{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row: 1;
+    grid-row-end: 2;
+    padding: 5px;
+}
+#gather_from_url{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    padding: 5px;
+}
 </style>

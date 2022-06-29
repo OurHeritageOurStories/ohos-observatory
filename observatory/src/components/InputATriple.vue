@@ -93,41 +93,48 @@ export default{
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 2;
+    padding: 5px;
 }
 #newDataSubject{
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 2;
     grid-row-end: 3;
+    padding: 5px;
 }
 #predicate_title{
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 2;
+    padding: 5px;
 }
 #newDataPredicate{
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 2;
     grid-row-end: 3;
+    padding: 5px;
 }
 #object_title{
     grid-column-start: 3;
     grid-column-end: 4;
     grid-row-start: 1;
     grid-row-end: 2;
+    padding: 5px;
 }
 #newDataObject{
     grid-column-start: 3;
     grid-column-end: 4;
     grid-row-start: 2;
     grid-row-end: 3;
+    padding: 5px;
 }
 #post_new_triple{
     grid-column-start: 4;
     grid-column-end: 5;
     grid-row-start: 1;
     grid-row-end: 3;
+    padding: 5px;
 }
 </style>
