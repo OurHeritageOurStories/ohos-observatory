@@ -13,6 +13,7 @@ import LoadDataVue from "./LoadData.vue";
 export default{
     data(){
         return{
+            graph_status: "Select data in the Select tab please",          
             playground_data:null,
             nodes: {},
             edges: {},
@@ -43,17 +44,26 @@ export default{
                     visible: true,
                   },
                 },
+                edge: {
+                  type: "curve",
+                  marker: {
+                    source: {
+                      type: "arrow",
+                    }
+                  },                  
+                },
               })
             ),
             eventHandlers: {
               "node:click": ({ node }) => {
-                console.log("Harshad");
                 alert(node);
               },
             }
         };
     },
     created(){
+        this.graph_status = this.graph_status.replace("Select data in the Select tab please", "Fetching data... If this message disappears but the graph doesn't show, switch between tabs");
+        console.log("Fetching data...");
         fetch('api/graph?query=SELECT * {?s ?p ?o}',{
             headers:{"Accept":"application/sparql-results+json"}
         })
@@ -63,6 +73,8 @@ export default{
     },
     methods:{
         draw_graph(fetched_data){
+            this.graph_status = this.graph_status.replace("Fetching data", "Drawing graph");
+            console.log("Drawing graph...")
             var results = fetched_data.results.bindings;
             var OHOSLink = "https://ohos.ac.uk/wp-content/uploads/2021/12/cropped-OHOSIcon_Large.png"
             for (let i = 0; i < results.length; i++){
@@ -94,23 +106,20 @@ export default{
                         switch(true){
                             case(!this.nodes[sub]):
                                 this.nodes[sub] = { name: this.refNode, face: OHOSLink };
-                                //if(!this.nodes[obje])
                                     this.nodes[obje] = { name: this.refNode, face: OHOSLink };
                                 break;
                             case(this.nodes[sub]):
                                 this.nodes[obje] = { name: this.refNode, face: OHOSLink };
                                 break;
                         }
-                        console.log(this.nodes[obje]);
-                        console.log(obje);
-                        console.log(sub);
-                        console.log(this.refEdge);
                         this.nodes[obje] = { name: this.refNode, face: OHOSLink };
                         this.edges[i] = { source: sub, target: obje, label: this.refEdge };
                         break;
                 }
                 
             }
+            this.graph_status = this.graph_status.delete;
+            console.log("The graph should be ready. If it doesn't display, switch between tabs.")
         }
     }
 }
@@ -118,7 +127,7 @@ export default{
 </script>
 
 <template>
-
+<div id="graphStatus">{{ graph_status }}</div>
 <v-network-graph
     :nodes="nodes"
     :edges="edges"

@@ -30,8 +30,6 @@ export default{
     <div class="tabs">
         <a v-on:click="activetab='1'" v-bind:class="[ activetab === '1' ? 'active' : '' ]">Select</a>
         <a v-on:click="activetab='2'" v-bind:class="[ activetab === '2' ? 'active' : '' ]">Graph View</a>
-        <a v-on:click="activetab='3'" v-bind:class="[ activetab === '3' ? 'active' : '' ]">Tab 3</a>
-        <a v-on:click="activetab='4'" v-bind:class="[ activetab === '4' ? 'active' : '' ]">Tab 4</a>
     </div>
 
     <div id="content" class="content">
@@ -40,18 +38,6 @@ export default{
         </div>
         <div v-if="activetab ==='2'" class="tabcontent">
             <NetworkGraphTab />
-        </div>
-        <div v-if="activetab ==='3'" class="tabcontent">
-            <h2>This is tab 3!</h2>
-        </div>
-        <div v-if="activetab ==='4'" class="tabcontent">
-            <h1>This is tab 4!</h1>
-            <h2>This <b>is</b> tab 4!</h2>
-            <h3>This <i>is</i> tab 4!</h3>
-            <h4>This is tab 4!</h4>
-            <h5>This is tab 4!</h5>
-            <h6>This is tab 4!</h6>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
     </div>
   
@@ -70,6 +56,7 @@ export default{
         right: 10px;
         position: absolute;
         height: 100%;
+        color: #888; 
     }
     #sidebar img {
         max-height: 120px;
@@ -80,8 +67,7 @@ export default{
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Gill Sans Nova", sans-serif;
-  color: #888;  
+  font-family: "Gill Sans Nova", sans-serif; 
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -99,6 +85,7 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
     margin-bottom: -2px;
     margin-left: 24px;
+    color: #888;
 }
 
 .tabs a{
