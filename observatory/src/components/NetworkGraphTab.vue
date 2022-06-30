@@ -73,58 +73,10 @@ export default{
                 var imageCategory = ["P18","P109","P154","P41","P94","P948","P242","P1621","P2716","P3451","P4291","P8592","P2910"];
                 this.refArrayNode = sub.split("/");
                 this.refNode = this.refArrayNode[this.refArrayNode.length-1];
-                /*fetch(
-                      "https://www.wikidata.org/w/api.php?action=wbgetentities&props=labels&origin=*&format=json&&formatversion=2&ids="+this.refNode,
-                      {
-                        method: "GET"
-                      }
-                    )
-                      .then(response => response.json())
-                      .then(response => (this.nodeLabel=response))
-                      .then(response => {
-                        console.log(this.nodeLabel.entities[this.refNode].labels.en.value);
-                      })
-                      .catch(error => {
-                        console.log(error.message);
-                      });
-                */
                 this.refArrayNodeObje = obje.split("/");
                 this.refNodeObje = this.refArrayNodeObje[this.refArrayNodeObje.length-1];
-                /*fetch(
-                      "https://www.wikidata.org/w/api.php?action=wbgetentities&props=labels&origin=*&format=json&&formatversion=2&ids="+this.refNodeObje,
-                      {
-                        method: "GET"
-                      }
-                    )
-                      .then(response => response.json())
-                      .then(response => (this.nodeLabelObje=response))
-                      .then(response => {
-                        console.log(this.nodeLabelObje.entities[this.refNodeObje].labels.en.value);
-                      })
-                      .catch(error => {
-                        console.log(error.message);
-                      });
-                */
                 this.refArrayEdge = pre.split("/");
                 this.refEdge = this.refArrayEdge[this.refArrayEdge.length-1];
-                /*fetch(
-                      "https://www.wikidata.org/w/api.php?action=wbgetentities&props=labels&origin=*&format=json&&formatversion=2&ids="+this.refEdge,
-                      {
-                        method: "GET"
-                      }
-                    )
-                      .then(response => response.json())
-                      .then(response => (this.edgeLabel=response))
-                      .then(response => {
-                        console.log(this.edgeLabel.entities[this.refEdge].labels.en.value);
-                      })
-                      .catch(error => {
-                        console.log(error.message);
-                      });
-                console.log(this.refEdge);
-                console.log(this.edgeLabel.entities);
-                console.log(this.edgeLabel.entities[this.refEdge].labels.en.value);
-                */
                 var edgeLabelIsImage = imageCategory.includes(this.refEdge);//this.edgeLabel.entities[this.refEdge].labels.en.value=="image";
                 
                 switch(true){
@@ -157,21 +109,7 @@ export default{
                         this.edges[i] = { source: sub, target: obje, label: this.refEdge };
                         break;
                 }
-                /*if(edgeLabelImage && !this.nodes[sub])
-                    this.nodes[sub] = { name: this.nodeLabel.entities[this.refNode].labels.en.value, face: obje };
-                else
-                    {
-                        if(this.edgeLabel.entities[this.refEdge].labels.en.value=="image" && this.nodes[sub])
-                            this.nodes[sub] = { name: this.nodeLabel.entities[this.refNode].labels.en.value};
-                        if(!this.edgeLabel.entities[this.refEdge].labels.en.value=="image" && this.nodes[sub])
-                            this.nodes[sub] = { name: this.nodeLabel.entities[this.refNode].labels.en.value, face: "src\assets\ohos.png"};
-                        if(this.edgeLabel.entities[this.refEdge].labels.en.value=="image")
-                            this.nodes[obje] = { name: this.nodeLabel.entities[this.refNode].labels.en.value, face: obje};
-                        else              
-                            this.nodes[obje] = { name: this.nodeLabelObje.entities[this.refNodeObje].labels.en.value, face: "src\assets\ohos.png" };
-                        this.edges[i] = { source: sub, target: obje, label: this.edgeLabel.entities[this.refEdge].labels.en.value };
-                    }
-                */
+                
             }
         }
     }
