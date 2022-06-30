@@ -18,6 +18,16 @@ export default{
             nodes: {},
             edges: {},
             layouts: {},
+            nodeLabel: {},
+            nodeLabelObje: {},
+            edgeLabel: {},
+            refArrayNode: null,
+            refNode: null,
+            refArrayNodeObje: null,
+            refNodeObje: null,
+            refArrayEdge: null,
+            refEdge: null,
+                
             configs: reactive(
               vNG.defineConfigs({
                 view: {
@@ -66,35 +76,50 @@ export default{
             this.graph_status = this.graph_status.replace("Fetching data", "Drawing graph");
             console.log("Drawing graph...")
             var results = fetched_data.results.bindings;
-            var subs = [];
+            var OHOSLink = "https://ohos.ac.uk/wp-content/uploads/2021/12/cropped-OHOSIcon_Large.png"
             for (let i = 0; i < results.length; i++){
                 let obj = results[i];
                 var sub = obj.s.value;
                 var pre = obj.p.value;
                 var obje = obj.o.value;
-                this.nodes[obje] = { name: obje }; //this.nodes[obje] = { name: obje, face: "/src/assets/OHOS_Logo.png" };
-                this.edges[i] = { source: sub, target: obje, label: pre };
-                this.nodes[sub] = { name: sub };  //this.nodes[sub] = { name: sub, face: "/src/assets/OHOS_Logo.png" };
-                //console.log(JSON.stringify(this.nodes[sub]))
-
-                //if sub multiple times in results, and P18:
-                //this.nodes[obje] = { name: obje, face: obje }; 
-                if(subs.includes(JSON.stringify(this.nodes[sub]))) // && pre=="http://www.wikidata.org/prop/direct/P18"
-                  {       
-                    console.log("In: ", JSON.stringify(this.nodes[sub]))
-                    this.nodes[obje] = { name: obje, face: obje };
-                    this.nodes[sub] = { name: sub, face: obje };                
-                  } else if(pre=="http://www.wikidata.org/prop/direct/P18") {       
-                    //this.nodes[obje] = { name: obje, face: obje };//current, future below:
-                    this.nodes[sub] = { name: sub, face: obje };
-                    delete this.edges[i];
-                    delete this.nodes[obje];                
-                  }   
-                subs.push(JSON.stringify(this.nodes[sub]));         
+                var imageCategory = ["P18","P109","P154","P41","P94","P948","P242","P1621","P2716","P3451","P4291","P8592","P2910"];
+                this.refArrayNode = sub.split("/");
+                this.refNode = this.refArrayNode[this.refArrayNode.length-1];
+                this.refArrayNodeObje = obje.split("/");
+                this.refNodeObje = this.refArrayNodeObje[this.refArrayNodeObje.length-1];
+                this.refArrayEdge = pre.split("/");
+                this.refEdge = this.refArrayEdge[this.refArrayEdge.length-1];
+                var edgeLabelIsImage = imageCategory.includes(this.refEdge);//this.edgeLabel.entities[this.refEdge].labels.en.value=="image";
+                
+                switch(true){
+                    case(edgeLabelIsImage):
+                        if(!this.nodes[sub] || this.nodes[sub].face == OHOSLink)
+                            this.nodes[sub] = { name: this.refNode, face: obje };
+                        else
+                            if(this.nodes[sub])
+                            {
+                                this.nodes[obje] = { name: this.refNode, face: obje };
+                                this.edges[i] = { source: sub, target: obje, label: this.refEdge };
+                            }
+                        break;
+                    case(!edgeLabelIsImage):
+                        switch(true){
+                            case(!this.nodes[sub]):
+                                this.nodes[sub] = { name: this.refNode, face: OHOSLink };
+                                    this.nodes[obje] = { name: this.refNode, face: OHOSLink };
+                                break;
+                            case(this.nodes[sub]):
+                                this.nodes[obje] = { name: this.refNode, face: OHOSLink };
+                                break;
+                        }
+                        this.nodes[obje] = { name: this.refNode, face: OHOSLink };
+                        this.edges[i] = { source: sub, target: obje, label: this.refEdge };
+                        break;
+                }
+                
             }
             this.graph_status = this.graph_status.delete;
             console.log("The graph should be ready. If it doesn't display, switch between tabs.")
-            console.log(JSON.stringify(subs))
         }
     }
 }
