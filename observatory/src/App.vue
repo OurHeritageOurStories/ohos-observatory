@@ -76,9 +76,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .container {  
     max-width: 80%;
-    left: 10px;
-    position: absolute;
-    margin: 20px auto;
+    position: relative;
+    margin: 20px;
 }
 
 .tabs {

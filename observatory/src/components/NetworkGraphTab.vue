@@ -98,7 +98,7 @@ export default{
                         else
                             if(this.nodes[sub])
                             {
-                                this.nodes[obje] = { name: this.refNode, face: obje };
+                                this.nodes[obje] = { name: this.refNodeObje, face: obje };
                                 this.edges[i] = { source: sub, target: obje, label: this.refEdge };
                             }
                         break;
@@ -106,13 +106,13 @@ export default{
                         switch(true){
                             case(!this.nodes[sub]):
                                 this.nodes[sub] = { name: this.refNode, face: OHOSLink };
-                                    this.nodes[obje] = { name: this.refNode, face: OHOSLink };
+                                    this.nodes[obje] = { name: this.refNodeObje, face: OHOSLink };
                                 break;
                             case(this.nodes[sub]):
-                                this.nodes[obje] = { name: this.refNode, face: OHOSLink };
+                                this.nodes[obje] = { name: this.refNodeObje, face: OHOSLink };
                                 break;
                         }
-                        this.nodes[obje] = { name: this.refNode, face: OHOSLink };
+                        this.nodes[obje] = { name: this.refNodeObje, face: OHOSLink };
                         this.edges[i] = { source: sub, target: obje, label: this.refEdge };
                         break;
                 }
