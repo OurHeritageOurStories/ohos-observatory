@@ -18,15 +18,6 @@ export default{
             nodes: {},
             edges: {},
             layouts: {},
-            nodeLabel: {},
-            nodeLabelObje: {},
-            edgeLabel: {},
-            refArrayNode: null,
-            refNode: null,
-            refArrayNodeObje: null,
-            refNodeObje: null,
-            refArrayEdge: null,
-            refEdge: null,
                 
             configs: reactive(
               vNG.defineConfigs({
@@ -72,6 +63,65 @@ export default{
             .then(response=>this.draw_graph(response));
     },
     methods:{
+        fetch_label_promise(ref){
+            var label = null;
+            let promise = new Promise(function (resolve, reject){
+                fetch(
+                      "https://www.wikidata.org/w/api.php?action=wbgetentities&props=labels&origin=*&format=json&&formatversion=2&ids="+ref,
+                      {
+                        method: "GET"
+                      }
+                    )
+                      .then(response => response.json())
+                      .then(response => (label=response))
+                      .then(response => {
+                        resolve(label);
+                      })
+                      .catch(error => {
+                        reject(error.message);
+                      });
+            });
+            return promise;
+        },
+        fetch_wikidata_label(ref){
+            var label = null;
+                fetch(
+                      "https://www.wikidata.org/w/api.php?action=wbgetentities&props=labels&origin=*&format=json&&formatversion=2&ids="+ref,
+                      {
+                        method: "GET"
+                      }
+                    )
+                      .then(response => response.json())
+                      .then(response => (label=response))
+                      .then(response => {
+                        console.log(label);
+                      })
+                      .catch(error => {
+                        console.log(error.message);
+                      });
+            return label;
+        },
+        fetch_label(link){
+            var refArray = link.split("/");
+            switch(link.includes("wikidata.org/")){
+                case true:
+                    var ref =  refArray[refArray.length-1];
+                    var promise = this.fetch_label_promise(ref);
+                    promise.then(
+                        (result)=>{
+                            console.log(result);
+                            return result;
+                        },
+                        (error)=>{
+                            throw "Error: " + error;
+                        }
+                    );
+                    break;
+                    // return this.fetch_wikidata_label(ref);
+                case false:
+                    return link;
+            }
+        },
         draw_graph(fetched_data){
             this.graph_status = this.graph_status.replace("Fetching data", "Drawing graph");
             console.log("Drawing graph...")
@@ -83,37 +133,40 @@ export default{
                 var pre = obj.p.value;
                 var obje = obj.o.value;
                 var imageCategory = ["P18","P109","P154","P41","P94","P948","P242","P1621","P2716","P3451","P4291","P8592","P2910"];
-                this.refArrayNode = sub.split("/");
-                this.refNode = this.refArrayNode[this.refArrayNode.length-1];
-                this.refArrayNodeObje = obje.split("/");
-                this.refNodeObje = this.refArrayNodeObje[this.refArrayNodeObje.length-1];
-                this.refArrayEdge = pre.split("/");
-                this.refEdge = this.refArrayEdge[this.refArrayEdge.length-1];
-                var edgeLabelIsImage = imageCategory.includes(this.refEdge);//this.edgeLabel.entities[this.refEdge].labels.en.value=="image";
+                var nodeLabel = this.fetch_label(sub);
+                console.log(sub);
+                console.log(nodeLabel);
+                var nodeLabelObje = this.fetch_label(obje);
+                console.log(obje);
+                console.log(nodeLabelObje);
+                var edgeLabel = this.fetch_label(pre);
+                var refArray = pre.split("/");
+                var refEdge =  refArray[refArray.length-1];
+                var edgeLabelIsImage = imageCategory.includes(refEdge);
                 
                 switch(true){
                     case(edgeLabelIsImage):
                         if(!this.nodes[sub] || this.nodes[sub].face == OHOSLink)
-                            this.nodes[sub] = { name: this.refNode, face: obje };
+                            this.nodes[sub] = { name: nodeLabel, face: obje };
                         else
                             if(this.nodes[sub])
                             {
-                                this.nodes[obje] = { name: this.refNodeObje, face: obje };
-                                this.edges[i] = { source: sub, target: obje, label: this.refEdge };
+                                this.nodes[obje] = { name: nodeLabelObje, face: obje };
+                                this.edges[i] = { source: sub, target: obje, label: edgeLabel };
                             }
                         break;
                     case(!edgeLabelIsImage):
                         switch(true){
                             case(!this.nodes[sub]):
-                                this.nodes[sub] = { name: this.refNode, face: OHOSLink };
-                                    this.nodes[obje] = { name: this.refNodeObje, face: OHOSLink };
+                                this.nodes[sub] = { name: nodeLabel, face: OHOSLink };
+                                    this.nodes[obje] = { name: nodeLabelObje, face: OHOSLink };
                                 break;
                             case(this.nodes[sub]):
-                                this.nodes[obje] = { name: this.refNodeObje, face: OHOSLink };
+                                this.nodes[obje] = { name: nodeLabelObje, face: OHOSLink };
                                 break;
                         }
-                        this.nodes[obje] = { name: this.refNodeObje, face: OHOSLink };
-                        this.edges[i] = { source: sub, target: obje, label: this.refEdge };
+                        this.nodes[obje] = { name: nodeLabelObje, face: OHOSLink };
+                        this.edges[i] = { source: sub, target: obje, label: edgeLabel };
                         break;
                 }
                 
