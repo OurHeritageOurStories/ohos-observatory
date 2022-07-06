@@ -17,17 +17,11 @@ export default{
             playground_data:null,
             nodes: {},
             edges: {},
+            labels: {},
             layouts: {},
-            nodeLabel: {},
-            nodeLabelObje: {},
-            edgeLabel: {},
-            refArrayNode: null,
-            refNode: null,
-            refArrayNodeObje: null,
-            refNodeObje: null,
-            refArrayEdge: null,
-            refEdge: null,
-                
+            len: null,
+            count: 0,
+            fetched_data_copy: null,
             configs: reactive(
               vNG.defineConfigs({
                 view: {
@@ -72,51 +66,117 @@ export default{
             .then(response=>this.draw_graph(response));
     },
     methods:{
-        draw_graph(fetched_data){
-            this.graph_status = this.graph_status.replace("Fetching data", "Drawing graph");
-            console.log("Drawing graph...")
-            var results = fetched_data.results.bindings;
-            var OHOSLink = "https://ohos.ac.uk/wp-content/uploads/2021/12/cropped-OHOSIcon_Large.png"
-            for (let i = 0; i < results.length; i++){
-                let obj = results[i];
-                var sub = obj.s.value;
-                var pre = obj.p.value;
-                var obje = obj.o.value;
-                var imageCategory = ["P18","P109","P154","P41","P94","P948","P242","P1621","P2716","P3451","P4291","P8592","P2910"];
-                this.refArrayNode = sub.split("/");
-                this.refNode = this.refArrayNode[this.refArrayNode.length-1];
-                this.refArrayNodeObje = obje.split("/");
-                this.refNodeObje = this.refArrayNodeObje[this.refArrayNodeObje.length-1];
-                this.refArrayEdge = pre.split("/");
-                this.refEdge = this.refArrayEdge[this.refArrayEdge.length-1];
-                var edgeLabelIsImage = imageCategory.includes(this.refEdge);//this.edgeLabel.entities[this.refEdge].labels.en.value=="image";
+        fetch_label_promise(ref){
+            let label = null;
+            let promise = new Promise(function (resolve, reject){
+                fetch(
+                      "https://www.wikidata.org/w/api.php?action=wbgetentities&props=labels&origin=*&format=json&&formatversion=2&ids="+ref,
+                      {
+                        method: "GET"
+                      }
+                    )
+                      .then(response => response.json())
+                      .then(response => (label = response))
+                      .then(response => {
+                        resolve(label);
+                      })
+                      .catch(error => {
+                        reject(error.message);
+                      });
+            });
+            return promise;
+        },
+        fetch_label(link){
+            var refArray = link.split("/");
+            switch(link.includes("wikidata.org/")){
+                case true:
+                    var ref =  refArray[refArray.length-1];
+                    var promise = this.fetch_label_promise(ref, link);
+                    promise.then(
+                        (result)=>{
+                            this.count = this.count + 1;
+                            this.labels[link] = result.entities[ref].labels.en.value;
+                            if(this.count == this.len*3)
+                            {
+                                this.make_connections();
+                            }
+                            return result;
+                        },
+                        (error)=>{
+                            throw "Error: " + error;
+                        }
+                    );
+                    break;
+                case false:
+                    this.count = this.count + 1;
+                    return link;
+            }
+        },
+        make_connections(){
+            var OHOSLink = "https://ohos.ac.uk/wp-content/uploads/2021/12/cropped-OHOSIcon_Large.png";
+            var imageCategory = ["P18","P109","P154","P41","P94","P948","P242","P1621","P2716","P3451","P4291","P8592","P2910"];
+            let obj = null;
+            var sub = null;
+            var pre = null;
+            var obje = null;
+            var refArray = null;
+            var refEdge =  null;
+            var edgeLabelIsImage = null;
+            
+            for (let i = 0; i < this.len; i++){
+                obj = this.fetched_data_copy[i];
+                sub = obj.s.value;
+                pre = obj.p.value;
+                obje = obj.o.value;
+                refArray = pre.split("/");
+                refEdge =  refArray[refArray.length-1];
+                edgeLabelIsImage = imageCategory.includes(refEdge);
                 
                 switch(true){
                     case(edgeLabelIsImage):
                         if(!this.nodes[sub] || this.nodes[sub].face == OHOSLink)
-                            this.nodes[sub] = { name: this.refNode, face: obje };
+                            this.nodes[sub] = { name: this.labels[sub], face: obje };
                         else
                             if(this.nodes[sub])
                             {
-                                this.nodes[obje] = { name: this.refNodeObje, face: obje };
-                                this.edges[i] = { source: sub, target: obje, label: this.refEdge };
+                                this.nodes[obje] = { name: this.labels[obje], face: obje };
+                                this.edges[i] = { source: sub, target: obje, label: this.labels[pre] };
                             }
                         break;
                     case(!edgeLabelIsImage):
                         switch(true){
                             case(!this.nodes[sub]):
-                                this.nodes[sub] = { name: this.refNode, face: OHOSLink };
-                                    this.nodes[obje] = { name: this.refNodeObje, face: OHOSLink };
+                                this.nodes[sub] = { name: this.labels[sub], face: OHOSLink };
+                                    this.nodes[obje] = { name: this.labels[obje], face: OHOSLink };
                                 break;
                             case(this.nodes[sub]):
-                                this.nodes[obje] = { name: this.refNodeObje, face: OHOSLink };
+                                this.nodes[obje] = { name: this.labels[obje], face: OHOSLink };
                                 break;
                         }
-                        this.nodes[obje] = { name: this.refNodeObje, face: OHOSLink };
-                        this.edges[i] = { source: sub, target: obje, label: this.refEdge };
+                        this.nodes[obje] = { name: this.labels[obje], face: OHOSLink };
+                        this.edges[i] = { source: sub, target: obje, label: this.labels[pre] };
                         break;
                 }
-                
+            }
+        },
+        draw_graph(fetched_data){
+            this.fetched_data_copy = fetched_data.results.bindings;
+            this.graph_status = this.graph_status.replace("Fetching data", "Drawing graph");
+            console.log("Drawing graph...")
+            var results = fetched_data.results.bindings;
+            let obj = null;
+            var sub = null;
+            var pre = null;
+            var obje = null;
+            this.len = results.length;
+            for (let i = 0; i < this.len; i++){
+                obj = results[i];
+                sub = obj.s.value;
+                pre = obj.p.value;
+                obje = obj.o.value;
+                this.fetch_label(sub);
+                this.fetch_label(obje);
+                this.fetch_label(pre);      
             }
             this.graph_status = this.graph_status.delete;
             console.log("The graph should be ready. If it doesn't display, switch between tabs.")
