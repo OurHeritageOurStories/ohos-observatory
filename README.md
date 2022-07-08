@@ -65,19 +65,18 @@ b. To test that this has worked, you should be able to contact miiify via http:/
 
 ### Standards in Use
 
-    [Agile](https://www.atlassian.com/agile#:~:text=Agile%20is%20an%20iterative%20approach,small%2C%20but%20consumable%2C%20increments.) Currently in sprint 8. 
-    [GitFlow](https://nvie.com/posts/a-successful-git-branching-model/)
+1. [Agile](https://www.atlassian.com/agile#:~:text=Agile%20is%20an%20iterative%20approach,small%2C%20but%20consumable%2C%20increments.) Currently in sprint 8. 2, 2. [GitFlow](https://nvie.com/posts/a-successful-git-branching-model/)
 
 ### Libraries
 
-    [Vue3](https://vuejs.org)
-    [v-network-graph](https://dash14.github.io/v-network-graph/)
+1. [Vue3](https://vuejs.org)
+2. [v-network-graph](https://dash14.github.io/v-network-graph/)
 
 ### Tools
 
-    [Insomnia](https://insomnia.rest)
+1. [Insomnia](https://insomnia.rest)
 
 ### Plans
 
-    Multiple-strand
-        Several seperate 
+1. Multiple-strand
+  *Several seperate 
