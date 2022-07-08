@@ -61,3 +61,23 @@ b. To test that this has worked, you should be able to contact miiify via http:/
 5- Data can then be sent to Blazegraph by sending a post to http://localhost:8000/graph?
 
 5- Go to 'localhost:3000' on your browser.
+
+
+### Standards in Use
+
+    [Agile](https://www.atlassian.com/agile#:~:text=Agile%20is%20an%20iterative%20approach,small%2C%20but%20consumable%2C%20increments.) Currently in sprint 8. 
+    [GitFlow](https://nvie.com/posts/a-successful-git-branching-model/)
+
+### Libraries
+
+    [Vue3](https://vuejs.org)
+    [v-network-graph](https://dash14.github.io/v-network-graph/)
+
+### Tools
+
+    [Insomnia](https://insomnia.rest)
+
+### Plans
+
+    Multiple-strand
+        Several seperate 
