@@ -113,7 +113,7 @@ h1, h2, h3, h4, h5, h6 {
     border-right: none;
     background-color: #e7d2ea;
     border-radius: 10px 10px 0 0;
-    font-weight: bold;
+    font-family: "ETBembo", "Arial Black";
 }
 .tabs a:last-child { 
     border-right: 1px solid #ccc;
@@ -151,7 +151,7 @@ input[type='radio'] {
     padding: 30px 50px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    box-shadow: 4px 4px 8px #e1e1e1
+    box-shadow: 4px 4px 8px #e1e1e1;
 }
 
 </style>

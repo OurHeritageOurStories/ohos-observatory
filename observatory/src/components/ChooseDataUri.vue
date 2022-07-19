@@ -131,10 +131,11 @@ export default{
             <div>
                 <input type="radio" id="turtle_star" name="data_type" value="turtle_rdr" @click="data_type('turtle_rdr')">
                 <label for="turtle_star">Turtle star/x-turtle-rdr</label>
+                <button @click="gather_from_url" id="gather_from_url" class="button">Upload</button>
             </div>
         </fieldset>
     </div>
-    <button @click="gather_from_url" id="gather_from_url" class="button">Insert</button>
+    
 </div>
 
 
@@ -154,14 +155,15 @@ export default{
 }
 #select_the_headers{
     grid-column-start: 2;
-    grid-column-end: 3;
+    grid-column-end: 5;
     grid-row: 1;
     grid-row-end: 2;
 }
 #gather_from_url{
-    grid-column-start: 1;
-    grid-column-end: 1;
+    grid-column-start: 5;
+    grid-column-end: 5;
     grid-row: 2;
+    margin-left: 240px;
 }
 #url_for_data{
     margin-top: 10px;
