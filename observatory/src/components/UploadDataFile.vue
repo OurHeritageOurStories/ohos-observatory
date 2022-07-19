@@ -70,10 +70,9 @@ export default{
 <div id="upload_form">
     <form @submit.prevent="upload_file">
         <div>
-            <label>Select file to upload</label>
             <input type="file">
         </div>
-        <button type="submit">Sumbit</button>
+        <button type="submit" class="button">Submit</button>
     </form>
     </div>
     Please note, this upload is ephemeral. If you select a new dataset in any way, you will need to upload again. 

@@ -117,9 +117,9 @@ export default{
 <template>
 
 <div id="insert_from_url">
-
     <div id="input_the_url">
-        <input v-model="url_for_data" id="url_for_data"/>
+        <p>This data will be ephemeral and must be in plain format,<br>e.g. a raw.github URL</p>
+        <input v-model="url_for_data" id="url_for_data" size="50"/>
     </div>
     <div id="select_the_headers">
         <p id="data_type_radio_group">Please select what data_type it is</p>
@@ -134,9 +134,7 @@ export default{
             </div>
         </fieldset>
     </div>
-    <button @click="gather_from_url" id="gather_from_url">Insert data from a URL here. </button>
-    <p>-This data will be ephemeral. -This data MUST be in plain  format - e.g. a raw.github URL</p>
-
+    <button @click="gather_from_url" id="gather_from_url" class="button">Insert</button>
 </div>
 
 
@@ -147,27 +145,26 @@ export default{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    padding: 5px
 }
 #input_the_url{
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 2;
-    padding: 5px;
 }
 #select_the_headers{
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row: 1;
     grid-row-end: 2;
-    padding: 5px;
 }
 #gather_from_url{
     grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 3;
-    padding: 5px;
+    grid-column-end: 1;
+    grid-row: 2;
+}
+#url_for_data{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 </style>
