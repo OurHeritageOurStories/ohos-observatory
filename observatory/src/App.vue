@@ -85,12 +85,12 @@ position: relative;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Gill Sans Nova", "Arial";
+  font-family: "Gill Sans Nova", "ETBembo";
   color: #303030;  
 }
 h1, h2, h3, h4, h5, h6 {
     color: #383838; 
-    font-family: "ETBembo", "Arial Black";
+    font-family: "Gill Sans Nova", "ETBembo";
 }
 .container {  
     max-width: 80%;
@@ -113,7 +113,7 @@ h1, h2, h3, h4, h5, h6 {
     border-right: none;
     background-color: #e7d2ea;
     border-radius: 10px 10px 0 0;
-    font-family: "ETBembo", "Arial Black";
+    font-family: "Gill Sans Nova", "ETBembo";
 }
 .tabs a:last-child { 
     border-right: 1px solid #ccc;
@@ -134,12 +134,18 @@ h1, h2, h3, h4, h5, h6 {
     padding: 8px;
     text-align: center;
     border-radius: 30px;
-    font-family: "ETBembo", "Gill Sans Nova", "Arial Black";
+    font-family: "Gill Sans Nova", "ETBembo";
     margin: 5px;
+    box-shadow: 2px 2px 4px #e1e1e1;
 }
 .button:hover {
     background-color: #ca5ed6;
     color: #fff;
+    box-shadow: 2px 2px 4px #e1e1e1;
+}
+.button:active {
+    background-color: #fff;
+    color: #ca5ed6;
 }
 .observatory {
     color: #787878;
