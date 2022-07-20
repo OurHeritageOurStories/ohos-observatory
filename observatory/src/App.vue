@@ -145,7 +145,7 @@ h1, h2, h3, h4, h5, h6 {
     color: #787878;
 }
 input[type='radio'] {
-    accent-color: #787878;
+    accent-color: #e7d2ea;
 }
 .tabcontent {
     padding: 30px 50px;
