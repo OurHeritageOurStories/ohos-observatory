@@ -78,4 +78,4 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
   
 ### CSS Standards
 
-<img width="702" alt="css_bubbles" src="https://user-images.githubusercontent.com/105296158/180017918-b9a29ea1-8b94-4287-9973-0013fd4724ad.PNG">
+<img width="654" alt="css_bubbles" src="https://user-images.githubusercontent.com/105296158/180023546-bc3bb26f-1ebb-4b54-8e54-11ad3c5f80e7.PNG">
