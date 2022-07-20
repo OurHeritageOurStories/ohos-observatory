@@ -79,7 +79,7 @@ position: relative;
     max-width: 100px;
 }
 #sidebar a {
-    color: #787878; 
+    color: #ca5ed6; 
 }
 * {
   box-sizing: border-box;
@@ -124,7 +124,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .tabs a.active {
     background-color: #fff;
-    color: #383838;
+    color: #ca5ed6;
     border-bottom: 2px solid #fff;
     cursor: default;
 }
