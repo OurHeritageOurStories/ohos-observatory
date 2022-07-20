@@ -118,7 +118,7 @@ export default{
 
 <div id="insert_from_url">
     <div id="input_the_url">
-        <p>This data will be ephemeral and must be in plain format,<br>e.g. a raw.github URL</p>
+        <p>This data will be ephemeral and must be in plain format, e.g. a raw.github URL. Please be patient after clicking Upload.</p>
         <input v-model="url_for_data" id="url_for_data" size="50"/>
     </div>
     <div id="select_the_headers">
@@ -163,10 +163,10 @@ export default{
     grid-column-start: 5;
     grid-column-end: 5;
     grid-row: 2;
-    margin-left: 240px;
+    margin-left: 200px;
 }
 #url_for_data{
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 10px;
 }
 </style>

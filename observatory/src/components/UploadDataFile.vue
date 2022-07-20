@@ -74,7 +74,7 @@ export default{
         </div>   
     </form>
     </div>
-    Please note, this upload is ephemeral. If you select a new dataset in any way, you will need to upload again. 
+    Please note, this upload is ephemeral. If you select a new dataset in any way, you will need to upload again. Please be patient after clicking Submit. 
 
 </template>
 
