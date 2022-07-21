@@ -1,6 +1,6 @@
 # ohos-observatory
 
-[Our Heritage, Our Stories (OHOS)](https://ohos.ac.uk/) is a [Towards a National Collection (TaNC)](https://www.nationalcollection.org.uk/) project linking together community generated digital content (CGDC) and displaying this linked content to the end user. The work here is “The Observatory”, a web-app designed to show this linked CGDC, and is part of The National Archives (TNA) work in the OHOS project. 
+[Our Heritage, Our Stories (OHOS)](https://ohos.ac.uk/) is a [Towards a National Collection (TaNC)](https://www.nationalcollection.org.uk/) project linking together community generated digital content (CGDC) and displaying this linked content to the end user. The work here is “The Observatory”, a web-app designed to visualise this linked CGDC, and is part of The National Archives (TNA) work in the OHOS project. 
 
 This project is currently at Minimum Viable Product stage. 
 
