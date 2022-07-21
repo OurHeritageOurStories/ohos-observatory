@@ -72,7 +72,7 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 
 ### Data formats
 
-This project is working with and investgating the possible uses of linked data. For this, we are currently using two linked data formats to store our data: .nt and .ttl/.ttlx. 
+This project is working with and investigating the possible uses of linked data. For this, we are currently using two linked data formats to store our data: .nt and .ttl/.ttlx. 
 1. .nt (aka N-triples) simply stores the triples in full size plain text. This makes them very easy for software to generate and parse, but they can become verbose. For example:
     * <:bob> <:knows> <:alice> 
     * <:bob> <:knows> <:dave>
