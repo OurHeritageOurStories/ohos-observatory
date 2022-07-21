@@ -108,7 +108,12 @@ export default{
                     );
                     break;
                 case false:
+                    this.labels[link] = link.replace(":", "").replace(/_/g, " ");
                     this.count = this.count + 1;
+                    if(this.count == this.len*3)
+                            {
+                                this.make_connections();
+                            }
                     return link;
             }
         },
@@ -164,6 +169,7 @@ export default{
             this.graph_status = this.graph_status.replace("Fetching data", "Drawing graph");
             console.log("Drawing graph...")
             var results = fetched_data.results.bindings;
+            console.log(results);
             let obj = null;
             var sub = null;
             var pre = null;

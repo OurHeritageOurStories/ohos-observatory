@@ -16,7 +16,7 @@ export default{
         fetch('/src/assets/datasets/playground.nt')
             .then(response=>response.text())
             .then(response=>(this.playground_data=response));
-        fetch('/src/assets/datasets/ai_lab_2.ttl')
+        fetch('/src/assets/datasets/ai_lab_2_extracted.ttl')
             .then(response=>response.text())
             .then(response=>(this.ai_lab_2=response));
         fetch('/src/assets/datasets/ai_lab_1.ttl')
@@ -74,7 +74,7 @@ export default{
                         case "ai_lab_2":
                             fetch('api/graph?',{
                                 method:"POST",
-                                headers:{"Content-Type":"application/x-turtle-RDR"},
+                                headers:{"Content-Type":"text/plain"},
                                 body:this.ai_lab_2
                             })
                                 .then(function(response){
