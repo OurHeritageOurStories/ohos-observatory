@@ -2,7 +2,7 @@
 
 [Our Heritage, Our Stories (OHOS)](https://ohos.ac.uk/) is a [Towards a National Collection (TaNC)](https://www.nationalcollection.org.uk/) project linking together community generated digital content (CGDC) and displaying this linked content to the end user. The work here is “The Observatory”, a web-app designed to show this linked CGDC, and is part of The National Archives (TNA) work in this project. 
 
-OHOS Observatory product. Currently MVP. 
+This project is currently at Minimum Viable Product stage. 
 
 NOTE: The Vue app can be run with or without the database/Kong running in the background. Without the database, it will simply not show some elements, as there is no data available. The Vue app may also be less stable and might crash when using some elements without the database running.
 
