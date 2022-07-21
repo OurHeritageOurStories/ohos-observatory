@@ -1,6 +1,6 @@
 # ohos-observatory
 
-[Our Heritage, Our Stories (OHOS)](https://ohos.ac.uk/) is a [Towards a National Collection (TaNC)](https://www.nationalcollection.org.uk/) project linking together community generated digital content (CGDC) and displaying this linked content to the end user. The work here is “The Observatory”, a web-app designed to show this linked CGDC, and is part of The National Archives (TNA) work in this project. 
+[Our Heritage, Our Stories (OHOS)](https://ohos.ac.uk/) is a [Towards a National Collection (TaNC)](https://www.nationalcollection.org.uk/) project linking together community generated digital content (CGDC) and displaying this linked content to the end user. The work here is “The Observatory”, a web-app designed to visualise this linked CGDC, and is part of The National Archives (TNA) work in the OHOS project. 
 
 This project is currently at Minimum Viable Product stage. 
 
@@ -60,7 +60,7 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 
 ### Standards in Use
 
-1. [Agile](https://www.atlassian.com/agile#:~:text=Agile%20is%20an%20iterative%20approach,small%2C%20but%20consumable%2C%20increments.) Currently in sprint 8.
+1. [Agile](https://www.atlassian.com/agile#:~:text=Agile%20is%20an%20iterative%20approach,small%2C%20but%20consumable%2C%20increments.) 
 2. [GitFlow](https://nvie.com/posts/a-successful-git-branching-model/)
 
 ### Libraries
@@ -84,10 +84,10 @@ This project is working with and investigating the possible uses of linked data.
 
 ### Multiple-strand plan
 
- Several separate prototypes will be produced at the same time, in order to investigate different approaches to working with the available data. 
-  * Omeka-S - Working with Omeka-S and other existing tools to investigate whether they adequately answer  the research questions. 
-  * Bespoke - A bespoke web-app based on Vue3, designed from the ground up to investigate what can be done with linked data for the benefit of the end user
-  * Future - An investigative look into technologies that may be the future of exhibitions. Particular focus will be paid to 3d environments such as [Mozilla hubs](https://hubs.mozilla.com/)
+ Several separate prototypes will be produced at the same time, in order to investigate different approaches to visualise, interact, and work with the available data. 
+  * Existing content management system based (P1)  - Working with Omeka-S and other existing tools to investigate whether they adequately answer  the research questions. 
+  * Bespoke (2D) (P2)  - A bespoke web-app based on Vue3, designed from the ground up to investigate what can be done with linked data for the benefit of the end user
+  * Experimental (3D) (P3)  - An investigative look into technologies that may be the future of exhibitions. Particular focus will be paid to 3d environments such as [Mozilla hubs](https://hubs.mozilla.com/)
   
 ### CSS Standards
 
