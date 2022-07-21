@@ -24,18 +24,17 @@ export default{
 <div id="sidebar">
     <img alt="OHOS" src="./assets/OHOS_Logo.png"/>
     <h1 class="observatory">Observatory</h1>
-    <a href="#sidebar">This is a link!</a><br>
-    <a href="#tabs">This too is a link!</a><br>
-    <a href="#content">This as well is a link!</a><br>
+    <a href="https://ohos.ac.uk/"  target="_blank">Our Heritage, Our Stories</a><br>
+    <a href="https://www.nationalcollection.org.uk/"  target="_blank">Towards a National Collection</a><br>
 </div>
 
 <div id="tabs" class="container">
   
     <div class="tabs">
-        <a v-on:click="activetab='1'" v-bind:class="[ activetab === '1' ? 'active' : '' ]">About</a>
-        <a v-on:click="activetab='2'" v-bind:class="[ activetab === '2' ? 'active' : '' ]">Select</a>
+        <a v-on:click="activetab='1'" v-bind:class="[ activetab === '1' ? 'active' : '' ]">Home</a>
+        <a v-on:click="activetab='2'" v-bind:class="[ activetab === '2' ? 'active' : '' ]">Change Dataset</a>
         <a v-on:click="activetab='3'" v-bind:class="[ activetab === '3' ? 'active' : '' ]">Add</a>
-        <a v-on:click="activetab='4'" v-bind:class="[ activetab === '4' ? 'active' : '' ]">Graph View</a>
+        <a v-on:click="activetab='4'" v-bind:class="[ activetab === '4' ? 'active' : '' ]">Explore</a>
     </div>
 
     <div id="content" class="content">
@@ -158,6 +157,9 @@ input[type='radio'] {
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 4px 4px 8px #e1e1e1;
+}
+.tabcontent a {
+    color: #ca5ed6; 
 }
 
 </style>

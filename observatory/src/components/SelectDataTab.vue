@@ -14,7 +14,7 @@ export default{
 </script>
 <template>
 <div id="insert_data_tab">
-    <h3 id="general_dataset_heading">Choose a dataset from below, then take a look at the Graph View tab</h3>
+    <h3 id="general_dataset_heading">Choose a dataset from below, then take a look at the Explore tab</h3>
     <h4 id="load_data_heading">If you would prefer to see a pre-defined dataset, please choose from the set below</h4>
     <div id="load_data_vue">
         <LoadDataVue />
