@@ -56,7 +56,7 @@ export default{
         };
     },
     created(){
-        this.graph_status = this.graph_status.replace("Select data in the Select tab please", "Fetching data... If this message disappears but the graph doesn't show, switch between tabs");
+        this.graph_status = this.graph_status.replace("Select data in the Select tab please", "Fetching data... If this message disappears but the graph doesn't show within a few seconds, switch between tabs");
         console.log("Fetching data...");
         fetch('api/graph?query=SELECT * {?s ?p ?o}',{
             headers:{"Accept":"application/sparql-results+json"}

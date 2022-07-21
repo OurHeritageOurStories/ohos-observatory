@@ -68,73 +68,75 @@ export default{
 <template>
 
 <div id="insert_triple_grid">
-
+    <h3 id="input_triple_heading">If you would like to insert a new triple into the current graph, please do so below</h3>
     <p id="subject_title">Subject</p>
     <input v-model="newDataSubject" id="newDataSubject" /> 
     <p id="predicate_title">Predicate</p>
     <input v-model="newDataPredicate" id="newDataPredicate" />
     <p id="object_title">Object</p>
     <input v-model="newDataObject" id="newDataObject"/> 
-    <button @click="insert_the_triple" id="post_new_triple">Insert new triple into the graph</button>
+    <button @click="insert_the_triple" id="post_new_triple" class="button">Insert new triple into the graph</button>
 
 </div>
 
 </template>
 
 <style>
+#input_triple_heading{
+    grid-column-start: 1;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    padding: 10px;
+    padding-top: 25px;
+    border-bottom: 2px solid;
+}
 #insert_triple_grid{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-    padding: 5px;
 }
 #subject_title{
     grid-column-start: 1;
     grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 2;
-    padding: 5px;
+    grid-row: 3;
 }
 #newDataSubject{
     grid-column-start: 1;
     grid-column-end: 2;
-    grid-row-start: 2;
-    grid-row-end: 3;
+    grid-row-start: 4;
+    grid-row-end: 5;
     padding: 5px;
 }
 #predicate_title{
     grid-column-start: 2;
     grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 2;
-    padding: 5px;
+    grid-row: 3;
 }
 #newDataPredicate{
     grid-column-start: 2;
     grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 3;
+    grid-row-start: 4;
+    grid-row-end: 5;
     padding: 5px;
 }
 #object_title{
     grid-column-start: 3;
     grid-column-end: 4;
-    grid-row-start: 1;
-    grid-row-end: 2;
-    padding: 5px;
+    grid-row: 3;
 }
 #newDataObject{
     grid-column-start: 3;
     grid-column-end: 4;
-    grid-row-start: 2;
-    grid-row-end: 3;
+    grid-row-start: 4;
+    grid-row-end: 5;
     padding: 5px;
 }
 #post_new_triple{
     grid-column-start: 4;
     grid-column-end: 5;
-    grid-row-start: 1;
-    grid-row-end: 3;
-    padding: 5px;
+    grid-row-start: 4;
+    grid-row-end: 5;
+    padding: 10px;
 }
 </style>

@@ -135,12 +135,12 @@ export default{
 
     <div>
         <input type="radio" id="ai_lab_1" name="data_set" value="ai_lab_1" @click="insert_data('ai_lab_1')">
-        <label for="ai_lab_1">Ai Lab initial dataset</label>
+        <label for="ai_lab_1">AI Lab initial dataset</label>
     </div>
 
     <div>
         <input type="radio" id="ai_lab_2" name="data_set" value="ai_lab_2" @click="insert_data('ai_lab_2')">
-        <label for="ai_lab_2">Ai Lab second dataset</label>
+        <label for="ai_lab_2">AI Lab second dataset</label>
     </div>
 
 </fieldset>
