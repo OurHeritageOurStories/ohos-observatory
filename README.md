@@ -80,10 +80,9 @@ This project is working with and investigating the possible uses of linked data.
     * :bob :knows :alice,
                   :dave .
 
-### Plans
+### Multiple-strand plan
 
-1. Multiple-strand
-  * Several separate prototypes will be produced at the same time, in order to investigate different approaches to working with the available data. 
+ Several separate prototypes will be produced at the same time, in order to investigate different approaches to working with the available data. 
   * Omeka-S - Working with Omeka-S and other existing tools to investigate whether they adequately answer  the research questions. 
   * Bespoke - A bespoke web-app based on Vue3, designed from the ground up to investigate what can be done with linked data for the benefit of the end user
   * Future - An investigative look into technologies that may be the future of exhibitions. Particular focus will be paid to 3d environments such as [Mozilla hubs](https://hubs.mozilla.com/)
