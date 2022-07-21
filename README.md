@@ -70,11 +70,23 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 
 1. [Insomnia](https://insomnia.rest)
 
+### Data formats
+
+This project is working with and investgating the possible uses of linked data. For this, we are currently using two linked data formats to store our data: .nt and .ttl/.ttlx. 
+1. .nt (aka N-triples) simply stores the triples in full size plain text. This makes them very easy for software to generate and parse, but they can become verbose. For example:
+    * <:bob> <:knows> <:alice> 
+    * <:bob> <:knows> <:dave>
+2. .ttl/.ttlx (aka Turtle, or Terse RDF Triple Language) is designed to be more human-readable, and to look similar to SPARQL queries. It is less verbose, leaving out repeated subjects or predicates where possible. Note that if the next triple repeats the predicate, the triple is followed by a comma; if the next triple repeats the subject, the triple is followed by a semi-colon. For example:
+    * :bob :knows :alice,
+                  :dave .
+
 ### Plans
 
 1. Multiple-strand
-  *Several separate 
-  
+  * Several seperate prototypes will be produced at the same time, in order to investigate different approaches to working with the avaiable data. 
+  * Omeka-S - Working with 
+  * Bespoke - A bespoke web-app based on Vue3, designed from the ground up to investigate what can be done with linked data for the benifit of the end user
+  * Future - An investigative look into technologies that may be the future of exhibitions. Particular focus will be paid to 3d environments such as [Mozilla hubs](https://hubs.mozilla.com/)
   
 ### CSS Standards
 
