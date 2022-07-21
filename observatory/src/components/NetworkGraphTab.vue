@@ -108,7 +108,7 @@ export default{
                     );
                     break;
                 case false:
-                    this.labels[link] = link.replace(":http://dbpedia.org/resource/", "").replace(/_/g, " ");
+                    this.labels[link] = link.replace(":http://dbpedia.org/resource/", "").replace(":", "").replace(/_/g, " ");
                     this.count = this.count + 1;
                     if(this.count == this.len*3)
                             {
