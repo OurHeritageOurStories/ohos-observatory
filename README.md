@@ -60,7 +60,7 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 
 ### Standards in Use
 
-1. [Agile](https://www.atlassian.com/agile#:~:text=Agile%20is%20an%20iterative%20approach,small%2C%20but%20consumable%2C%20increments.) Currently in sprint 8.
+1. [Agile](https://www.atlassian.com/agile#:~:text=Agile%20is%20an%20iterative%20approach,small%2C%20but%20consumable%2C%20increments.) 
 2. [GitFlow](https://nvie.com/posts/a-successful-git-branching-model/)
 
 ### Libraries
