@@ -11,9 +11,9 @@ for j, i in enumerate(lines):
 		while "tanc:start" not in lines[j+1]:
 			#print(subject, lines[j+1].split(":")[1].split(" ")[1], lines[j+1].split(":")[2].split(" ")[0])
 			if lines[j+1].split(":")[1].split(" ")[1] == "Wikidata":
-				obj = "<http://www.wikidata.org/entity/" + lines[j+1].split(":")[2].split(" ")[0] + "> ."
+				obj = "<http://www.wikidata.org/entity/" + lines[j+1].split(":")[2].split(" ")[0] + "> .\n"
 			else:
-				obj = "<http://dbpedia.org/resource/" + lines[j+1].split(":")[2].split(" ")[0] + "> ."
+				obj = "<http://dbpedia.org/resource/" + lines[j+1].split(":")[2].split(" ")[0] + "> .\n"
 			line = subject + " <:> " + obj
 			j=j+1
 			#print(line)
