@@ -58,6 +58,40 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 6. Go to 'localhost:3000' on your browser.
 
 
+### How to access the SPARQL endpoint. 
+
+The database can be accessed directly, and queried using SPARQL commands. To do so, launch the app as per the “database active” instructions. 
+Once it is active, SPARQL queries can be passed to it directly by querying the URL 'http://localhost:8000/graph?' And adding the SPARQL query in plain text after the '?' 
+
+Note: headers are required to get a response. The suggested default is '{Accept: application/json}', but see [here](https://github.com/blazegraph/database/wiki/REST_API#rdf-data) for several other options. 
+
+Below is an example query to the SPARQL endpoint using HTTPie, and the start of the response. 
+
+'http GET 'http://localhost:8000/graph?query=SELECT * {?s ?p ?o} LIMIT 100' Accept:application/json'
+'HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: application/sparql-results+json;charset=utf-8
+Server: Jetty(9.4.18.v20190429)
+Transfer-Encoding: chunked
+Via: kong/2.8.0
+X-Kong-Proxy-Latency: 32
+X-Kong-Upstream-Latency: 56
+
+{
+    "head": {
+        "vars": [
+            "s",
+            "p",
+            "o"
+        ]
+    },
+    "results": {
+        "bindings": [
+            {
+                "o": {
+'
+
+
 ### Standards in Use
 
 1. [Agile](https://www.atlassian.com/agile#:~:text=Agile%20is%20an%20iterative%20approach,small%2C%20but%20consumable%2C%20increments.) 
