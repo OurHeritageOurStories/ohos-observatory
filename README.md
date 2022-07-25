@@ -68,6 +68,7 @@ Note: headers are required to get a response. The suggested default is '{Accept:
 Below is an example query to the SPARQL endpoint using HTTPie, and the start of the response. 
 
 'http GET 'http://localhost:8000/graph?query=SELECT * {?s ?p ?o} LIMIT 100' Accept:application/json'
+
 'HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Type: application/sparql-results+json;charset=utf-8
