@@ -8,24 +8,24 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 
 ### Requirements
 
-    VSCode
-    Docker
-    Web Browser
+* VSCode
+* Docker
+* Web Browser
 
 ### Useful
 
-    Insomnia
-    [HTTPie](https://httpie.io)
+* Insomnia
+* [HTTPie](https://httpie.io)
 
 ## Contains
 
-    Kong config file
-    Vue3 app
-    Docker file, to generate:
-    o Graph database served by Blazegraph
-    o Graph database served by GraphDB
-    o Miiify
-    o Kong API
+* Kong config file
+* Vue3 app
+* Docker file, to generate:
+    * Graph database served by Blazegraph
+    * Graph database served by GraphDB
+    * Miiify
+    * Kong API
 
 ## How to run (without the database active, undockerised Vue)
 
