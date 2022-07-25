@@ -15,7 +15,7 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 ### Useful
 
     Insomnia
-    HTTPie
+    [HTTPie](https://httpie.io)
 
 ### Contains
 
@@ -61,13 +61,18 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 ### How to access the SPARQL endpoint. 
 
 The database can be accessed directly, and queried using SPARQL commands. To do so, launch the app as per the “database active” instructions. 
-Once it is active, SPARQL queries can be passed to it directly by querying the URL 'http://localhost:8000/graph?' And adding the SPARQL query in plain text after the '?' 
+Once it is active, SPARQL queries can be passed to it directly by querying the URL below, adding the SPARQL query in plain text after the '?'  
+
+    http://localhost:8000/graph?
 
 Note: headers are required to get a response. The suggested default is '{Accept: application/json}', but see [here](https://github.com/blazegraph/database/wiki/REST_API#rdf-data) for several other options. 
 
-Below is an example query to the SPARQL endpoint using HTTPie, and the start of the response. 
+Below is an example query to the SPARQL endpoint using [HTTPie](https://httpie.io), and the start of the response. 
+Endpoint query: 
+    
+    http GET 'http://localhost:8000/graph?query=SELECT * {?s ?p ?o} LIMIT 100' Accept:application/json
 
-'http GET 'http://localhost:8000/graph?query=SELECT * {?s ?p ?o} LIMIT 100' Accept:application/json'
+Response:
 
     HTTP/1.1 200 OK
     Connection: keep-alive
