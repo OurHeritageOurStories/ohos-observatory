@@ -69,27 +69,27 @@ Below is an example query to the SPARQL endpoint using HTTPie, and the start of 
 
 'http GET 'http://localhost:8000/graph?query=SELECT * {?s ?p ?o} LIMIT 100' Accept:application/json'
 
-'HTTP/1.1 200 OK
-Connection: keep-alive
-Content-Type: application/sparql-results+json;charset=utf-8
-Server: Jetty(9.4.18.v20190429)
-Transfer-Encoding: chunked
-Via: kong/2.8.0
-X-Kong-Proxy-Latency: 32
-X-Kong-Upstream-Latency: 56
+    HTTP/1.1 200 OK
+    Connection: keep-alive
+    Content-Type: application/sparql-results+json;charset=utf-8
+    Server: Jetty(9.4.18.v20190429)
+    Transfer-Encoding: chunked
+    Via: kong/2.8.0
+    X-Kong-Proxy-Latency: 32
+    X-Kong-Upstream-Latency: 56
 
-{
-    "head": {
-        "vars": [
-            "s",
-            "p",
-            "o"
-        ]
-    },
-    "results": {
-        "bindings": [
-            {
-                "o": {
+    {
+        "head": {
+            "vars": [
+                "s",
+                "p",
+                "o"
+            ]
+        },
+        "results": {
+            "bindings": [
+                {
+                    "o": {
 '
 
 
