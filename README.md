@@ -65,7 +65,7 @@ Once it is active, SPARQL queries can be passed to it directly by querying the U
 
     http://localhost:8000/graph?
 
-#### headers 
+#### Headers 
 Headers are required to get a response. The suggested default is 
 
     {Accept: application/json}'
@@ -78,7 +78,7 @@ Below is an example query to the SPARQL endpoint using [HTTPie](https://httpie.i
 
 ##### Endpoint query: 
     
-    http GET 'http://localhost:8000/graph?query=SELECT * {?s ?p ?o} LIMIT 100' Accept:application/json
+    > http GET 'http://localhost:8000/graph?query=SELECT * {?s ?p ?o} LIMIT 100' Accept:application/json
 
 ##### Response:
 
