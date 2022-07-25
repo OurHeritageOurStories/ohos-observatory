@@ -65,14 +65,22 @@ Once it is active, SPARQL queries can be passed to it directly by querying the U
 
     http://localhost:8000/graph?
 
-Note: headers are required to get a response. The suggested default is '{Accept: application/json}', but see [here](https://github.com/blazegraph/database/wiki/REST_API#rdf-data) for several other options. 
+#### headers 
+Headers are required to get a response. The suggested default is 
+
+    {Accept: application/json}'
+    
+See [here](https://github.com/blazegraph/database/wiki/REST_API#rdf-data) for several other options. 
+
+#### Query example
 
 Below is an example query to the SPARQL endpoint using [HTTPie](https://httpie.io), and the start of the response. 
-Endpoint query: 
+
+##### Endpoint query: 
     
     http GET 'http://localhost:8000/graph?query=SELECT * {?s ?p ?o} LIMIT 100' Accept:application/json
 
-Response:
+##### Response:
 
     HTTP/1.1 200 OK
     Connection: keep-alive
