@@ -8,30 +8,30 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 
 ### Requirements
 
-    VSCode
-    Docker
-    Web Browser
+* VSCode
+* Docker
+* Web Browser
 
 ### Useful
 
-    Insomnia
-    HTTPie
+* Insomnia
+* [HTTPie](https://httpie.io)
 
-### Contains
+## Contains
 
-    Kong config file
-    Vue3 app
-    Docker file, to generate:
-    o Graph database served by Blazegraph
-    o Graph database served by GraphDB
-    o Miiify
-    o Kong API
+* Kong config file
+* Vue3 app
+* Docker file, to generate:
+    * Graph database served by Blazegraph
+    * Graph database served by GraphDB
+    * Miiify
+    * Kong API
 
-### How to run (without the database active, undockerised Vue)
+## How to run (without the database active, undockerised Vue)
 
 1. Open a terminal in the ohos-observatory directory, run 'npm run dev', then go to 'localhost:3000' on your browser.
 
-### How to run (without database, dockerised Vue)
+## How to run (without database, dockerised Vue)
 
 1. Open a terminal in the ohos-observatory directory, run 'docker build -t ohos_observatory_frontend .'
 
@@ -39,7 +39,7 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 
 3. Go to 'localhost:3000' on your browser.
 
-### How to run (with the database active, dockerised Vue)
+## How to run (with the database active, dockerised Vue)
 
 1. Clone repo
 
@@ -58,7 +58,55 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 6. Go to 'localhost:3000' on your browser.
 
 
-### Standards in Use
+## How to access the SPARQL endpoint. 
+
+The database can be accessed directly, and queried using SPARQL commands. To do so, launch the app as per the “database active” instructions. 
+Once it is active, SPARQL queries can be passed to it directly by querying the URL below, adding the SPARQL query in plain text after the '?'  
+
+    http://localhost:8000/graph?
+
+#### Headers 
+Headers are required to get a response. The suggested default is 
+
+    {Accept: application/json}'
+    
+See [here](https://github.com/blazegraph/database/wiki/REST_API#rdf-data) for several other options. 
+
+#### Query example
+
+Below is an example query to the SPARQL endpoint using [HTTPie](https://httpie.io), and the start of the response. 
+
+##### Endpoint query: 
+    
+    > http GET 'http://localhost:8000/graph?query=SELECT * {?s ?p ?o} LIMIT 100' Accept:application/json
+
+##### Response:
+
+    HTTP/1.1 200 OK
+    Connection: keep-alive
+    Content-Type: application/sparql-results+json;charset=utf-8
+    Server: Jetty(9.4.18.v20190429)
+    Transfer-Encoding: chunked
+    Via: kong/2.8.0
+    X-Kong-Proxy-Latency: 32
+    X-Kong-Upstream-Latency: 56
+
+    {
+        "head": {
+            "vars": [
+                "s",
+                "p",
+                "o"
+            ]
+        },
+        "results": {
+            "bindings": [
+                {
+                    "o": {
+'
+
+
+## Standards in Use
 
 1. [Agile](https://www.atlassian.com/agile#:~:text=Agile%20is%20an%20iterative%20approach,small%2C%20but%20consumable%2C%20increments.) 
 2. [GitFlow](https://nvie.com/posts/a-successful-git-branching-model/)
