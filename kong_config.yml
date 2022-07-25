@@ -12,13 +12,24 @@ services:
         strip_path: true
         methods:
         - GET
-        
+
   - name: kong_blazegraph_api_query_post
     url: http://kong_blazegraph:8080/bigdata/sparql
     routes: 
       - name: kong_blazegraph_routes_query_post
         paths:
           - /graph?
+        preserve_host: true  
+        strip_path: true
+        methods:
+        - GET 
+
+  - name: kong_blazegraph_api_query_post_full_access
+    url: http://kong_blazegraph:8080/bigdata/sparql
+    routes: 
+      - name: kong_blazegraph_routes_query_post_full_access
+        paths:
+          - /graph-full-access?
         preserve_host: true  
         strip_path: true
         methods:
