@@ -14,7 +14,7 @@ for j, i in enumerate(lines):
 				obj = "<http://www.wikidata.org/entity/" + lines[j+1].split(":")[2].split(" ")[0] + "> .\n"
 			else:
 				obj = "<http://dbpedia.org/resource/" + lines[j+1].split(":")[2].split(" ")[0] + "> .\n"
-			line = subject + " <:" + lines[j+1].split(" ")[1] + "> " + obj
+			line = subject + " <:is_type> " + obj
 			j=j+1
 			#print(line)
 			f.write(line)
