@@ -60,3 +60,16 @@ The downloaded image will have the following name and tag
 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend  latest
 
  
+## Run the docker Image downloaded from ECR locally
+If you wish to run the newly built image from AWS, edit the docker-compose file by replacing the locally built image, ohos_observatory_frontend with 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend
+
+Then you can run the docker-compose up command
+
+Locally built ohos_observatory_frontend image
+  kong_vue_frontend:
+    image: ohos_observatory_frontend
+
+AWS built ohos_observatory_frontend image
+  kong_vue_frontend:
+    image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend
+ 
