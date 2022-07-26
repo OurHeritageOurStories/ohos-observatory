@@ -22,7 +22,7 @@ services:
       - "8444:8444"
   
   kong_vue_frontend:
-    image: ohos_observatory_frontend
+    image: ohos_observatory_frontend #259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend
     hostname: kong_vue_frontend
     container_name: kong_vue_frontend
     ports:
