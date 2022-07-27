@@ -1,7 +1,6 @@
 const pactum = require('pactum');
 
 before(()=>{
-    //pactum.request.setBaseUrl('http://localhost:8000/graph')
     pactum.request.setDefaultTimeout(210000)
 })
 

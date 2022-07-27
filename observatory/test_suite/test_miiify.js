@@ -56,12 +56,6 @@ it('should get empty collection', async()=>{
                 "total": 0
             }
         );
-        //.expectJsonLike([
-        //    {
-        //        "id":"",
-        //        "type":""
-        //    }
-        //]);
 });
 
 //add 199 annotations
@@ -385,63 +379,9 @@ it('it should check the second page total and keys', async()=>{
             }
         );
 });
-/*
-it('should get container collection items', async()=>{
-    await pactum.spec()
-        .get('/test_container/')
 
-});
-/*
-it('should get page items', async()=>{
-    await pactum.spec()
-});
-
-it('should get container collection', async()=>{
-    await pactum.spec()
-});
-
-it('should get page items', async()=>{
-    await pactum.spec()
-});
-*/
 it('should delete a container', async()=>{
     await pactum.spec()
         .delete('/test_container/')
         .expectStatus(204)
 });
-/*
-describe('alt miiify test', ()=>{
-    let e2e = pactum.e2e('alt miiify test');
-
-    it('alt create container', async()=>{
-        await e2e.step('post container')
-            .spec()
-            .post('http://localhost:8000/miiify/annotations/')
-            .withHeaders('Slug', 'test_container_alt')
-            .withHeaders('Content-Type', 'application/json')
-            .withJson({
-                "@context": [
-                  "http://www.w3.org/ns/anno.jsonld",
-                  "http://www.w3.org/ns/ldp.jsonld"
-                ],
-                "type": ["BasicContainer", "AnnotationCollection"],
-                "label": "A Container for Web Annotations"
-              })
-            .expectStatus(201)
-            .clean()
-            .delete('http://localhost:8000/miiify/annotations/test_container_alt/')
-            .expectStatus(204);
-    });
-    
-    it('alt should get empty collection', async()=>{
-        await e2e.step('alt get container')
-            .spec()
-            .get('http://localhost:8000/miiify/annotations/test_container_alt/')
-            .expectStatus(200);
-    });
-
-    it('alt clean up', async()=>{
-        await e2e.cleanup();
-    });
-});
-*/
