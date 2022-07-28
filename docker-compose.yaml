@@ -41,3 +41,10 @@ services:
     container_name: kong_miiify
     ports:
       - "8080:8080"
+
+  ohos_observatory_tests:
+    image: ohos_observatory_tests
+    hostname: ohos_observatory_tests
+    container_name: ohos_observatory_tests
+    ports:
+      - "9724:9724"
