@@ -52,7 +52,7 @@ phases:
         - |
           if expr "${CODEBUILD_BUILD_SUCCEEDING}" : "1" >/dev/null; then
             echo Build succeeded____........
-            result_str="SUCEEDED"
+            result_str="SUCCEEDED"
           fi
         - |
           if expr "${CODEBUILD_BUILD_SUCCEEDING}" : "0" >/dev/null; then
