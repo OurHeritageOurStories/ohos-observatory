@@ -62,7 +62,7 @@ phases:
         - date_str=`date`
 
         - cburl="https://eu-west-2.console.aws.amazon.com/codesuite/codebuild/259004456259/projects/docker-build-image-pipeline-ohos-observatory/build/${CODEBUILD_BUILD_ID}"
-        - slack_str="'OHOS_Observatory_Frontend_Docker__v_${CODEBUILD_BUILD_NUMBER},_build_status_=_${result_str}_For_more_details_${cburl}"
+        - slack_str="OHOS_Observatory_Frontend_Docker__v_${CODEBUILD_BUILD_NUMBER},_Build_Status_=_${result_str}_For_more_details_${cburl}"
         - echo $slack_str
         - ./slack-alert.sh $slack_str
         
