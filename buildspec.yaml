@@ -48,4 +48,22 @@ phases:
     commands:
         - echo ____Build status = $CODEBUILD_BUILD_SUCCEEDING @ `date`____........
         
+        - chmod +x slack-alert.sh
+        - |
+          if expr "${CODEBUILD_BUILD_SUCCEEDING}" : "1" >/dev/null; then
+            echo Build succeeded____........
+            result_str="SUCCEEDED"
+          fi
+        - |
+          if expr "${CODEBUILD_BUILD_SUCCEEDING}" : "0" >/dev/null; then
+            echo Build Failed____........
+            result_str="FAILED"
+          fi
+        - date_str=`date`
+
+        - cburl="https://eu-west-2.console.aws.amazon.com/codesuite/codebuild/259004456259/projects/docker-build-image-pipeline-ohos-observatory/build/${CODEBUILD_BUILD_ID}"
+        - slack_str="OHOS_Observatory_Frontend_Docker__v_${CODEBUILD_BUILD_NUMBER},_Build_Status_=_${result_str}_For_more_details_${cburl}"
+        - echo $slack_str
+        - ./slack-alert.sh $slack_str
+        
         
