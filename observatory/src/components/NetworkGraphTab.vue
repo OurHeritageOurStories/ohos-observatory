@@ -58,7 +58,7 @@ export default{
     created(){
         this.graph_status = this.graph_status.replace("Select data in the Select tab please", "Fetching data... If this message disappears but the graph doesn't show within a few seconds, switch between tabs");
         console.log("Fetching data...");
-        fetch('api/graph?query=SELECT * {?s ?p ?o}',{
+        fetch('api/graph?query=SELECT * {?s ?p ?o} LIMIT 100',{
             headers:{"Accept":"application/sparql-results+json"}
         })
             .then(response=>response.json())
@@ -71,6 +71,26 @@ export default{
             let promise = new Promise(function (resolve, reject){
                 fetch(
                       "https://www.wikidata.org/w/api.php?action=wbgetentities&props=labels&origin=*&format=json&&formatversion=2&ids="+ref,
+                      {
+                        method: "GET"
+                      }
+                    )
+                      .then(response => response.json())
+                      .then(response => (label = response))
+                      .then(response => {
+                        resolve(label);
+                      })
+                      .catch(error => {
+                        reject(error.message);
+                      });
+            });
+            return promise;
+        },
+        fetch_image_promise(ref){
+            let label = null;
+            let promise = new Promise(function (resolve, reject){
+                fetch(
+                      "https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=SELECT+%3Fi+WHERE+%7B%0D%0A+++%7B%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + ref + "%3E+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2Fthumbnail%3E+%3Fi%7D%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=30000&signal_void=on&signal_unconnected=on",
                       {
                         method: "GET"
                       }
@@ -108,13 +128,39 @@ export default{
                     );
                     break;
                 case false:
-                    this.labels[link] = link.replace("http://dbpedia.org/resource/", "").replace(":", "").replace(/_/g, " ").replace("//xmlns.com/foaf/0.1/", "");
-                    this.count = this.count + 1;
-                    if(this.count == this.len*3)
-                            {
-                                this.make_connections();
-                            }
-                    return link;
+                    switch(link.includes("dbpedia.org/")){
+                        case true:
+                            var ref =  refArray[refArray.length-1];
+                            var promise = this.fetch_image_promise(ref);
+                            this.labels[link] = link.replace("http://dbpedia.org/resource/", "").replace(":", "").replace(/_/g, " ").replace("//xmlns.com/foaf/0.1/", "");
+                            promise.then(
+                                (result)=>{
+                                    this.count = this.count + 1;
+                                    if (result.results.bindings.length)
+                                        this.nodes[link] = {face: result.results.bindings[0].i.value };
+                                    if(this.count == this.len*3)
+                                    {
+                                        this.make_connections();
+                                    }
+                                    return result;
+                                },
+                                (error)=>{
+                                    throw "Error: " + error;
+                                }
+                            );
+                            break;
+                        case false:
+                            this.labels[link] = link.replace("http://dbpedia.org/resource/", "").replace(":", "").replace(/_/g, " ").replace("//xmlns.com/foaf/0.1/", "");
+                            this.count = this.count + 1;
+                            if(this.count == this.len*3)
+                                    {
+                                        this.make_connections();
+                                    }
+                            return link;
+                            break;
+                    }
+
+                    
             }
         },
         make_connections(){
@@ -162,6 +208,7 @@ export default{
                         this.edges[i] = { source: sub, target: obje, label: this.labels[pre] };
                         break;
                 }
+                this.nodes[sub].name = this.labels[sub];
             }
         },
         draw_graph(fetched_data){
