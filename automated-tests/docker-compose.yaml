@@ -1,0 +1,43 @@
+version: "3.3"
+networks:
+  default:
+   # name: kong-net
+services:
+  kong:
+    image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/kong-alpine:kong-280-alpine
+    hostname: ohos_observatory_kong
+    container_name: ohos_observatory_kong
+    environment:
+      KONG_DATABASE: 'off'
+      KONG_PROXY_ACCESS_LOG: '/dev/stdout'
+      KONG_ADMIN_ACCESS_LOG: '/dev/stdout'
+      KONG_PROXY_ERROR_LOG: '/dev/stderr'
+      KONG_ADMIN_ERROR_LOG: '/dev/stderr'
+      KONG_ADMIN_LISTEN: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
+    command: "kong start"
+    ports:
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "8444:8444"
+  
+  kong_vue_frontend:
+    image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend
+    hostname: kong_vue_frontend
+    container_name: kong_vue_frontend
+    ports:
+      - "3000:3000"
+
+  kong_blazegraph:
+    image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/lyrasis-blazegraph
+    hostname: kong_blazegraph
+    container_name: kong_blazegraph
+    ports:
+      - "3497:3497"
+      
+  kong_miiify:
+    image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/jptmoore-miiify
+    hostname: kong_miiify
+    container_name: kong_miiify
+    ports:
+      - "8080:8080"
