@@ -160,5 +160,38 @@ input[type='radio'] {
 .tabcontent a {
     color: #ca5ed6; 
 }
+.slidecontainer {
+  width: 15%;
+}
+.slider {
+  -webkit-appearance: none;
+  width: 15%;
+  height: 10px;
+  border-radius: 5px;
+  background: #e7d2ea;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+.slider:hover {
+  opacity: 1;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ca5ed6;
+  cursor: pointer;
+}
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ca5ed6;
+  cursor: pointer;
+}
 
 </style>
