@@ -92,8 +92,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: "Gill Sans Nova", "ETBembo";
 }
 .container {  
-    max-width: 80%;
-    min-width: 60%;
+    max-width: 75%;
     position: relative;
     margin: 20px;
 }

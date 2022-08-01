@@ -22,9 +22,12 @@ export default{
             len: null,
             count: 0,
             fetched_data_copy: null,
+            node_limit: 30,
+            componentKey: 0,
             configs: reactive(
               vNG.defineConfigs({
                 view: {
+                  autoPanAndZoomOnLoad: "center-content",
                   layoutHandler: new ForceLayout({
                     positionFixedByDrag: false,
                     positionFixedByClickWithAltKey: true,
@@ -32,19 +35,27 @@ export default{
                 },
                 node: {
                   normal: {
-                    color: n => (n.id === "node0" ? "#ff0000" : "#4466cc"),
+                    color: "#b3bdee",
                   },
                   label: {
                     visible: true,
+                    background: {
+                      padding: 10,
+                    },
+                  margin: 10,    
                   },
                 },
                 edge: {
+                  normal: {
+                    width: 1,
+                    color: "#b3bdee",
+                  },
                   type: "curve",
                   marker: {
                     source: {
                       type: "arrow",
                     }
-                  },                  
+                  },
                 },
               })
             ),
@@ -56,14 +67,7 @@ export default{
         };
     },
     created(){
-        this.graph_status = this.graph_status.replace("Select data in the Select tab please", "Fetching data... If this message disappears but the graph doesn't show within a few seconds, switch between tabs");
-        console.log("Fetching data...");
-        fetch('api/graph?query=SELECT * {?s ?p ?o}',{
-            headers:{"Accept":"application/sparql-results+json"}
-        })
-            .then(response=>response.json())
-            .then(response=>(this.post=response))
-            .then(response=>this.draw_graph(response));
+        //this.redo_graph()
     },
     methods:{
         fetch_label_promise(ref){
@@ -161,7 +165,7 @@ export default{
         },
         draw_graph(fetched_data){
             this.fetched_data_copy = fetched_data.results.bindings;
-            this.graph_status = this.graph_status.replace("Fetching data", "Drawing graph");
+            this.graph_status = "Drawing graph...";
             console.log("Drawing graph...")
             var results = fetched_data.results.bindings;
             let obj = null;
@@ -178,9 +182,26 @@ export default{
                 this.fetch_label(obje);
                 this.fetch_label(pre);      
             }
-            this.graph_status = this.graph_status.delete;
+            this.graph_status = "";
             console.log("The graph should be ready. If it doesn't display, switch between tabs.")
-        }
+        },
+        redo_graph(){
+            console.log(this.node_limit);
+            sessionStorage.setItem("nodeLimit", this.node_limit);
+            this.componentKey += 1;
+            console.log(this.node_limit);
+            this.node_limit = sessionStorage.getItem("nodeLimit");
+            console.log(this.node_limit);
+            this.graph_status = "Fetching data... If this message disappears but the graph doesn't show within a few seconds, click refresh below";
+            console.log("Fetching data...");
+            fetch('api/graph?query=SELECT * {?s ?p ?o}',{
+            //fetch('api/graph?query=SELECT * {?s ?p ?o} LIMIT ' + this.node_limit,{
+                headers:{"Accept":"application/sparql-results+json"}
+            })
+                .then(response=>response.json())
+                .then(response=>(this.post=response))
+                .then(response=>this.draw_graph(response)); 
+    }
     }
 }
 
@@ -195,6 +216,7 @@ export default{
     :configs="configs"
     :layers="layers"
     :event-handlers="eventHandlers"
+    :key="componentKey"
   >
     <defs>
       <clipPath id="faceCircle" clipPathUnits="objectBoundingBox">
@@ -225,7 +247,11 @@ export default{
       />
     </template>
   </v-network-graph>
-
+  <div id="nodeLimit">
+  <p>Set max nodes: {{ node_limit }}</p>
+  <input v-model="node_limit" id="node_limit" size="4"/>
+  <button @click="redo_graph" id="node_limit_button" class="button">Refresh</button>
+  </div>
 </template>
 
 <style lang="scss" scoped>
