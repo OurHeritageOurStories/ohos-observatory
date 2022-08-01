@@ -26,11 +26,10 @@ phases:
         - cd automated-tests
         - pwd  
         - cat docker-compose.yaml
-        - cat dockerfile
         
         - docker images -a
 
-        # Build Docker image and push to ECR with latest tag
+        # Pull latest ohos-observatory-frontend image from ECR 
         - aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 259004456259.dkr.ecr.eu-west-2.amazonaws.com
         - docker images -a
         - docker pull 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend:latest
@@ -40,7 +39,7 @@ phases:
         - docker-compose up -d
         - docker ps 
 
-
+        # Install Insomnia CLI 
         #- docker pull kong/inso:latest
         - npm install --global insomnia-inso
 
@@ -48,6 +47,7 @@ phases:
         - curl -v http://localhost:3000 ;
         - curl  http://localhost:3000
         
+        #Apply API configs via HTTP POST 
         - cat apiconfig.sh
         - chmod +x apiconfig.sh 
         - ./apiconfig.sh
