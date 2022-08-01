@@ -1,0 +1,65 @@
+version: 0.2
+
+phases:
+  install:
+
+    commands:
+        # Setup Docker host 
+        - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
+        - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+        
+        # Download code repo 
+        - git config --global credential.helper store
+        - echo git user $git_user
+        - cd /home
+        - git clone --single-branch -b ${git_branch} https://$git_user:${git_password}@github.com/nationalarchives/ohos-observatory.git
+
+
+  build:
+    commands:
+    
+        - echo Running the build __...
+
+        
+        - pwd
+        - cd ohos-observatory
+        - cd automated-tests
+        - pwd  
+        - cat docker-compose.yaml
+        - cat dockerfile
+        
+        - docker images -a
+
+        # Build Docker image and push to ECR with latest tag
+        - aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 259004456259.dkr.ecr.eu-west-2.amazonaws.com
+        - docker images -a
+        - docker pull 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend:latest
+        
+         # Build Docker image and push to ECR with build tag
+        - docker images -a
+        - docker-compose up -d
+        - docker ps 
+
+
+        #- docker pull kong/inso:latest
+        - npm install --global insomnia-inso
+
+
+        - curl -v http://localhost:3000 ;
+        - curl  http://localhost:3000
+        
+        - cat apiconfig.sh
+        - chmod +x apiconfig.sh 
+        - ./apiconfig.sh
+        
+        - inso -v
+        
+        - curl -v http://localhost:3000 ;
+      
+       
+
+  post_build:
+    commands:
+        - echo ____Build status = $CODEBUILD_BUILD_SUCCEEDING @ `date`____........
+        
+        
