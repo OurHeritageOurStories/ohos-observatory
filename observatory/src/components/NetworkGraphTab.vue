@@ -66,11 +66,40 @@ export default{
             .then(response=>this.draw_graph(response));
     },
     methods:{
+        forceUpdate(){
+            fetch('api/graph?query=SELECT * {?s ?p ?o} LIMIT 30',{
+            headers:{"Accept":"application/sparql-results+json"}
+        })
+            .then(response=>response.json())
+            .then(response=>(this.post=response))
+            .then(response=>this.draw_graph(response));
+        },
+
         fetch_label_promise(ref){
             let label = null;
             let promise = new Promise(function (resolve, reject){
                 fetch(
                       "https://www.wikidata.org/w/api.php?action=wbgetentities&props=labels&origin=*&format=json&&formatversion=2&ids="+ref,
+                      {
+                        method: "GET"
+                      }
+                    )
+                      .then(response => response.json())
+                      .then(response => (label = response))
+                      .then(response => {
+                        resolve(label);
+                      })
+                      .catch(error => {
+                        reject(error.message);
+                      });
+            });
+            return promise;
+        },
+        fetch_related_promise(ref){
+            let label = null;
+            let promise = new Promise(function (resolve, reject){
+                fetch(
+                      "https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=+SELECT+%3Fp+%3Fo+%7B%0D%0A++++%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + ref + "%3E%0D%0A++++++++%3Fp+%3Fo+.+%23%3Fp+is+now+a+variable%0D%0A+++FILTER%28LANG%28%3Fo%29+%3D+%27en%27+%7C%7C+LANG%28%3Fo%29+%3D+%27%27+%7C%7C++%21BOUND%28LANG%28%3Fo%29%29+%29%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=30000&signal_void=on&signal_unconnected=on",
                       {
                         method: "GET"
                       }
@@ -231,7 +260,7 @@ export default{
       />
     </template>
   </v-network-graph>
-
+  <button @click=forceUpdate id="node_limit_button" class="button">OK</button>
 </template>
 
 <style lang="scss" scoped>
