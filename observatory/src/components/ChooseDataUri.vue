@@ -119,7 +119,7 @@ export default{
 <div id="insert_from_url">
     <div id="input_the_url">
         <p>This data will be ephemeral and must be in plain format, e.g. a raw.github URL. Please be patient after clicking Upload.</p>
-        <input v-model="url_for_data" id="url_for_data" size="80"/>
+        <input v-model="url_for_data" id="url_for_data" size="50"/>
     </div>
     <div id="select_the_headers">
         <p id="data_type_radio_group">Please select what data_type it is</p>
@@ -164,7 +164,8 @@ export default{
     grid-column-start: 5;
     grid-column-end: 5;
     grid-row: 2;
-    margin-left: 160px;
+    margin-left: 20%;
+    margin-right: 5px;
 }
 #url_for_data{
     margin-top: 20px;
