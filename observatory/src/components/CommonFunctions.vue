@@ -3,13 +3,12 @@
 export default{
       fetch_image_promise(ref){
           let label = null;
+          let endpoint = 'https://dbpedia.org/sparql';
+          let sparqlQuery = "SELECT ?i WHERE { {<http://dbpedia.org/resource/" + ref + "> <http://dbpedia.org/ontology/thumbnail> ?i}}";
+          let fullUrl = endpoint + '?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=' + encodeURIComponent( sparqlQuery );
+          let headers = { 'Accept': 'application/sparql-results+json' };
           let promise = new Promise(function (resolve, reject){
-              fetch(
-                    "https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=SELECT+%3Fi+WHERE+%7B%0D%0A+++%7B%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + ref + "%3E+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2Fthumbnail%3E+%3Fi%7D%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=30000&signal_void=on&signal_unconnected=on",
-                    {
-                      method: "GET"
-                    }
-                  )
+              fetch( fullUrl, { headers } )
                     .then(response => response.json())
                     .then(response => (label = response))
                     .then(response => {
