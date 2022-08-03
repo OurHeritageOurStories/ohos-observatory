@@ -42,7 +42,7 @@ export default{
                 edge: {
                   type: "curve",
                   marker: {
-                    source: {
+                    target: {
                       type: "arrow",
                     }
                   },                  
