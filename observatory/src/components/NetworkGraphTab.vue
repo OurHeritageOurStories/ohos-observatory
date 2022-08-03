@@ -8,6 +8,7 @@ import {
   ForceEdgeDatum,
 } from "v-network-graph/lib/force-layout"
 import LoadDataVue from "./LoadData.vue";
+import CommonFunctions from "./CommonFunctions.vue";
 
 export default{
     data(){
@@ -58,7 +59,7 @@ export default{
                   gap: 50,
                   type: "curve",
                   marker: {
-                    source: {
+                    target: {
                       type: "arrow",
                     }
                   },
@@ -125,13 +126,39 @@ export default{
                     );
                     break;
                 case false:
-                    this.labels[link] = link.replace("http://dbpedia.org/resource/", "").replace(":", "").replace(/_/g, " ").replace("//xmlns.com/foaf/0.1/", "");
-                    this.count = this.count + 1;
-                    if(this.count == this.len*3)
-                            {
-                                this.make_connections();
-                            }
-                    return link;
+                    switch(link.includes("dbpedia.org/")){
+                        case true:
+                            var ref =  refArray[refArray.length-1];
+                            var promise = CommonFunctions.fetch_image_promise(ref);
+                            this.labels[link] = link.replace("http://dbpedia.org/resource/", "").replace(":", "").replace(/_/g, " ").replace("//xmlns.com/foaf/0.1/", "");
+                            promise.then(
+                                (result)=>{
+                                    this.count = this.count + 1;
+                                    if (result.results.bindings.length)
+                                        this.nodes[link] = {face: result.results.bindings[0].i.value };
+                                    if(this.count == this.len*3)
+                                    {
+                                        this.make_connections();
+                                    }
+                                    return result;
+                                },
+                                (error)=>{
+                                    throw "Error: " + error;
+                                }
+                            );
+                            break;
+                        case false:
+                            this.labels[link] = link.replace("http://dbpedia.org/resource/", "").replace(":", "").replace(/_/g, " ").replace("//xmlns.com/foaf/0.1/", "");
+                            this.count = this.count + 1;
+                            if(this.count == this.len*3)
+                                    {
+                                        this.make_connections();
+                                    }
+                            return link;
+                            break;
+                    }
+
+                    
             }
         },
         make_connections(){
@@ -179,6 +206,7 @@ export default{
                         this.edges[i] = { source: sub, target: obje, label: this.labels[pre] };
                         break;
                 }
+                this.nodes[sub].name = this.labels[sub];
             }
         },
         draw_graph(fetched_data){
