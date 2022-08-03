@@ -10,7 +10,6 @@ import {
 import LoadDataVue from "./LoadData.vue";
 import CommonFunctions from "./CommonFunctions.vue";
 
-
 export default{
     data(){
         return{
@@ -23,9 +22,14 @@ export default{
             len: null,
             count: 0,
             fetched_data_copy: null,
+            node_limit: localStorage.getItem("nodeLimit"),
+            componentKey: 0,
+            zoomLevel: ref(0.7),
             configs: reactive(
               vNG.defineConfigs({
                 view: {
+                  scalingObjects: true,
+                  autoPanAndZoomOnLoad: "fit-content",
                   layoutHandler: new ForceLayout({
                     positionFixedByDrag: false,
                     positionFixedByClickWithAltKey: true,
@@ -33,19 +37,39 @@ export default{
                 },
                 node: {
                   normal: {
-                    color: n => (n.id === "node0" ? "#ff0000" : "#4466cc"),
+                    radius: 12,
+                    color: "#b3bdee",
+                    strokeWidth: 5,
+                    strokeColor: "#b3bdee",
                   },
                   label: {
                     visible: true,
-                  },
+                    background: {
+                      visible: true,
+                      color: "#f7fafa",
+                    },
+                  margin: 0,    
+                  }
                 },
                 edge: {
+                  normal: {
+                    width: 1,
+                    color: "#b3bdee",
+                  },
+                  gap: 50,
                   type: "curve",
                   marker: {
                     target: {
                       type: "arrow",
                     }
-                  },                  
+                  },
+                  label: {
+                    fontSize: 9,
+                    background: {
+                      visible: true,
+                      color: "#f7fafa",
+                    },                    
+                  }
                 },
               })
             ),
@@ -57,14 +81,7 @@ export default{
         };
     },
     created(){
-        this.graph_status = this.graph_status.replace("Select data in the Select tab please", "Fetching data... If this message disappears but the graph doesn't show within a few seconds, switch between tabs");
-        console.log("Fetching data...");
-        fetch('api/graph?query=SELECT * {?s ?p ?o} LIMIT 100',{
-            headers:{"Accept":"application/sparql-results+json"}
-        })
-            .then(response=>response.json())
-            .then(response=>(this.post=response))
-            .then(response=>this.draw_graph(response));
+        this.create_graph()
     },
     methods:{
         fetch_label_promise(ref){
@@ -194,7 +211,7 @@ export default{
         },
         draw_graph(fetched_data){
             this.fetched_data_copy = fetched_data.results.bindings;
-            this.graph_status = this.graph_status.replace("Fetching data", "Drawing graph");
+            this.graph_status = "Drawing graph...";
             console.log("Drawing graph...")
             var results = fetched_data.results.bindings;
             console.log(results);
@@ -212,23 +229,43 @@ export default{
                 this.fetch_label(obje);
                 this.fetch_label(pre);      
             }
-            this.graph_status = this.graph_status.delete;
+            this.graph_status = "";
             console.log("The graph should be ready. If it doesn't display, switch between tabs.")
-        }
+        },
+        create_graph(){
+            localStorage.setItem("nodeLimit", this.node_limit);
+            this.componentKey += 1;
+            this.graph_status = "Fetching data... If this message disappears but the graph doesn't show within a few seconds, switch between tabs";
+            if (isNaN(this.node_limit)){
+                this.node_limit = 100;
+            }
+            fetch('api/graph?query=SELECT * {?s ?p ?o} LIMIT ' + this.node_limit,{
+                headers:{"Accept":"application/sparql-results+json"}
+            })
+                .then(response=>response.json())
+                .then(response=>(this.post=response))
+                .then(response=>this.draw_graph(response));
+    }
     }
 }
 
 </script>
 
 <template>
-<div id="graphStatus">{{ graph_status }}</div>
+<div id="graphStatus" style="font-size:12px;">{{ graph_status }}</div>
+<div id="zoomStatus">
+    <label style="font-size:12px;">Set zoom level  </label>
+    <input type="range" v-model="zoomLevel" min="0.4" max="5" step="0.1" class="slider">
+</div>
 <v-network-graph
+    v-model:zoom-level="zoomLevel"
     :nodes="nodes"
     :edges="edges"
     :layouts="layouts"
     :configs="configs"
     :layers="layers"
     :event-handlers="eventHandlers"
+    :key="componentKey"
   >
     <defs>
       <clipPath id="faceCircle" clipPathUnits="objectBoundingBox">
@@ -259,7 +296,12 @@ export default{
       />
     </template>
   </v-network-graph>
-
+  <div id="nodeLimit">
+  <label style="font-size:12px;">Set max nodes: {{ node_limit }}  </label>
+  <input  type="range" v-model="node_limit" id="node_limit" min="1" max="200" class="slider"/>
+  <button @click="create_graph" id="node_limit_button" class="button">Refresh</button>
+  <span style="font-size:12px;">The limit might not be precise. If the graph appears odd, switch between tabs.</span>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -274,4 +316,5 @@ export default{
 .face-picture {
   pointer-events: none;
 }
+
 </style>
