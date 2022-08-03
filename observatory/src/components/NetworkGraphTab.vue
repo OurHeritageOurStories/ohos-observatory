@@ -8,6 +8,7 @@ import {
   ForceEdgeDatum,
 } from "v-network-graph/lib/force-layout"
 import LoadDataVue from "./LoadData.vue";
+import CommonFunctions from "./CommonFunctions.vue";
 
 
 export default{
@@ -86,26 +87,6 @@ export default{
             });
             return promise;
         },
-        fetch_image_promise(ref){
-            let label = null;
-            let promise = new Promise(function (resolve, reject){
-                fetch(
-                      "https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=SELECT+%3Fi+WHERE+%7B%0D%0A+++%7B%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + ref + "%3E+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2Fthumbnail%3E+%3Fi%7D%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=30000&signal_void=on&signal_unconnected=on",
-                      {
-                        method: "GET"
-                      }
-                    )
-                      .then(response => response.json())
-                      .then(response => (label = response))
-                      .then(response => {
-                        resolve(label);
-                      })
-                      .catch(error => {
-                        reject(error.message);
-                      });
-            });
-            return promise;
-        },
         fetch_label(link){
             var refArray = link.split("/");
             switch(link.includes("wikidata.org/")){
@@ -131,7 +112,7 @@ export default{
                     switch(link.includes("dbpedia.org/")){
                         case true:
                             var ref =  refArray[refArray.length-1];
-                            var promise = this.fetch_image_promise(ref);
+                            var promise = CommonFunctions.fetch_image_promise(ref);
                             this.labels[link] = link.replace("http://dbpedia.org/resource/", "").replace(":", "").replace(/_/g, " ").replace("//xmlns.com/foaf/0.1/", "");
                             promise.then(
                                 (result)=>{
