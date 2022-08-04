@@ -71,7 +71,7 @@ export default{
             ),
             eventHandlers: {
               "node:click": ({ node }) => {
-                alert(node);
+                this.fetch_related_promise(node);
               },
             }
         };
@@ -100,26 +100,31 @@ export default{
             });
             return promise;
         },
-        fetch_related_promise(ref){
-            let label = null;
-            let promise = new Promise(function (resolve, reject){
-                fetch(
-                      "https://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=+SELECT+%3Fp+%3Fo+%7B%0D%0A++++%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + ref + "%3E%0D%0A++++++++%3Fp+%3Fo+.+%23%3Fp+is+now+a+variable%0D%0A+++FILTER%28LANG%28%3Fo%29+%3D+%27en%27+%7C%7C+LANG%28%3Fo%29+%3D+%27%27+%7C%7C++%21BOUND%28LANG%28%3Fo%29%29+%29%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=30000&signal_void=on&signal_unconnected=on",
-                      {
-                        method: "GET"
-                      }
-                    )
-                      .then(response => response.json())
-                      .then(response => (label = response))
-                      .then(response => {
-                        resolve(label);
-                      })
-                      .catch(error => {
-                        reject(error.message);
-                      });
-            });
-            return promise;
-        },
+        fetch_related_promise(link){
+          var refArray = link.split("/");
+          var ref =  refArray[refArray.length-1];  
+          let label = null;
+          let endpoint = 'https://query.wikidata.org/sparql';
+          let sparqlQuery = "SELECT DISTINCT ?op ?o ?oo ?a ?s  WHERE { " +
+            "SERVICE <http://dbpedia.org/sparql>  {<http://dbpedia.org/resource/" + ref + "> ?op ?o. " +
+            "<http://dbpedia.org/resource/" + ref + "> owl:sameAs ?oo " +
+            "filter( regex(str(?oo), 'wikidata' ) && (LANG(?o) = 'en' || LANG(?o) = ''))} " +
+            "SERVICE <https://query.wikidata.org/sparql>{ ?oo ?a ?s.}}";
+          let fullUrl = endpoint + '?query=' + encodeURIComponent( sparqlQuery );
+          let headers = { 'Accept': 'application/sparql-results+json' };
+          let promise = new Promise(function (resolve, reject){
+              fetch( fullUrl, { headers } )
+                    .then(response => response.json())
+                    .then(response => (label = response))
+                    .then(response => {
+                      console.log(response);
+                    })
+                    .then(response => {
+                      this.$parent.relatedJSON = text( JSON.stringify(response) );
+                    });
+          });
+          return promise;
+      },
         fetch_label(link){
             var refArray = link.split("/");
             switch(link.includes("wikidata.org/")){

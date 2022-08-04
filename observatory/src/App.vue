@@ -13,6 +13,7 @@ export default{
     },
     data: function() { 
       return {
+        relatedJSON: "",
         activetab: '1' 
         }
     },
@@ -22,10 +23,14 @@ export default{
 
 <template>
 <div id="sidebar">
-    <img alt="OHOS" src="./assets/OHOS_Logo.png"/>
-    <h1 class="observatory">Observatory</h1>
-    <a href="https://ohos.ac.uk/"  target="_blank">Our Heritage, Our Stories</a><br>
-    <a href="https://www.nationalcollection.org.uk/"  target="_blank">Towards a National Collection</a><br>
+    <div id="static">
+        <img alt="OHOS" src="./assets/OHOS_Logo.png"/>
+        <h1 class="observatory">Observatory</h1>
+        <a href="https://ohos.ac.uk/"  target="_blank">Our Heritage, Our Stories</a><br>
+        <a href="https://www.nationalcollection.org.uk/"  target="_blank">Towards a National Collection</a><br>
+    </div>
+    <div id="placeholder" v-html="relatedJSON">
+    </div>
 </div>
 
 <div id="tabs" class="container">
