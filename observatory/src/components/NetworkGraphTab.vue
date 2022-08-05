@@ -233,7 +233,7 @@ export default{
         },
         create_graph(){
             this.nodes = {};
-            this.edges = {}
+            this.edges = {};
             this.labels = {};
             this.layouts = {};
             this.len = null;
