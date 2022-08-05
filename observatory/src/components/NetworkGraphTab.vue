@@ -306,7 +306,6 @@ export default{
   <label style="font-size:12px;">Set max nodes: {{ node_limit }}  </label>
   <input  type="range" v-model="node_limit" id="node_limit" min="1" max="200" class="slider"/>
   <button @click="create_graph" id="node_limit_button" class="button">Refresh</button>
-  <span style="font-size:12px;">The limit might not be precise. If the graph appears odd, switch between tabs.</span>
   </div>
 </template>
 
