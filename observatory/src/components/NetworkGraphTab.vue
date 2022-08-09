@@ -54,6 +54,7 @@ export default{
     data(){
         return{
             items: null,
+            label: null,
             relatedData: reactive([]),
             table: reactive({
               columns: [
@@ -146,23 +147,8 @@ export default{
                 promise.then(
                     (result)=>{
                         this.relatedData = reactive([]);
-                        this.relatedJSON = "";
-                        this.items = [];
-            for(let i = 0;i<result.length;i++)
-            {
-                this.items.push({
-                    subject: "A",
-                    predicate: result[i].op.split(":")[1],
-                    object: result[i].o,
-                });
-                this.items.push({
-                    subject: "As",
-                    predicate: result[i].a.split(":")[1],
-                    object: result[i].s,
-                });
-            }
-            this.relatedJSON = result;
-            this.publish_table(this.relatedData);
+                        this.relatedJSON = result;
+                        this.publish_table(this.relatedData);
                     },
                     (error)=>{
                         throw "Error: " + error;
@@ -179,31 +165,20 @@ export default{
         publish_table(relatedData)
         {
             let sub = this.fetch_related_label(this.relatedJSON.results.bindings[0].oo.value);
+            this.items = {};
             for (let i = 0; i < this.relatedJSON.results.bindings.length; i++) {
-                let opp = this.relatedJSON.results.bindings[i].op.value.split(":")[1];
-              relatedData.push({
+                this.items[this.relatedJSON.results.bindings[i].op.value] = this.relatedJSON.results.bindings[i].o.value;
+                this.items[this.relatedJSON.results.bindings[i].a.value]  = this.fetch_related_label(this.relatedJSON.results.bindings[i].s.value);
+            }
+            for (const [key, value] of Object.entries(this.items)) {
+            relatedData.push({
                 subject: sub,
-                predicate: this.relatedJSON.results.bindings[i].op.value.split(":")[1],
-                object: this.relatedJSON.results.bindings[i].o.value,
-              });
-                let opp = this.relatedJSON.results.bindings[i].a.value.split(":")[1];
-              relatedData.push({
-                subject: sub,
-                predicate: this.relatedJSON.results.bindings[i].a.value.split(":")[1],
-                object: this.relatedJSON.results.bindings[i].s.value,
+                predicate: key,
+                object: value,
               });
             }
             this.table["rows"] = relatedData;
             
-        },
-        display_related_result(json)
-        {   
-            this.relatedJSON = "";
-            for(let i = 0;i<json.length;i++)
-            {
-            this.relatedJSON = this.relatedJSON  + json[i].op.split(":")[1] + " " + json[i].o + " " + json[i].a.split(":")[1] + " " + json[i].s;
-            }
-            this.relatedJSON = json;
         },
         fetch_label_promise(ref){
             let label = null;
@@ -306,13 +281,14 @@ export default{
         },
         fetch_related_label(link){
             var refArray = link.split("/");
+            var label = "";
             switch(link.includes("wikidata.org/")){
                 case true:
                     var ref =  refArray[refArray.length-1];
                     var promise = this.fetch_label_promise(ref, link);
                     promise.then(
                         (result)=>{
-                            return result.entities[ref].labels.en.value;
+                            label = result.entities[ref].labels.en.value;
                         },
                         (error)=>{
                             throw "Error: " + error;
