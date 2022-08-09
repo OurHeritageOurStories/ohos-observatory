@@ -1007,8 +1007,8 @@ tr {
 .vtl-table thead th {
   vertical-align: bottom;
   color: #fff;
-  background-color: #343a40;
-  border-color: #454d55;
+  background-color: #e7d2ea;
+  border-color: #e7d2ea;
   border-bottom: 2px solid #dee2e6;
 }
 

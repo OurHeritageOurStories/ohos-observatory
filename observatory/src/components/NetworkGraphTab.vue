@@ -164,11 +164,44 @@ export default{
     methods:{
         publish_table(relatedData)
         {
-            let sub = this.fetch_related_label(this.relatedJSON.results.bindings[0].oo.value);
+            let sub = ""
+            let link = this.relatedJSON.results.bindings[0].oo.value;
+            var refArray = link.split("/");
+            switch(link.includes("wikidata.org/")){
+                case true:
+                    var ref =  refArray[refArray.length-1];
+                    var promise = this.fetch_label_promise(ref, link);
+                    promise.then(
+                        (result)=>{
+                            sub = result.entities[ref].labels.en.value;
+                        },
+                        (error)=>{
+                            throw "Error: " + error;
+                        }
+                    );
+                    break;    
+            }
             this.items = {};
             for (let i = 0; i < this.relatedJSON.results.bindings.length; i++) {
                 this.items[this.relatedJSON.results.bindings[i].op.value] = this.relatedJSON.results.bindings[i].o.value;
-                this.items[this.relatedJSON.results.bindings[i].a.value]  = this.fetch_related_label(this.relatedJSON.results.bindings[i].s.value);
+                //let label = ""
+                let link = this.relatedJSON.results.bindings[i].s.value;
+                //var refArray = link.split("/");
+                //switch(link.includes("wikidata.org/")){
+                //    case true:
+                //        var ref =  refArray[refArray.length-1];
+                //        var promise = this.fetch_label_promise(ref, link);
+                //        promise.then(
+                //            (result)=>{
+                                this.items[this.relatedJSON.results.bindings[i].a.value] = link;
+                                console.log(this.relatedJSON.results.bindings[i].a.value, link);
+                //            },
+                //            (error)=>{
+                //                throw "Error: " + error;
+                //            }
+                //        );
+                //        break;    
+                //}
             }
             for (const [key, value] of Object.entries(this.items)) {
             relatedData.push({
@@ -281,7 +314,6 @@ export default{
         },
         fetch_related_label(link){
             var refArray = link.split("/");
-            var label = "";
             switch(link.includes("wikidata.org/")){
                 case true:
                     var ref =  refArray[refArray.length-1];
