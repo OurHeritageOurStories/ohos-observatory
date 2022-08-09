@@ -1,6 +1,7 @@
 <script lang="ts">
 
-import { reactive, ref } from "vue"
+import TableLite from "../components/TableLite.vue";
+import { defineComponent, reactive, computed, ref } from "vue"
 import * as vNG from "v-network-graph"
 import {
   ForceLayout,
@@ -11,8 +12,78 @@ import LoadDataVue from "./LoadData.vue";
 import CommonFunctions from "./CommonFunctions.vue";
 
 export default{
+    components: { TableLite },
+    /* setup()
+        {
+            const relatedData = reactive([]);
+            const table = reactive({
+              columns: [
+                {
+                  label: "Subject",
+                  field: "subject",
+                  width: "3%",
+                  sortable: true,
+                  isKey: true,
+                },
+                {
+                  label: "Predicate",
+                  field: "predicate",
+                  width: "10%",
+                  sortable: true,
+                },
+                {
+                  label: "Object",
+                  field: "object",
+                  width: "15%",
+                  sortable: true,
+                },
+              ],
+              rows: relatedData,
+              totalRecordCount: computed(() => {
+                return table.rows.length;
+              }),
+              sortable: {
+                order: "predicate",
+                sort: "asc",
+              },
+            });
+            return {
+              table,
+            };
+        }, */
     data(){
         return{
+            items: null,
+            relatedData: reactive([]),
+            table: reactive({
+              columns: [
+                {
+                  label: "Subject",
+                  field: "subject",
+                  width: "3%",
+                  sortable: true,
+                  isKey: true,
+                },
+                {
+                  label: "Predicate",
+                  field: "predicate",
+                  width: "10%",
+                  sortable: true,
+                },
+                {
+                  label: "Object",
+                  field: "object",
+                  width: "15%",
+                  sortable: true,
+                },
+              ],
+              rows: this.relatedData,
+              sortable: {
+                order: "predicate",
+                sort: "asc",
+              },
+            }), 
+            relatedJSON: null,
             graph_status: "Select data in the Select tab please",          
             playground_data:null,
             nodes: {},
@@ -44,11 +115,7 @@ export default{
                   },
                   label: {
                     visible: true,
-                    background: {
-                      visible: true,
-                      color: "#f7fafa",
-                    },
-                  margin: 0,    
+                    margin: 0,    
                   }
                 },
                 edge: {
@@ -75,7 +142,32 @@ export default{
             ),
             eventHandlers: {
               "node:click": ({ node }) => {
-                alert(node);
+                var promise = this.fetch_related_promise(node);
+                promise.then(
+                    (result)=>{
+                        this.relatedData = reactive([]);
+                        this.relatedJSON = "";
+                        this.items = [];
+            for(let i = 0;i<result.length;i++)
+            {
+                this.items.push({
+                    subject: "A",
+                    predicate: result[i].op.split(":")[1],
+                    object: result[i].o,
+                });
+                this.items.push({
+                    subject: "As",
+                    predicate: result[i].a.split(":")[1],
+                    object: result[i].s,
+                });
+            }
+            this.relatedJSON = result;
+            this.publish_table(this.relatedData);
+                    },
+                    (error)=>{
+                        throw "Error: " + error;
+                    }
+                );
               },
             }
         };
@@ -84,6 +176,35 @@ export default{
         this.create_graph()
     },
     methods:{
+        publish_table(relatedData)
+        {
+            let sub = this.fetch_related_label(this.relatedJSON.results.bindings[0].oo.value);
+            for (let i = 0; i < this.relatedJSON.results.bindings.length; i++) {
+                let opp = this.relatedJSON.results.bindings[i].op.value.split(":")[1];
+              relatedData.push({
+                subject: sub,
+                predicate: this.relatedJSON.results.bindings[i].op.value.split(":")[1],
+                object: this.relatedJSON.results.bindings[i].o.value,
+              });
+                let opp = this.relatedJSON.results.bindings[i].a.value.split(":")[1];
+              relatedData.push({
+                subject: sub,
+                predicate: this.relatedJSON.results.bindings[i].a.value.split(":")[1],
+                object: this.relatedJSON.results.bindings[i].s.value,
+              });
+            }
+            this.table["rows"] = relatedData;
+            
+        },
+        display_related_result(json)
+        {   
+            this.relatedJSON = "";
+            for(let i = 0;i<json.length;i++)
+            {
+            this.relatedJSON = this.relatedJSON  + json[i].op.split(":")[1] + " " + json[i].o + " " + json[i].a.split(":")[1] + " " + json[i].s;
+            }
+            this.relatedJSON = json;
+        },
         fetch_label_promise(ref){
             let label = null;
             let promise = new Promise(function (resolve, reject){
@@ -104,6 +225,28 @@ export default{
             });
             return promise;
         },
+        fetch_related_promise(link){
+          var refArray = link.split("/");
+          var ref =  refArray[refArray.length-1];  
+          let label = null;
+          let endpoint = 'https://query.wikidata.org/sparql';
+          let sparqlQuery = "SELECT DISTINCT ?op ?o ?oo ?a ?s  WHERE { " +
+            "SERVICE <http://dbpedia.org/sparql>  {<http://dbpedia.org/resource/" + ref + "> ?op ?o. " +
+            "<http://dbpedia.org/resource/" + ref + "> owl:sameAs ?oo " +
+            "filter( regex(str(?oo), 'wikidata' ) && (LANG(?o) = 'en' || LANG(?o) = ''))} " +
+            "SERVICE <https://query.wikidata.org/sparql>{ ?oo ?a ?s.}}";
+          let fullUrl = endpoint + '?query=' + encodeURIComponent( sparqlQuery );
+          let headers = { 'Accept': 'application/sparql-results+json' };
+          let promise = new Promise(function (resolve, reject){
+              fetch( fullUrl, { headers } )
+                    .then(response => response.json())
+                    .then(response => (label = response))
+                    .then(response => {
+                      resolve(response);
+                    });
+          });
+          return promise;
+      },
         fetch_label(link){
             var refArray = link.split("/");
             switch(link.includes("wikidata.org/")){
@@ -135,7 +278,7 @@ export default{
                                 (result)=>{
                                     this.count = this.count + 1;
                                     if (result.results.bindings.length)
-                                        this.nodes[link] = {face: result.results.bindings[0].i.value };
+                                        this.nodes[link] = {name: this.labels[link], face: result.results.bindings[0].i.value };
                                     if(this.count == this.len*3)
                                     {
                                         this.make_connections();
@@ -159,6 +302,23 @@ export default{
                     }
 
                     
+            }
+        },
+        fetch_related_label(link){
+            var refArray = link.split("/");
+            switch(link.includes("wikidata.org/")){
+                case true:
+                    var ref =  refArray[refArray.length-1];
+                    var promise = this.fetch_label_promise(ref, link);
+                    promise.then(
+                        (result)=>{
+                            return result.entities[ref].labels.en.value;
+                        },
+                        (error)=>{
+                            throw "Error: " + error;
+                        }
+                    );
+                    break;    
             }
         },
         make_connections(){
@@ -302,6 +462,12 @@ export default{
   <button @click="create_graph" id="node_limit_button" class="button">Refresh</button>
   <span style="font-size:12px;">The limit might not be precise. If the graph appears odd, switch between tabs.</span>
   </div>
+  <table-lite
+    :is-static-mode="fals3"
+    :columns="table.columns"
+    :rows="table.rows"
+    :sortable="table.sortable"
+  ></table-lite>
 </template>
 
 <style lang="scss" scoped>
@@ -316,5 +482,4 @@ export default{
 .face-picture {
   pointer-events: none;
 }
-
 </style>
