@@ -204,11 +204,38 @@ export default{
                 //}
             }
             for (const [key, value] of Object.entries(this.items)) {
-            relatedData.push({
-                subject: sub,
-                predicate: key,
-                object: value,
-              });
+            let label = ""
+            let link = key;
+            var refArray = link.split("/");
+            switch(link.includes("wikidata.org/")){
+                    case true:
+                        var ref =  refArray[refArray.length-1];
+                        var promise = this.fetch_label_promise(ref, link);
+                        var pred = "";
+                        promise.then(
+                            (result)=>{
+                                console.log(result);
+                                pred = result.entities[ref].labels.en.value;
+                                relatedData.push({
+                                subject: sub,
+                                predicate: pred,
+                                object: value,
+                              });
+                            },
+                            (error)=>{
+                                throw "Error: " + error;
+                            }
+                        );
+                        break;    
+                    case false:
+                        relatedData.push({
+                            subject: sub,
+                            predicate: key,
+                            object: value,
+                          });
+                          break;
+                }
+            
             }
             this.table["rows"] = relatedData;
             
