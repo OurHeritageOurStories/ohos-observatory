@@ -10,7 +10,7 @@ export default{
     methods:{
         delete_current_data(){
             let promise = new Promise(function (resolve, reject){
-                fetch('api/graph?DROP ALL',{
+                fetch('api/graph-full-access?DROP ALL',{
                     method: "DELETE"
                 })
                     .then(function(response){
@@ -32,7 +32,7 @@ export default{
                     (result)=>{
                         var datafile = document.querySelector('input[type="file"]');
                         var uploaded = datafile.files[0];
-                        fetch('api/graph?',{
+                        fetch('api/graph-full-access?',{
                                 method:"POST",
                                 headers:{"Content-Type":"text/plain"},
                                 body: uploaded,
