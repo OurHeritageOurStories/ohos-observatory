@@ -41,3 +41,11 @@ services:
     container_name: kong_miiify
     ports:
       - "8080:8080"
+
+  automated_tests:
+    image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/automated_tests
+    hostname: automated_tests
+    container_name: automated_tests
+    ports:
+      - "8000:8000"
+
