@@ -56,7 +56,27 @@ phases:
         
         - curl -v http://localhost:3000 ;
       
+        
+        
+        - docker images -a
        
+        - cd ../test_suite 
+        - cat dockerfile
+        
+        # Build Docker image and push to ECR with latest tag
+        - aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 259004456259.dkr.ecr.eu-west-2.amazonaws.com
+        - docker build -t automated_tests .
+        - docker images -a
+        - docker tag automated_tests:latest 259004456259.dkr.ecr.eu-west-2.amazonaws.com/automated_tests:latest
+        - docker push 259004456259.dkr.ecr.eu-west-2.amazonaws.com/automated_tests:latest
+        
+         # Build Docker image and push to ECR with build tag
+        - docker images -a
+        - docker tag automated_tests:latest 259004456259.dkr.ecr.eu-west-2.amazonaws.com/automated_tests:v_${CODEBUILD_BUILD_NUMBER}
+        - docker push 259004456259.dkr.ecr.eu-west-2.amazonaws.com/automated_tests:v_${CODEBUILD_BUILD_NUMBER}
+
+        
+        - docker ps 
 
   post_build:
     commands:
