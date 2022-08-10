@@ -23,7 +23,6 @@ phases:
         
         - pwd
         - cd ohos-observatory
-        - cd automated-tests
         - pwd  
         
         - cd test_suite 
