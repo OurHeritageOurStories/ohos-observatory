@@ -11,7 +11,7 @@ export default{
     methods:{
         delete_current_data(){
             let promise = new Promise(function (resolve, reject){
-                fetch('api/graph?DROP ALL',{
+                fetch('api/graph-full-access?DROP ALL',{
                     method: "DELETE"
                 })
                     .then(function(response){
@@ -55,7 +55,7 @@ export default{
             var data_type_header = this.selected_data_type;
             gather_data_promise.then(
                 (result)=>{
-                    fetch('api/graph?',{
+                    fetch('api/graph-full-access?',{
                         method:"POST",
                         headers:{"Content-Type":data_type_header},
                         body:result
@@ -64,7 +64,7 @@ export default{
                             if(response.status!==200){
                                 throw "Failure while uploading data"
                             } else {
-                                alert("Sucsessfuly updated the data")
+                                alert("Successfuly updated the data")
                             }
                         })
                 },
