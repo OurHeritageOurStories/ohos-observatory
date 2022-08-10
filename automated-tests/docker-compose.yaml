@@ -47,5 +47,5 @@ services:
     hostname: automated_tests
     container_name: automated_tests
     ports:
-      - "8000:8000"
+      - "9000:9000"
 
