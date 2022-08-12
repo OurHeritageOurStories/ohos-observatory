@@ -10,6 +10,8 @@ import {
 } from "v-network-graph/lib/force-layout"
 import LoadDataVue from "./LoadData.vue";
 import CommonFunctions from "./CommonFunctions.vue";
+import VueLodash from 'vue-lodash'
+import lodash from 'lodash';
 
 export default{
     components: { TableLite },
@@ -148,7 +150,7 @@ export default{
                     (result)=>{
                         this.relatedData = reactive([]);
                         this.relatedJSON = result;
-                        this.publish_table(this.relatedData);
+                        this.publish_table(this.relatedData, node);
                     },
                     (error)=>{
                         throw "Error: " + error;
@@ -162,26 +164,10 @@ export default{
         this.create_graph()
     },
     methods:{
-        publish_table(relatedData)
+        publish_table(relatedData, node)
         {
-            let sub = ""
-            let link = this.relatedJSON.results.bindings[0].oo.value;
-            var refArray = link.split("/");
-            switch(link.includes("wikidata.org/")){
-                case true:
-                    var ref =  refArray[refArray.length-1];
-                    var promise = this.fetch_label_promise(ref, link);
-                    promise.then(
-                        (result)=>{
-                            sub = result.entities[ref].labels.en.value;
-                        },
-                        (error)=>{
-                            throw "Error: " + error;
-                        }
-                    );
-                    break;    
-            }
             this.items = {};
+            this.table.totalRecordCount = this.relatedJSON.results.bindings.length;
             for (let i = 0; i < this.relatedJSON.results.bindings.length; i++) {
                 this.items[this.relatedJSON.results.bindings[i].op.value] = this.relatedJSON.results.bindings[i].o.value;
                 //let label = ""
@@ -217,7 +203,7 @@ export default{
                                 console.log(result);
                                 pred = result.entities[ref].labels.en.value;
                                 relatedData.push({
-                                subject: sub,
+                                subject: this.labels[node],
                                 predicate: pred,
                                 object: value,
                               });
@@ -228,9 +214,12 @@ export default{
                         );
                         break;    
                     case false:
+                        var pred = key;
+                        var predArray =  pred.split("/");
+                        pred = lodash.startCase(predArray[predArray.length-1]);
                         relatedData.push({
-                            subject: sub,
-                            predicate: key,
+                            subject: this.labels[node],
+                            predicate: pred,
                             object: value,
                           });
                           break;
@@ -501,6 +490,7 @@ export default{
     :is-static-mode="fals3"
     :columns="table.columns"
     :rows="table.rows"
+    :total="table.totalRecordCount"
     :sortable="table.sortable"
   ></table-lite>
 </template>

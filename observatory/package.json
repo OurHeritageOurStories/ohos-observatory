@@ -8,9 +8,12 @@
   },
   "dependencies": {
     "dagre": "^0.8.5",
+    "levelgraph": "^3.0.0",
+    "lodash": "^4.17.21",
     "sass": "^1.53.0",
     "v-network-graph": "^0.6.0",
-    "vue": "^3.2.36"
+    "vue": "^3.2.36",
+    "vue-lodash": "^2.1.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.3",
