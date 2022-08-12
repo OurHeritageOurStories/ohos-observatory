@@ -167,7 +167,6 @@ export default{
         publish_table(relatedData, node)
         {
             this.items = {};
-            this.table.totalRecordCount = this.relatedJSON.results.bindings.length;
             for (let i = 0; i < this.relatedJSON.results.bindings.length; i++) {
                 this.items[this.relatedJSON.results.bindings[i].op.value] = this.relatedJSON.results.bindings[i].o.value;
                 //let label = ""
@@ -189,6 +188,7 @@ export default{
                 //        break;    
                 //}
             }
+            this.table.totalRecordCount = this.items.length;
             for (const [key, value] of Object.entries(this.items)) {
             let label = ""
             let link = key;
@@ -201,7 +201,10 @@ export default{
                         promise.then(
                             (result)=>{
                                 console.log(result);
-                                pred = result.entities[ref].labels.en.value;
+                                var retRef = Object.keys(result.entities)[0];
+                                console.log(result.entities[retRef], ref, Object.keys(result.entities)[0]);
+                                console.log(ref, result.entities[retRef].labels.en.value);
+                                pred = result.entities[retRef].labels.en.value;
                                 relatedData.push({
                                 subject: this.labels[node],
                                 predicate: pred,
