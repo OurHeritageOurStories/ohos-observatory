@@ -41,3 +41,10 @@ services:
     container_name: kong_miiify
     ports:
       - "8080:8080"
+
+  ohos-iffy-manifest:
+    image: ohos-iiif-manifest
+    hostname: ohos-iiif-manifest
+    container_name: ohos-iiif-manifest
+    ports:
+      - "5000:5000"
