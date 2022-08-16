@@ -42,7 +42,7 @@ services:
     ports:
       - "8080:8080"
 
-  ohos-iffy-manifest:
+  ohos-iff-manifest:
     image: ohos-iiif-manifest
     hostname: ohos-iiif-manifest
     container_name: ohos-iiif-manifest
