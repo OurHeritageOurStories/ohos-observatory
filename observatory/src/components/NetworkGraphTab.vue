@@ -10,7 +10,6 @@ import {
 } from "v-network-graph/lib/force-layout"
 import LoadDataVue from "./LoadData.vue";
 import CommonFunctions from "./CommonFunctions.vue";
-import VueLodash from 'vue-lodash'
 import lodash from 'lodash';
 
 export default{
@@ -169,24 +168,9 @@ export default{
             this.items = {};
             for (let i = 0; i < this.relatedJSON.results.bindings.length; i++) {
                 this.items[this.relatedJSON.results.bindings[i].op.value] = this.relatedJSON.results.bindings[i].o.value;
-                //let label = ""
                 let link = this.relatedJSON.results.bindings[i].s.value;
-                //var refArray = link.split("/");
-                //switch(link.includes("wikidata.org/")){
-                //    case true:
-                //        var ref =  refArray[refArray.length-1];
-                //        var promise = this.fetch_label_promise(ref, link);
-                //        promise.then(
-                //            (result)=>{
                                 this.items[this.relatedJSON.results.bindings[i].a.value] = link;
                                 console.log(this.relatedJSON.results.bindings[i].a.value, link);
-                //            },
-                //            (error)=>{
-                //                throw "Error: " + error;
-                //            }
-                //        );
-                //        break;    
-                //}
             }
             this.table.totalRecordCount = this.items.length;
             for (const [key, value] of Object.entries(this.items)) {
