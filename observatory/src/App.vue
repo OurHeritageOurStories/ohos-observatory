@@ -3,14 +3,18 @@ import SelectDataTab from './components/SelectDataTab.vue';
 import NetworkGraphTab from './components/NetworkGraphTab.vue';
 import AboutTab from './components/AboutTab.vue';
 import InputATripleVue from "./components/InputATriple.vue";
+import IiifManifestConvert from './components/iiifManifestConvert.vue';
+import Iiifmanifest2 from './components/iiifmanifest2.vue';
 
 export default{
     components:{
-        SelectDataTab,
-        NetworkGraphTab,
-        AboutTab,
-        InputATripleVue
-    },
+    SelectDataTab,
+    NetworkGraphTab,
+    AboutTab,
+    InputATripleVue,
+    IiifManifestConvert,
+    Iiifmanifest2
+},
     data: function() { 
       return {
         activetab: '1' 
@@ -35,6 +39,7 @@ export default{
         <a v-on:click="activetab='2'" v-bind:class="[ activetab === '2' ? 'active' : '' ]">Change Dataset</a>
         <a v-on:click="activetab='3'" v-bind:class="[ activetab === '3' ? 'active' : '' ]">Add</a>
         <a v-on:click="activetab='4'" v-bind:class="[ activetab === '4' ? 'active' : '' ]">Explore</a>
+        <a v-on:click="activetab='5'" v-bind:class="[ activetab === '5' ? 'active' : '' ]">IIIF manifest</a>
     </div>
 
     <div id="content" class="content">
@@ -49,6 +54,9 @@ export default{
         </div>
         <div v-if="activetab ==='4'" class="tabcontent">
             <NetworkGraphTab />
+        </div>
+        <div v-if="activetab ==='5'" class="tabcontent">
+            <Iiifmanifest2 /> 
         </div>
     </div>
   
@@ -92,7 +100,8 @@ h1, h2, h3, h4, h5, h6 {
     font-family: "Gill Sans Nova", "ETBembo";
 }
 .container {  
-    max-width: 75%;
+    max-width: 80%;
+    min-width: 60%;
     position: relative;
     margin: 20px;
 }
@@ -159,39 +168,6 @@ input[type='radio'] {
 }
 .tabcontent a {
     color: #ca5ed6; 
-}
-.slidecontainer {
-  width: 15%;
-}
-.slider {
-  -webkit-appearance: none;
-  width: 15%;
-  height: 10px;
-  border-radius: 5px;
-  background: #e7d2ea;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-.slider:hover {
-  opacity: 1;
-}
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: #ca5ed6;
-  cursor: pointer;
-}
-.slider::-moz-range-thumb {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: #ca5ed6;
-  cursor: pointer;
 }
 
 </style>
