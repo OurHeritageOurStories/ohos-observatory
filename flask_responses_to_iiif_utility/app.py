@@ -27,7 +27,6 @@ async def get_image_resolution(url):
     return [width, height]
 
 async def get_distinct_objects():
-    #url = 'http://localhost:8000/graph?query=SELECT DISTINCT ?s where {?s ?p <http://dbpedia.org/resource/Organization> } LIMIT 4'
     url = 'http://ohos_observatory_kong:8000/graph?query=SELECT DISTINCT ?s where {?s ?p <http://dbpedia.org/resource/Organization> } LIMIT 4'
     header = {"Accept":"application/json"}
     response = requests.get(url, headers=header)

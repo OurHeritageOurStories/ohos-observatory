@@ -21,7 +21,7 @@ export default{
                         resolve(response.results.bindings[0].i.value);
                     })
                     .catch(error=>{
-                        resolve("error");
+                        reject("error");
                     });
             });
         },
@@ -87,7 +87,10 @@ export default{
         build_json_ld_images_metadata_stage_two(start_of_json, list_of_objects_metadata){
             async function loop(context){
                 for (let i = 0; i < list_of_objects_metadata.length; i++){var height_and_width = await context.get_image_resolution_promise_alt(list_of_objects_metadata[i].thumbnail_url)
-                        .catch((error) => console.log("get metadata error", error));
+                        .catch((error) => function(){
+                            list_of_objects_metadata.splice(i, 1);
+                            console.log("error with", list_of_objects_metadata[i]);
+                            console.log("get metadata error", error)});
                     list_of_objects_metadata[i].height_px = height_and_width[0];
                     list_of_objects_metadata[i].width_px = height_and_width[1];
                     let thumbnail_url_parts = list_of_objects_metadata[i].thumbnail_url.split(".");
@@ -107,9 +110,10 @@ export default{
                     let image_reference = image[image.length-1];
                     var thumbnail_url_returned = await context.dbpedia_get_thumbnail_image_promise_alt(image_reference)
                         .catch((error) => function(){
+                            list_of_objects.splice(i, 1); //goodbye broken link
                             console.log("build json image metadata error", error);
-                            //break;
-                        })
+                            console.log("error with", list_of_objects[i], image_reference);
+                        });
                     image_and_metadata.thumbnail_url = thumbnail_url_returned.replaceAll('?width=300', ''); //we want the full size one, not the tiny thumbnail
                     object_images_with_metadata[i] = image_and_metadata;
                 };

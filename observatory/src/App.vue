@@ -3,8 +3,7 @@ import SelectDataTab from './components/SelectDataTab.vue';
 import NetworkGraphTab from './components/NetworkGraphTab.vue';
 import AboutTab from './components/AboutTab.vue';
 import InputATripleVue from "./components/InputATriple.vue";
-import IiifManifestConvert from './components/iiifManifestConvert.vue';
-import Iiifmanifest2 from './components/iiifmanifest2.vue';
+import Iiif_manifest_generator from './components/iiif_manifest_generator.vue';
 
 export default{
     components:{
@@ -12,8 +11,7 @@ export default{
     NetworkGraphTab,
     AboutTab,
     InputATripleVue,
-    IiifManifestConvert,
-    Iiifmanifest2
+    Iiif_manifest_generator
 },
     data: function() { 
       return {
@@ -56,7 +54,7 @@ export default{
             <NetworkGraphTab />
         </div>
         <div v-if="activetab ==='5'" class="tabcontent">
-            <Iiifmanifest2 /> 
+            <Iiif_manifest_generator /> 
         </div>
     </div>
   
