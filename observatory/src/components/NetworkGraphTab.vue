@@ -170,7 +170,6 @@ export default{
                 this.items[this.relatedJSON.results.bindings[i].op.value] = this.relatedJSON.results.bindings[i].o.value;
                 let link = this.relatedJSON.results.bindings[i].s.value;
                                 this.items[this.relatedJSON.results.bindings[i].a.value] = link;
-                                console.log(this.relatedJSON.results.bindings[i].a.value, link);
             }
             this.table.totalRecordCount = this.items.length;
             for (const [key, value] of Object.entries(this.items)) {
@@ -184,10 +183,7 @@ export default{
                         var pred = "";
                         promise.then(
                             (result)=>{
-                                console.log(result);
                                 var retRef = Object.keys(result.entities)[0];
-                                console.log(result.entities[retRef], ref, Object.keys(result.entities)[0]);
-                                console.log(ref, result.entities[retRef].labels.en.value);
                                 pred = result.entities[retRef].labels.en.value;
                                 relatedData.push({
                                 subject: this.labels[node],
@@ -383,9 +379,9 @@ export default{
         draw_graph(fetched_data){
             this.fetched_data_copy = fetched_data.results.bindings;
             this.graph_status = "Drawing graph...";
-            console.log("Drawing graph...")
+            console.log("Drawing graph...");
+            console.log(this.fetched_data_copy);
             var results = fetched_data.results.bindings;
-            console.log(results);
             let obj = null;
             var sub = null;
             var pre = null;
