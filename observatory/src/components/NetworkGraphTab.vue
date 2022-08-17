@@ -14,44 +14,6 @@ import lodash from 'lodash';
 
 export default{
     components: { TableLite },
-    /* setup()
-        {
-            const relatedData = reactive([]);
-            const table = reactive({
-              columns: [
-                {
-                  label: "Subject",
-                  field: "subject",
-                  width: "3%",
-                  sortable: true,
-                  isKey: true,
-                },
-                {
-                  label: "Predicate",
-                  field: "predicate",
-                  width: "10%",
-                  sortable: true,
-                },
-                {
-                  label: "Object",
-                  field: "object",
-                  width: "15%",
-                  sortable: true,
-                },
-              ],
-              rows: relatedData,
-              totalRecordCount: computed(() => {
-                return table.rows.length;
-              }),
-              sortable: {
-                order: "predicate",
-                sort: "asc",
-              },
-            });
-            return {
-              table,
-            };
-        }, */
     data(){
         return{
             items: null,
@@ -79,6 +41,7 @@ export default{
                   sortable: true,
                 },
               ],
+              totalRecordCount: 0,
               rows: this.relatedData,
               sortable: {
                 order: "predicate",
@@ -171,7 +134,6 @@ export default{
                 let link = this.relatedJSON.results.bindings[i].s.value;
                                 this.items[this.relatedJSON.results.bindings[i].a.value] = link;
             }
-            this.table.totalRecordCount = this.items.length;
             for (const [key, value] of Object.entries(this.items)) {
             let label = ""
             let link = key;
@@ -210,7 +172,7 @@ export default{
             
             }
             this.table["rows"] = relatedData;
-            
+            this.table["totalRecordCount"] = relatedData.length;
         },
         fetch_label_promise(ref){
             let label = null;
@@ -430,7 +392,6 @@ export default{
     :edges="edges"
     :layouts="layouts"
     :configs="configs"
-    :layers="layers"
     :event-handlers="eventHandlers"
     :key="componentKey"
   >
@@ -470,7 +431,7 @@ export default{
   <span style="font-size:12px;">The limit might not be precise. If the graph appears odd, switch between tabs.</span>
   </div>
   <table-lite
-    :is-static-mode="fals3"
+    :is-static-mode="true"
     :columns="table.columns"
     :rows="table.rows"
     :total="table.totalRecordCount"
