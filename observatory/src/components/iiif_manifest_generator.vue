@@ -40,7 +40,7 @@ export default{
         get_distinct_objects_promise(){
             let promise = new Promise(function (resolve, reject){
                 fetch(
-                    'api/graph?query=SELECT DISTINCT ?s where {?s ?p <http://dbpedia.org/resource/Organization> } LIMIT 4',
+                    'api/graph?query=SELECT DISTINCT ?s where {?s ?p <http://www.wikidata.org/entity/Q486972> } LIMIT 4',
                     {
                     headers:{"Accept":"application/json"}
                     }
@@ -109,13 +109,18 @@ export default{
                     let image = list_of_objects[i].s.value.split("/");
                     let image_reference = image[image.length-1];
                     var thumbnail_url_returned = await context.dbpedia_get_thumbnail_image_promise_alt(image_reference)
+                        .then(_=>function(){
+                            image_and_metadata.thumbnail_url = thumbnail_url_returned.replaceAll('?width=300', ''); //we want the full size one, not the tiny thumbnail
+                            object_images_with_metadata[i] = image_and_metadata;
+                })
                         .catch((error) => function(){
                             list_of_objects.splice(i, 1); //goodbye broken link
                             console.log("build json image metadata error", error);
                             console.log("error with", list_of_objects[i], image_reference);
+                            //this.continue;
                         })
-                    image_and_metadata.thumbnail_url = thumbnail_url_returned.replaceAll('?width=300', ''); //we want the full size one, not the tiny thumbnail
-                    object_images_with_metadata[i] = image_and_metadata;
+                    //image_and_metadata.thumbnail_url = thumbnail_url_returned.replaceAll('?width=300', ''); //we want the full size one, not the tiny thumbnail
+                    //object_images_with_metadata[i] = image_and_metadata;
                 };
             };
             loop(this).then(
