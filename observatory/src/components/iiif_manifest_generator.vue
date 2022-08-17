@@ -88,7 +88,7 @@ export default{
             async function loop(context){
                 for (let i = 0; i < list_of_objects_metadata.length; i++){var height_and_width = await context.get_image_resolution_promise_alt(list_of_objects_metadata[i].thumbnail_url)
                         .catch((error) => function(){
-                            list_of_objects_metadata.splice(i, 1);
+                            list_of_objects_metadata.splice(i, 1); //goodbye non-gettable image 
                             console.log("error with", list_of_objects_metadata[i]);
                             console.log("get metadata error", error)});
                     list_of_objects_metadata[i].height_px = height_and_width[0];
@@ -113,7 +113,7 @@ export default{
                             list_of_objects.splice(i, 1); //goodbye broken link
                             console.log("build json image metadata error", error);
                             console.log("error with", list_of_objects[i], image_reference);
-                        });
+                        })
                     image_and_metadata.thumbnail_url = thumbnail_url_returned.replaceAll('?width=300', ''); //we want the full size one, not the tiny thumbnail
                     object_images_with_metadata[i] = image_and_metadata;
                 };
