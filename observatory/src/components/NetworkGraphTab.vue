@@ -381,6 +381,7 @@ export default{
             this.graph_status = "Drawing graph...";
             console.log("Drawing graph...");
             var results = fetched_data.results.bindings;
+            console.log(results);
             let obj = null;
             var sub = null;
             var pre = null;
@@ -405,7 +406,7 @@ export default{
             if (isNaN(this.node_limit)){
                 this.node_limit = 100;
             }
-            fetch('api/graph?query=SELECT * {?s ?p ?o} LIMIT ' + this.node_limit,{
+            fetch('api/graph?query=SELECT * {<http://dbpedia.org/resource/Spratton> ?p ?o BIND(<http://dbpedia.org/resource/Spratton> AS ?s)} LIMIT ' + this.node_limit,{
                 headers:{"Accept":"application/sparql-results+json"}
             })
                 .then(response=>response.json())
