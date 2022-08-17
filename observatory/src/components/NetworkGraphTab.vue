@@ -343,7 +343,6 @@ export default{
             this.graph_status = "Drawing graph...";
             console.log("Drawing graph...");
             var results = fetched_data.results.bindings;
-            console.log(results);
             let obj = null;
             var sub = null;
             var pre = null;
