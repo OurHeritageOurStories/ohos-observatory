@@ -380,7 +380,6 @@ export default{
             this.fetched_data_copy = fetched_data.results.bindings;
             this.graph_status = "Drawing graph...";
             console.log("Drawing graph...");
-            console.log(this.fetched_data_copy);
             var results = fetched_data.results.bindings;
             let obj = null;
             var sub = null;
