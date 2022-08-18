@@ -4,7 +4,7 @@ _transform: true
 services: 
 
   - name: kong_blazegraph
-    url: http://kong_blazegraph:8080/bigdata/#splash
+    url: //kong_blazegraph:8080/bigdata/#splash
     routes:
       - name: kong_blazegraph_routes_home
         paths:
@@ -14,7 +14,7 @@ services:
         - GET
 
   - name: kong_blazegraph_api_query_post
-    url: http://kong_blazegraph:8080/bigdata/sparql
+    url: //kong_blazegraph:8080/bigdata/sparql
     routes: 
       - name: kong_blazegraph_routes_query_post
         paths:
@@ -25,7 +25,7 @@ services:
         - GET 
 
   - name: kong_blazegraph_api_query_post_full_access
-    url: http://kong_blazegraph:8080/bigdata/sparql
+    url: //kong_blazegraph:8080/bigdata/sparql
     routes: 
       - name: kong_blazegraph_routes_query_post_full_access
         paths:
@@ -38,7 +38,7 @@ services:
         - DELETE 
       
   - name: kong_miiify
-    url: https://kong_miiify:8080
+    url: //kong_miiify:8080
     routes:
       - name: kong_miiify_routes_home
         paths:
@@ -48,7 +48,7 @@ services:
         - GET
         
   - name: kong_miiify_add_anotation
-    url: https://kong_miiify:8080/annotations/
+    url: //kong_miiify:8080/annotations/
     routes:
       - name: kong_miiify_routes_add_annotation
         paths:
