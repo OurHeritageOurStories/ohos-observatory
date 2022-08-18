@@ -1,6 +1,7 @@
 <script lang="ts">
 
-import { reactive, ref } from "vue"
+import TableLite from "../components/TableLite.vue";
+import { defineComponent, reactive, computed, ref } from "vue"
 import * as vNG from "v-network-graph"
 import {
   ForceLayout,
@@ -9,11 +10,49 @@ import {
 } from "v-network-graph/lib/force-layout"
 import LoadDataVue from "./LoadData.vue";
 import CommonFunctions from "./CommonFunctions.vue";
+import lodash from 'lodash';
 
 export default{
+    components: { TableLite },
     data(){
         return{
-            graph_status: "Select data in the Select tab please",     
+
+            items: null,
+            label: null,
+            relatedData: reactive([]),
+            table: reactive({
+              columns: [
+                {
+                  label: "Subject",
+                  field: "subject",
+                  width: "3%",
+                  sortable: true,
+                  isKey: true,
+                },
+                {
+                  label: "Predicate",
+                  field: "predicate",
+                  width: "10%",
+                  sortable: true,
+                },
+                {
+                  label: "Object",
+                  field: "object",
+                  width: "15%",
+                  sortable: true,
+                },
+              ],
+              totalRecordCount: 0,
+              rows: this.relatedData,
+              sortable: {
+                order: "predicate",
+                sort: "asc",
+              },
+            }), 
+            relatedJSON: null,
+            graph_status: "Select data in the Select tab please",          
+            playground_data:null,
+
             nodes: {},
             edges: {},
             labels: {},
@@ -43,11 +82,7 @@ export default{
                   },
                   label: {
                     visible: true,
-                    background: {
-                      visible: true,
-                      color: "#f7fafa",
-                    },
-                  margin: 0,    
+                    margin: 0,    
                   }
                 },
                 edge: {
@@ -74,7 +109,17 @@ export default{
             ),
             eventHandlers: {
               "node:click": ({ node }) => {
-                alert(node);
+                var promise = this.fetch_related_promise(node);
+                promise.then(
+                    (result)=>{
+                        this.relatedData = reactive([]);
+                        this.relatedJSON = result;
+                        this.publish_table(this.relatedData, node);
+                    },
+                    (error)=>{
+                        throw "Error: " + error;
+                    }
+                );
               },
             }
         };
@@ -83,6 +128,54 @@ export default{
         this.create_graph()
     },
     methods:{
+        publish_table(relatedData, node)
+        {
+            this.items = {};
+            for (let i = 0; i < this.relatedJSON.results.bindings.length; i++) {
+                this.items[this.relatedJSON.results.bindings[i].op.value] = this.relatedJSON.results.bindings[i].o.value;
+                let link = this.relatedJSON.results.bindings[i].s.value;
+                                this.items[this.relatedJSON.results.bindings[i].a.value] = link;
+            }
+            for (const [key, value] of Object.entries(this.items)) {
+            let label = ""
+            let link = key;
+            var refArray = link.split("/");
+            switch(link.includes("wikidata.org/")){
+                    case true:
+                        var ref =  refArray[refArray.length-1];
+                        var promise = this.fetch_label_promise(ref, link);
+                        var pred = "";
+                        promise.then(
+                            (result)=>{
+                                var retRef = Object.keys(result.entities)[0];
+                                pred = result.entities[retRef].labels.en.value;
+                                relatedData.push({
+                                subject: this.labels[node],
+                                predicate: pred,
+                                object: value,
+                              });
+                            },
+                            (error)=>{
+                                throw "Error: " + error;
+                            }
+                        );
+                        break;    
+                    case false:
+                        var pred = key;
+                        var predArray =  pred.split("/");
+                        pred = lodash.startCase(predArray[predArray.length-1]);
+                        relatedData.push({
+                            subject: this.labels[node],
+                            predicate: pred,
+                            object: value,
+                          });
+                          break;
+                }
+            
+            }
+            this.table["rows"] = relatedData;
+            this.table["totalRecordCount"] = relatedData.length;
+        },
         fetch_label_promise(ref){
             let label = null;
             let promise = new Promise(function (resolve, reject){
@@ -103,6 +196,28 @@ export default{
             });
             return promise;
         },
+        fetch_related_promise(link){
+          var refArray = link.split("/");
+          var ref =  refArray[refArray.length-1];  
+          let label = null;
+          let endpoint = 'https://query.wikidata.org/sparql';
+          let sparqlQuery = "SELECT DISTINCT ?op ?o ?oo ?a ?s  WHERE { " +
+            "SERVICE <http://dbpedia.org/sparql>  {<http://dbpedia.org/resource/" + ref + "> ?op ?o. " +
+            "<http://dbpedia.org/resource/" + ref + "> owl:sameAs ?oo " +
+            "filter( regex(str(?oo), 'wikidata' ) && (LANG(?o) = 'en' || LANG(?o) = ''))} " +
+            "SERVICE <https://query.wikidata.org/sparql>{ ?oo ?a ?s.}}";
+          let fullUrl = endpoint + '?query=' + encodeURIComponent( sparqlQuery );
+          let headers = { 'Accept': 'application/sparql-results+json' };
+          let promise = new Promise(function (resolve, reject){
+              fetch( fullUrl, { headers } )
+                    .then(response => response.json())
+                    .then(response => (label = response))
+                    .then(response => {
+                      resolve(response);
+                    });
+          });
+          return promise;
+      },
         fetch_label(link){
             var refArray = link.split("/");
             switch(link.includes("wikidata.org/")){
@@ -134,7 +249,7 @@ export default{
                                 (result)=>{
                                     this.count = this.count + 1;
                                     if (result.results.bindings.length)
-                                        this.nodes[link] = {face: result.results.bindings[0].i.value };
+                                        this.nodes[link] = {name: this.labels[link], face: result.results.bindings[0].i.value };
                                     if(this.count == this.len*3)
                                     {
                                         this.make_connections();
@@ -158,6 +273,23 @@ export default{
                     }
 
                     
+            }
+        },
+        fetch_related_label(link){
+            var refArray = link.split("/");
+            switch(link.includes("wikidata.org/")){
+                case true:
+                    var ref =  refArray[refArray.length-1];
+                    var promise = this.fetch_label_promise(ref, link);
+                    promise.then(
+                        (result)=>{
+                            label = result.entities[ref].labels.en.value;
+                        },
+                        (error)=>{
+                            throw "Error: " + error;
+                        }
+                    );
+                    break;    
             }
         },
         make_connections(){
@@ -211,9 +343,8 @@ export default{
         draw_graph(fetched_data){
             this.fetched_data_copy = fetched_data.results.bindings;
             this.graph_status = "Drawing graph...";
-            console.log("Drawing graph...")
+            console.log("Drawing graph...");
             var results = fetched_data.results.bindings;
-            console.log(results);
             let obj = null;
             var sub = null;
             var pre = null;
@@ -245,7 +376,7 @@ export default{
             if (isNaN(this.node_limit)){
                 this.node_limit = 100;
             }
-            fetch('api/graph?query=SELECT * {?s ?p ?o} LIMIT ' + this.node_limit,{
+            fetch('api/graph?query=SELECT * {<http://dbpedia.org/resource/Spratton> ?p ?o BIND(<http://dbpedia.org/resource/Spratton> AS ?s)} LIMIT ' + this.node_limit,{
                 headers:{"Accept":"application/sparql-results+json"}
             })
                 .then(response=>response.json())
@@ -269,7 +400,6 @@ export default{
     :edges="edges"
     :layouts="layouts"
     :configs="configs"
-    :layers="layers"
     :event-handlers="eventHandlers"
     :key="componentKey"
   >
@@ -307,6 +437,13 @@ export default{
   <input  type="range" v-model="node_limit" id="node_limit" min="1" max="200" class="slider"/>
   <button @click="create_graph" id="node_limit_button" class="button">Refresh</button>
   </div>
+  <table-lite
+    :is-static-mode="true"
+    :columns="table.columns"
+    :rows="table.rows"
+    :total="table.totalRecordCount"
+    :sortable="table.sortable"
+  ></table-lite>
 </template>
 
 <style lang="scss" scoped>
@@ -323,3 +460,4 @@ export default{
 }
 
 </style>
+
