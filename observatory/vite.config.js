@@ -30,29 +30,30 @@ import vue from '@vitejs/plugin-vue'
 
 //https://vitejs.dev/config/
 export default defineConfig({
+  base:'',
   plugins: [vue()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  envDir:'./',
+  //envDir:'./',
   server:{
     host: true,
     proxy:{
-      '/foo':'http://ohos_observatory_kong:8000',
-      //'/foo':'//ohos_observatory_kong:8000',
+      //'/foo':'http://ohos_observatory_kong:8000',
+      '/foo':'ohos_observatory_kong:8000',
       //'/foo':import.meta.env.VITE_API_ENDPOINT,
       //'/foo':import.meta.env.VITE_API_ENDPOINT,
       '/api':{
-        target:'http://ohos_observatory_kong:8000',
-        //target:'//ohos_observatory_kong:8000',
+        //target:'http://ohos_observatory_kong:8000',
+        target:'ohos_observatory_kong:8000',
         //target: import.meta.env.VITE_API_ENDPOINT,
         //target:import.meta.env.VITE_API_ENDPOINT,
         changeOrigin:true,
         secure:false,
         ws:true,
-        rewrite:(path)=>path.replace(/^\/api/, '')
+        //rewrite:(path)=>path.replace(/^\/api/, '')
       }
     }
   }
