@@ -16,6 +16,7 @@ export default{
     components: { TableLite },
     data(){
         return{
+
             items: null,
             label: null,
             relatedData: reactive([]),
@@ -51,6 +52,7 @@ export default{
             relatedJSON: null,
             graph_status: "Select data in the Select tab please",          
             playground_data:null,
+
             nodes: {},
             edges: {},
             labels: {},
@@ -361,6 +363,13 @@ export default{
             console.log("The graph should be ready. If it doesn't display, switch between tabs.")
         },
         create_graph(){
+            this.nodes = {};
+            this.edges = {};
+            this.labels = {};
+            this.layouts = {};
+            this.len = null;
+            this.count = 0;
+            this.fetched_data_copy = null;
             localStorage.setItem("nodeLimit", this.node_limit);
             this.componentKey += 1;
             this.graph_status = "Fetching data... If this message disappears but the graph doesn't show within a few seconds, switch between tabs";
@@ -427,7 +436,6 @@ export default{
   <label style="font-size:12px;">Set max nodes: {{ node_limit }}  </label>
   <input  type="range" v-model="node_limit" id="node_limit" min="1" max="200" class="slider"/>
   <button @click="create_graph" id="node_limit_button" class="button">Refresh</button>
-  <span style="font-size:12px;">The limit might not be precise. If the graph appears odd, switch between tabs.</span>
   </div>
   <table-lite
     :is-static-mode="true"
@@ -450,4 +458,6 @@ export default{
 .face-picture {
   pointer-events: none;
 }
+
 </style>
+
