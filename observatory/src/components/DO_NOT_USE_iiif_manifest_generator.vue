@@ -32,7 +32,12 @@ export default{
                         resolve([image.naturalHeight, image.naturalWidth]) //if your image returns a 404 - eg Spratton DBPedia thumbnail - this breaks. See - https://national-archives.atlassian.net/jira/software/projects/OHOS/boards/82/backlog?selectedIssue=OHOS-703
                     }
                     image.onerror = function(){ //this check for 404 doesn't seem to work
-                        reject("the image 404's");
+                        console.log("jjjjjjjjjjjjjjjjJ");
+                        //reject("the image 404's");
+                        //reject(throw(error))
+                        //throw new Error();
+                        //reject();
+                        reject();
                     };
                     image.src = image_url;
             });
@@ -40,7 +45,7 @@ export default{
         get_distinct_objects_promise(){
             let promise = new Promise(function (resolve, reject){
                 fetch(
-                    'api/graph?query=SELECT DISTINCT ?s where {?s ?p <http://www.wikidata.org/entity/Q486972> } LIMIT 4',
+                    'api/graph?query=SELECT DISTINCT ?s where {?s ?p <http://dbpedia.org/resource/Place> } LIMIT 4',
                     {
                     headers:{"Accept":"application/json"}
                     }
@@ -86,15 +91,47 @@ export default{
         },
         build_json_ld_images_metadata_stage_two(start_of_json, list_of_objects_metadata){
             async function loop(context){
-                for (let i = 0; i < list_of_objects_metadata.length; i++){var height_and_width = await context.get_image_resolution_promise_alt(list_of_objects_metadata[i].thumbnail_url)
-                        .catch((error) => function(){
-                            list_of_objects_metadata.splice(i, 1); //goodbye non-gettable image 
-                            console.log("error with", list_of_objects_metadata[i]);
-                            console.log("get metadata error", error)});
-                    list_of_objects_metadata[i].height_px = height_and_width[0];
-                    list_of_objects_metadata[i].width_px = height_and_width[1];
-                    let thumbnail_url_parts = list_of_objects_metadata[i].thumbnail_url.split(".");
-                    list_of_objects_metadata[i].image_type = thumbnail_url_parts[thumbnail_url_parts.length-1];      
+                for (let i = 0; i < list_of_objects_metadata.length; i++){
+                    var height_and_width = await context.get_image_resolution_promise_alt(list_of_objects_metadata[i].thumbnail_url)
+                        .then(
+                            (result)=>{
+                                list_of_objects_metadata[i].height_px = height_and_width[0];
+                                list_of_objects_metadata[i].width_px = height_and_width[1];
+                                let thumbnail_url_parts = list_of_objects_metadata[i].thumbnail_url.split(".");
+                                list_of_objects_metadata[i].image_type = thumbnail_url_parts[thumbnail_url_parts.length-1];
+                            },
+                            (error)=>{
+                                list_of_objects_metadata.splice(i, 1);
+                                console.log("error with", list_of_objects_metadata[i]);
+                                console.log("get metadata error", error);
+                                alert("get metadata error", error);
+                                //continue;
+                            }
+                        );
+                        
+                    //var height_and_width = "";
+                        //.then(()=>{
+                        //    list_of_objects_metadata[i].height_px = height_and_width[0];
+                        //    list_of_objects_metadata[i].width_px = height_and_width[1];
+                        //    let thumbnail_url_parts = list_of_objects_metadata[i].thumbnail_url.split(".");
+                        //    list_of_objects_metadata[i].image_type = thumbnail_url_parts[thumbnail_url_parts.length-1];      
+                        //})
+                        ////.catch(() => function(){
+                    //try {
+                      //  height_and_width = await context.get_image_resolution_promise_alt(list_of_objects_metadata[i].thumbnail_url)
+                    //} catch (error) {
+                            ////console.log("dlakjfdlkjaksldaj");
+                            ////list_of_objects_metadata.splice(i, 1); //goodbye non-gettable image 
+                            ////console.log("error with", list_of_objects_metadata[i]);
+                            ////console.log("get metadata error", error);
+                            ////alert("get metadata error", error);
+                            //continue;
+                    ////});
+                            //continue;});
+                   // list_of_objects_metadata[i].height_px = height_and_width[0];
+                   // list_of_objects_metadata[i].width_px = height_and_width[1];
+                   // let thumbnail_url_parts = list_of_objects_metadata[i].thumbnail_url.split(".");
+                   // list_of_objects_metadata[i].image_type = thumbnail_url_parts[thumbnail_url_parts.length-1];      
                 };
             }
             loop(this).then(
@@ -109,18 +146,17 @@ export default{
                     let image = list_of_objects[i].s.value.split("/");
                     let image_reference = image[image.length-1];
                     var thumbnail_url_returned = await context.dbpedia_get_thumbnail_image_promise_alt(image_reference)
-                        .then(_=>function(){
-                            image_and_metadata.thumbnail_url = thumbnail_url_returned.replaceAll('?width=300', ''); //we want the full size one, not the tiny thumbnail
-                            object_images_with_metadata[i] = image_and_metadata;
-                })
+                        //.then(function(){
+                        //    image_and_metadata.thumbnail_url = thumbnail_url_returned.replaceAll('?width=300', ''); //we want the full size one, not the tiny thumbnail
+                        //    object_images_with_metadata[i] = image_and_metadata;
+                        // })
                         .catch((error) => function(){
                             list_of_objects.splice(i, 1); //goodbye broken link
                             console.log("build json image metadata error", error);
                             console.log("error with", list_of_objects[i], image_reference);
-                            //this.continue;
                         })
-                    //image_and_metadata.thumbnail_url = thumbnail_url_returned.replaceAll('?width=300', ''); //we want the full size one, not the tiny thumbnail
-                    //object_images_with_metadata[i] = image_and_metadata;
+                    image_and_metadata.thumbnail_url = thumbnail_url_returned.replaceAll('?width=300', ''); //we want the full size one, not the tiny thumbnail
+                    object_images_with_metadata[i] = image_and_metadata;
                 };
             };
             loop(this).then(
@@ -135,6 +171,7 @@ export default{
             var list_of_objects_promise = this.get_distinct_objects_promise();
             list_of_objects_promise.then(
                 (result)=>{
+                    console.log("unique stuff", result);
                     this.build_json_ld_images_metadata(json_ld_being_built, result)
                 },
                 (error)=>{

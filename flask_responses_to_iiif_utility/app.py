@@ -1,3 +1,4 @@
+from nis import cat
 from time import sleep
 from urllib import response
 from flask import Flask
@@ -27,7 +28,7 @@ async def get_image_resolution(url):
     return [width, height]
 
 async def get_distinct_objects():
-    url = 'http://ohos_observatory_kong:8000/graph?query=SELECT DISTINCT ?s where {?s ?p <http://dbpedia.org/resource/Organization> } LIMIT 4'
+    url = 'http://ohos_observatory_kong:8000/graph?query=SELECT DISTINCT ?s where {?s ?p <http://dbpedia.org/resource/Location> } LIMIT 4'
     header = {"Accept":"application/json"}
     response = requests.get(url, headers=header)
     toreturn = []
@@ -46,8 +47,20 @@ async def construct_json():
         fragment = {}
         fragment["id"] = item
         fragment["type"] = "canvas"
-        url_thumbnail = await dbpedia_get_thumbnail(item.split("/")[len(item.split("/"))-1])
-        thumbnail_metadata = await get_image_resolution(url_thumbnail)
+        #url_thumbnail = await dbpedia_get_thumbnail(item.split("/")[len(item.split("/"))-1])
+        try:
+            url_thumbnail = await dbpedia_get_thumbnail(item.split("/")[len(item.split("/"))-1])
+        except: 
+            print("error")
+        #    return item
+         #   break
+            continue
+        #thumbnail_metadata = await get_image_resolution(url_thumbnail)
+        try: 
+            thumbnail_metadata = await get_image_resolution(url_thumbnail)
+        except:
+            print("error")
+            continue
         fragment["height"] = thumbnail_metadata[1]
         fragment["width"] = thumbnail_metadata[0]
         fragment["items"] = []
