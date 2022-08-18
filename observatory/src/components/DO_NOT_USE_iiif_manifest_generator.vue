@@ -31,12 +31,7 @@ export default{
                     image.onload = function(){
                         resolve([image.naturalHeight, image.naturalWidth]) //if your image returns a 404 - eg Spratton DBPedia thumbnail - this breaks. See - https://national-archives.atlassian.net/jira/software/projects/OHOS/boards/82/backlog?selectedIssue=OHOS-703
                     }
-                    image.onerror = function(){ //this check for 404 doesn't seem to work
-                        console.log("jjjjjjjjjjjjjjjjJ");
-                        //reject("the image 404's");
-                        //reject(throw(error))
-                        //throw new Error();
-                        //reject();
+                    image.onerror = function(){ //this check for 404 doesn't seem to work properly
                         reject();
                     };
                     image.src = image_url;
@@ -93,6 +88,27 @@ export default{
             async function loop(context){
                 for (let i = 0; i < list_of_objects_metadata.length; i++){
                     var height_and_width = await context.get_image_resolution_promise_alt(list_of_objects_metadata[i].thumbnail_url)
+                        .catch((error) => function(){
+                            list_of_objects_metadata.splice(i, 1); //goodbye non-gettable image 
+                            console.log("error with", list_of_objects_metadata[i]);
+                            console.log("get metadata error", error);
+                            alert("get metadata error", error);
+                            });
+                    list_of_objects_metadata[i].height_px = height_and_width[0];
+                    list_of_objects_metadata[i].width_px = height_and_width[1];
+                    let thumbnail_url_parts = list_of_objects_metadata[i].thumbnail_url.split(".");
+                    list_of_objects_metadata[i].image_type = thumbnail_url_parts[thumbnail_url_parts.length-1];   
+                };
+/**
+ * The .catch((error)=>function{....})code which is currently here and in use doesn't quite work as expected. It still generates the manifest, just instead of 
+ * stripping out a 404 image, it keeps it in and doesn't fill in metadata if it can't find it (usually height and width). It might be just the splice (line 92)
+ * that isn't working properly, but it doesn't seem to be going into the .catch at all. 
+ * 
+ * 
+ * This, below in this comment, seems to work properly, in that it throws things out the lists. But it works in reverse. So good images get thrown out while errors are 
+ * let through. 
+ * 
+ * var height_and_width = await context.get_image_resolution_promise_alt(list_of_objects_metadata[i].thumbnail_url)
                         .then(
                             (result)=>{
                                 list_of_objects_metadata[i].height_px = height_and_width[0];
@@ -108,31 +124,8 @@ export default{
                                 //continue;
                             }
                         );
-                        
-                    //var height_and_width = "";
-                        //.then(()=>{
-                        //    list_of_objects_metadata[i].height_px = height_and_width[0];
-                        //    list_of_objects_metadata[i].width_px = height_and_width[1];
-                        //    let thumbnail_url_parts = list_of_objects_metadata[i].thumbnail_url.split(".");
-                        //    list_of_objects_metadata[i].image_type = thumbnail_url_parts[thumbnail_url_parts.length-1];      
-                        //})
-                        ////.catch(() => function(){
-                    //try {
-                      //  height_and_width = await context.get_image_resolution_promise_alt(list_of_objects_metadata[i].thumbnail_url)
-                    //} catch (error) {
-                            ////console.log("dlakjfdlkjaksldaj");
-                            ////list_of_objects_metadata.splice(i, 1); //goodbye non-gettable image 
-                            ////console.log("error with", list_of_objects_metadata[i]);
-                            ////console.log("get metadata error", error);
-                            ////alert("get metadata error", error);
-                            //continue;
-                    ////});
-                            //continue;});
-                   // list_of_objects_metadata[i].height_px = height_and_width[0];
-                   // list_of_objects_metadata[i].width_px = height_and_width[1];
-                   // let thumbnail_url_parts = list_of_objects_metadata[i].thumbnail_url.split(".");
-                   // list_of_objects_metadata[i].image_type = thumbnail_url_parts[thumbnail_url_parts.length-1];      
-                };
+ * 
+ */     
             }
             loop(this).then(
                 _ => this.construct_rest_of_json(start_of_json, list_of_objects_metadata)
@@ -146,10 +139,6 @@ export default{
                     let image = list_of_objects[i].s.value.split("/");
                     let image_reference = image[image.length-1];
                     var thumbnail_url_returned = await context.dbpedia_get_thumbnail_image_promise_alt(image_reference)
-                        //.then(function(){
-                        //    image_and_metadata.thumbnail_url = thumbnail_url_returned.replaceAll('?width=300', ''); //we want the full size one, not the tiny thumbnail
-                        //    object_images_with_metadata[i] = image_and_metadata;
-                        // })
                         .catch((error) => function(){
                             list_of_objects.splice(i, 1); //goodbye broken link
                             console.log("build json image metadata error", error);

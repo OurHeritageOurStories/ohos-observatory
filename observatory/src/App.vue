@@ -3,7 +3,7 @@ import SelectDataTab from './components/SelectDataTab.vue';
 import NetworkGraphTab from './components/NetworkGraphTab.vue';
 import AboutTab from './components/AboutTab.vue';
 import InputATripleVue from "./components/InputATriple.vue";
-import Iiif_manifest_generator from './components/iiif_manifest_generator.vue';
+import Iiif_manifest_generator from './components/DO_NOT_USE_iiif_manifest_generator.vue';
 import Iiif_from_backend from './components/iiif_from_backend.vue';
 
 export default{
