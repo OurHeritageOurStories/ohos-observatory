@@ -145,3 +145,10 @@ This project is working with and investigating the possible uses of linked data.
 
 There is a test suite avaiable. To run the tests, follow the instructions above to run with the database activated. Once this is setup, open a terminal in the main /ohos-observatory/ direcory, and run the below command
   > npm run test
+
+
+### WSL issues
+
+There are some known issues with WSL. If you run this project using WSL and actively using the Linux portion for development, you will likely run into issues related to timing of POST requests that cross the Windows/Linux barrier. This is inconsistent, and seems to show itself mostly when sending the config to Kong, and when running the automated tests.
+This bug has been noted, and is in the list of tasks to work on. 
+Temporary workaround: if something fails due to a timeout issue, re-try. It may take a few times, but sometimes the large delay simply won’t happen, and the timeout issue goes away. 
