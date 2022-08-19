@@ -140,3 +140,8 @@ This project is working with and investigating the possible uses of linked data.
 ### CSS Standards
 
 <img width="654" alt="css_bubbles" src="https://user-images.githubusercontent.com/105296158/180023546-bc3bb26f-1ebb-4b54-8e54-11ad3c5f80e7.PNG">
+
+### Tests
+
+There is a test suite avaiable. To run the tests, follow the instructions above to run with the database activated. Once this is setup, open a terminal in the main /ohos-observatory/ direcory, and run the below command
+  > npm run test
