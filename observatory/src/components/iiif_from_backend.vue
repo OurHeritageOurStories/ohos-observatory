@@ -3,7 +3,7 @@
 export default{
     data(){
         return{
-            return_text: "push the button",
+            return_text: "This is currently a proof of concept to generate IIIF manifests from RDF data. To get this to work, select AI lab 2, and press this button. On teh back end, a search will happen, and the response sent to this page. It take a couple of moments, so don't worry if nothing appears to happen at first.",
         };
     },
     methods:{
@@ -42,7 +42,7 @@ export default{
 
 <template>
 
-<button @click="get_iiif_manifest()">button</button>
+<button @click="get_iiif_manifest()" class="button">button</button>
 
 <pre>
     {{ return_text }}
