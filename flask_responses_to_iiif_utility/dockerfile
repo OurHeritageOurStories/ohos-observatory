@@ -1,7 +1,4 @@
-#FROM python:3.9-slim-buster
 FROM ubuntu:22.04
-
-#WORKDIR /python-docker
 
 RUN apt-get -y update && \
     apt-get -y upgrade && \
@@ -9,12 +6,6 @@ RUN apt-get -y update && \
     apt-get install -y ant && \
     apt-get install -y python3 && \
     apt-get clean;
-
-#RUN apt-get update && \
-#    apt-get install -y openjdk-11-jdk && \
-#    apt-get install -y python3
-
-#ENV JDK_HOME usr\lib\jvm\java-11-openjdk-amd64
 FROM buildpack-deps:buster-scm
 
 RUN set -eux; \
@@ -34,28 +25,14 @@ ENV JAVA_HOME /usr/local/openjdk-11
 RUN { echo '#/bin/sh'; echo 'echo "$JAVA_HOME"'; } > /usr/local/bin/docker-java-home && chmod +x /usr/local/bin/docker-java-home && [ "$JAVA_HOME" = "$(docker-java-home)" ] # backwards compatibility
 ENV PATH $JAVA_HOME/bin:$PATH
 ENV JDK_HOME /usr/local/openjdk-11
-
-#ENV JDK_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 RUN export JDK_HOME
-#COPY requirements.txt requirements.txt
 
 FROM python:3.9-slim-buster
 RUN pip install --upgrade cython
 RUN pip install --upgrade Flask[async]
-#RUN pip install --upgrade jnius 
 WORKDIR /python-docker
-COPY requirements_copy.txt requirements_copy.txt
-RUN pip3 install -r requirements_copy.txt
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
 COPY . .
 EXPOSE 5000
 CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
-
-#FROM ubuntu:22.04
-#RUN apt-get update -y && \
-#    apt-get install -y pip
-#WORKDIR /flask
-#COPY requirements.txt requirements.txt
-#RUN pip install --upgrade cython
-#RUN pip install -r requirements.txt
-#COPY . .
-#CMD ["python3", "-m", "flask", "run"]

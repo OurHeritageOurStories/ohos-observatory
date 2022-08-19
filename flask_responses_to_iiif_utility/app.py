@@ -47,15 +47,11 @@ async def construct_json():
         fragment = {}
         fragment["id"] = item
         fragment["type"] = "canvas"
-        #url_thumbnail = await dbpedia_get_thumbnail(item.split("/")[len(item.split("/"))-1])
         try:
             url_thumbnail = await dbpedia_get_thumbnail(item.split("/")[len(item.split("/"))-1])
         except: 
-            print("error")
-        #    return item
-         #   break
+            print("error") #these should probably be sent to somewhere
             continue
-        #thumbnail_metadata = await get_image_resolution(url_thumbnail)
         try: 
             thumbnail_metadata = await get_image_resolution(url_thumbnail)
         except:

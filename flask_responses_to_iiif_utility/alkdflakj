@@ -1,7 +1,0 @@
-FROM python:3.9-alpine
-RUN mkdir /app
-WORKDIR /app
-ADD requirements_copy.txt /app
-ADD app.py /app
-RUN pip3 install -r requirements_copy.txt
-CMD ["python3", "-m", "flask", "run"]
