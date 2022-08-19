@@ -55,7 +55,7 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 
     b. To test that this has worked, you should be able to contact miiify via http://localhost:8000/annotation/hello. Either run 'http http://localhost:8000/annotation/hello' (requires HTTPie), 'curl http://localhost:8000/annotation/hello', or go directly through Insomnia. You should receive the response > Welcome to miiify!
 
-5. Data can then be sent to Blazegraph by sending a post to http://localhost:8000/graph?
+5. Data can then be sent to Blazegraph by sending a post to http://localhost:8000/graph-all-access?
 
 6. Go to 'localhost:3000' on your browser.
 
