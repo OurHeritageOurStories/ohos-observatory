@@ -47,7 +47,7 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 
 3. Open a terminal in the flask_responses_to_iiif_utility directory, run 'docker build -t ohos-iiif-manifest .'
 
-4. Run dockercompose.yaml with the command 'docker-compose up' to generate a local Blazegraph, Miiify, Flask-based IIIF generator, and GraphDB server, the Vue front-end, and a Kong API.
+4. Run dockercompose.yaml with the command 'docker-compose up --remove-orphans' to generate a local Blazegraph, Miiify, Flask-based IIIF generator, and GraphDB server, the Vue front-end, and a Kong API.
 
 5. Transfer kong_config.yml to the Kong API
 
