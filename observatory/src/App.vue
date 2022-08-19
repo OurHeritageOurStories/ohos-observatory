@@ -3,7 +3,6 @@ import SelectDataTab from './components/SelectDataTab.vue';
 import NetworkGraphTab from './components/NetworkGraphTab.vue';
 import AboutTab from './components/AboutTab.vue';
 import InputATripleVue from "./components/InputATriple.vue";
-import Iiif_manifest_generator from './components/DO_NOT_USE_iiif_manifest_generator.vue';
 import Iiif_from_backend from './components/iiif_from_backend.vue';
 
 export default{
@@ -12,7 +11,6 @@ export default{
     NetworkGraphTab,
     AboutTab,
     InputATripleVue,
-    Iiif_manifest_generator,
     Iiif_from_backend
 },
     data: function() { 
@@ -39,8 +37,7 @@ export default{
         <a v-on:click="activetab='2'" v-bind:class="[ activetab === '2' ? 'active' : '' ]">Change Dataset</a>
         <a v-on:click="activetab='3'" v-bind:class="[ activetab === '3' ? 'active' : '' ]">Add</a>
         <a v-on:click="activetab='4'" v-bind:class="[ activetab === '4' ? 'active' : '' ]">Explore</a>
-        <a v-on:click="activetab='5'" v-bind:class="[ activetab === '5' ? 'active' : '' ]">IIIF manifest</a>
-        <a v-on:click="activetab='6'" v-bind:class="[ activetab === '6' ? 'active' : '' ]">IIIF manifest backend</a>
+        <a v-on:click="activetab='5'" v-bind:class="[ activetab === '5' ? 'active' : '' ]">IIIF manifest from the backend</a>
     </div>
 
     <div id="content" class="content">
@@ -57,9 +54,6 @@ export default{
             <NetworkGraphTab />
         </div>
         <div v-if="activetab ==='5'" class="tabcontent">
-            <Iiif_manifest_generator /> 
-        </div>
-        <div v-if="activetab ==='6'" class="tabcontent">
             <Iiif_from_backend /> 
         </div>
     </div>
