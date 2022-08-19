@@ -21,7 +21,7 @@ RUN set -eux; \
             ; \
             rm -rf /var/lib/apt/lists/*
 
-ENV JAVA_HOME /usr/local/openjdk-11
+ENV JAVA_HOME /usr/local/openjdk-11 
 RUN { echo '#/bin/sh'; echo 'echo "$JAVA_HOME"'; } > /usr/local/bin/docker-java-home && chmod +x /usr/local/bin/docker-java-home && [ "$JAVA_HOME" = "$(docker-java-home)" ] # backwards compatibility
 ENV PATH $JAVA_HOME/bin:$PATH
 ENV JDK_HOME /usr/local/openjdk-11
@@ -36,3 +36,10 @@ RUN pip3 install -r requirements.txt
 COPY . .
 EXPOSE 5000
 CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
+
+#
+#Dockerfile stuck together from bits of the below and self made code
+# https://stackoverflow.com/questions/31196567/installing-java-in-docker-image
+# https://runnable.com/docker/python/dockerize-your-flask-application
+# Unfortunatly some locations are lost as I had a computer crash at the wrong moment and lost the locations 
+#
