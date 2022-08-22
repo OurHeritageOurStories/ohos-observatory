@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "mocha": "^9.2.2",
-    "pactum": "^3.1.5"
+    "pactum": "^3.1.13"
   },
   "scripts": {
     "test": "mocha **/test_suite/test_scripts/*.js"
