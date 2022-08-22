@@ -14,44 +14,6 @@ import lodash from 'lodash';
 
 export default{
     components: { TableLite },
-    /* setup()
-        {
-            const relatedData = reactive([]);
-            const table = reactive({
-              columns: [
-                {
-                  label: "Subject",
-                  field: "subject",
-                  width: "3%",
-                  sortable: true,
-                  isKey: true,
-                },
-                {
-                  label: "Predicate",
-                  field: "predicate",
-                  width: "10%",
-                  sortable: true,
-                },
-                {
-                  label: "Object",
-                  field: "object",
-                  width: "15%",
-                  sortable: true,
-                },
-              ],
-              rows: relatedData,
-              totalRecordCount: computed(() => {
-                return table.rows.length;
-              }),
-              sortable: {
-                order: "predicate",
-                sort: "asc",
-              },
-            });
-            return {
-              table,
-            };
-        }, */
     data(){
         return{
             items: null,
@@ -79,6 +41,7 @@ export default{
                   sortable: true,
                 },
               ],
+              totalRecordCount: 0,
               rows: this.relatedData,
               sortable: {
                 order: "predicate",
@@ -171,7 +134,6 @@ export default{
                 let link = this.relatedJSON.results.bindings[i].s.value;
                                 this.items[this.relatedJSON.results.bindings[i].a.value] = link;
             }
-            this.table.totalRecordCount = this.items.length;
             for (const [key, value] of Object.entries(this.items)) {
             let label = ""
             let link = key;
@@ -210,7 +172,7 @@ export default{
             
             }
             this.table["rows"] = relatedData;
-            
+            this.table["totalRecordCount"] = relatedData.length;
         },
         fetch_label_promise(ref){
             let label = null;
@@ -381,20 +343,11 @@ export default{
             this.graph_status = "Drawing graph...";
             console.log("Drawing graph...");
             var results = fetched_data.results.bindings;
-            console.log(results);
-            let obj = null;
-            var sub = null;
-            var pre = null;
-            var obje = null;
             this.len = results.length;
             for (let i = 0; i < this.len; i++){
-                obj = results[i];
-                sub = obj.s.value;
-                pre = obj.p.value;
-                obje = obj.o.value;
-                this.fetch_label(sub);
-                this.fetch_label(obje);
-                this.fetch_label(pre);      
+                this.fetch_label(results[i].s.value);
+                this.fetch_label(results[i].o.value);
+                this.fetch_label(results[i].p.value);      
             }
             this.graph_status = "";
             console.log("The graph should be ready. If it doesn't display, switch between tabs.")
@@ -430,7 +383,6 @@ export default{
     :edges="edges"
     :layouts="layouts"
     :configs="configs"
-    :layers="layers"
     :event-handlers="eventHandlers"
     :key="componentKey"
   >
@@ -469,8 +421,23 @@ export default{
   <button @click="create_graph" id="node_limit_button" class="button">Refresh</button>
   <span style="font-size:12px;">The limit might not be precise. If the graph appears odd, switch between tabs.</span>
   </div>
+  <div>
+    <p>Legends</p>
+    <p style = "color:#e7d2ea>
+        OHOS
+    </p>
+    <p class = "line OHOSLine"></p>
+    <p style = "color:#fed32c>
+        DBPedia
+    </p>
+    <p class = "line DBPediaLine"></p>
+    <p style = "color:#990000">
+        WikiData
+    </p>
+    <p class = "line WikiDataLine"></p>
+  </div>
   <table-lite
-    :is-static-mode="fals3"
+    :is-static-mode="true"
     :columns="table.columns"
     :rows="table.rows"
     :total="table.totalRecordCount"
@@ -489,5 +456,31 @@ export default{
 // by the background circle.
 .face-picture {
   pointer-events: none;
+}
+.OHOSLine {
+    background-color: #e7d2ea;
+}
+.DBPediaLine {
+    background-color: #fed32c;
+}
+.WikiDataLine {
+    background-color: #990000;
+}
+.OHOSLine {
+    background-color: #000;
+{
+.OHOSLine {
+    background-color: #000;
+}
+.OHOSLine {
+    background-color: #000;
+}
+.line{
+    content: "";
+    display: inline-block;
+    height: 5px;
+    position: relative;
+    vertical-align: middle;
+    width: 5%;
 }
 </style>
