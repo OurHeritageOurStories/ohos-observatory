@@ -45,17 +45,19 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 
 2. Open a terminal in the ohos-observatory directory, run 'docker build -t ohos_observatory_frontend .'
 
-3. Run dockercompose.yaml with the command 'docker-compose up' to generate a local Blazegraph, Miiify, and GraphDB server, the Vue front-end, and a Kong API.
+3. Open a terminal in the flask_responses_to_iiif_utility directory, run 'docker build -t ohos-iiif-manifest .'
 
-4. Transfer kong_config.yml to the Kong API
+4. Run dockercompose.yaml with the command 'docker-compose up --remove-orphans' to generate a local Blazegraph, Miiify, Flask-based IIIF generator, and GraphDB server, the Vue front-end, and a Kong API.
+
+5. Transfer kong_config.yml to the Kong API
 
     a. This can either be done as per the Kong documentation, or via Insomnia. It requires sending a POST request to 'http://localhost:8001/config', with the contents of kong_config.yml, and the header 'Content-Type: text/yaml'. You should get a response of a JSON file containing details about the various routes that have been created.
 
     b. To test that this has worked, you should be able to contact miiify via http://localhost:8000/annotation/hello. Either run 'http http://localhost:8000/annotation/hello' (requires HTTPie), 'curl http://localhost:8000/annotation/hello', or go directly through Insomnia. You should receive the response > Welcome to miiify!
 
-5. Data can then be sent to Blazegraph by sending a post to http://localhost:8000/graph?
+6. Data can then be sent to Blazegraph by sending a post to http://localhost:8000/graph-full-access?
 
-6. Go to 'localhost:3000' on your browser.
+7. Go to 'localhost:3000' on your browser.
 
 
 ## How to access the SPARQL endpoint. 

@@ -1,0 +1,45 @@
+FROM ubuntu:22.04
+
+RUN apt-get -y update && \
+    apt-get -y upgrade && \
+    apt-get install -y openjdk-11-jdk && \
+    apt-get install -y ant && \
+    apt-get install -y python3 && \
+    apt-get clean;
+FROM buildpack-deps:buster-scm
+
+RUN set -eux; \
+        apt-get update; \
+        apt-get install -y --no-install-recommends \
+                bzip2 \
+                unzip \
+                xz-utils \
+                \
+                fontconfig libfreetype6 \
+		        \
+                ca-certificates p11-kit \
+            ; \
+            rm -rf /var/lib/apt/lists/*
+
+ENV JAVA_HOME /usr/local/openjdk-11 
+RUN { echo '#/bin/sh'; echo 'echo "$JAVA_HOME"'; } > /usr/local/bin/docker-java-home && chmod +x /usr/local/bin/docker-java-home && [ "$JAVA_HOME" = "$(docker-java-home)" ] # backwards compatibility
+ENV PATH $JAVA_HOME/bin:$PATH
+ENV JDK_HOME /usr/local/openjdk-11
+RUN export JDK_HOME
+
+FROM python:3.9-slim-buster
+RUN pip install --upgrade cython
+RUN pip install --upgrade Flask[async]
+WORKDIR /python-docker
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+COPY . .
+EXPOSE 5000
+CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
+
+#
+#Dockerfile stuck together from bits of the below and self made code
+# https://stackoverflow.com/questions/31196567/installing-java-in-docker-image
+# https://runnable.com/docker/python/dockerize-your-flask-application
+# Unfortunatly some locations are lost as I had a computer crash at the wrong moment and lost the locations 
+#

@@ -1,3 +1,5 @@
+node_modules
+flask_responses_to_iiif_utility/.venv/
 # Logs
 logs
 *.log
