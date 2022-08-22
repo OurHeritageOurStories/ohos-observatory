@@ -376,7 +376,7 @@ export default{
             if (isNaN(this.node_limit)){
                 this.node_limit = 100;
             }
-            fetch('api/graph?query=SELECT * {<http://dbpedia.org/resource/Spratton> ?p ?o BIND(<http://dbpedia.org/resource/Spratton> AS ?s)} LIMIT ' + this.node_limit,{
+            fetch("api/graph?query=SELECT DISTINCT ?s ?p ?o WHERE { BIND(<http://dbpedia.org/resource/Spratton> AS ?s1) <http://dbpedia.org/resource/Spratton> ?p1 ?s. ?s ?p ?o.} LIMIT " + this.node_limit,{ 
                 headers:{"Accept":"application/sparql-results+json"}
             })
                 .then(response=>response.json())
