@@ -74,9 +74,9 @@ export default{
                 node: {
                   normal: {
                     radius: 12,
-                    color: "#b3bdee",
+                    color: node => node.color,
                     strokeWidth: 5,
-                    strokeColor: "#b3bdee",
+                    strokeColor: node => node.color,
                   },
                   label: {
                     visible: true,
@@ -86,7 +86,7 @@ export default{
                 edge: {
                   normal: {
                     width: 1,
-                    color: "#b3bdee",
+                    color: edge => edge.color,
                   },
                   gap: 50,
                   type: "curve",
@@ -137,6 +137,8 @@ export default{
             for (const [key, value] of Object.entries(this.items)) {
             let label = ""
             let link = key;
+            let j = this.len + 1;
+            var OHOSLink = "https://ohos.ac.uk/wp-content/uploads/2021/12/cropped-OHOSIcon_Large.png";
             var refArray = link.split("/");
             switch(link.includes("wikidata.org/")){
                     case true:
@@ -147,6 +149,9 @@ export default{
                             (result)=>{
                                 var retRef = Object.keys(result.entities)[0];
                                 pred = result.entities[retRef].labels.en.value;
+                                this.nodes[value] = { name: value, face: OHOSLink, color: "#fed32c" };
+                                this.edges[key] = { source: node, target: value, label: pred, color: "#fed32c" };
+                                j = j + 1;
                                 relatedData.push({
                                 subject: this.labels[node],
                                 predicate: pred,
@@ -247,7 +252,7 @@ export default{
                                 (result)=>{
                                     this.count = this.count + 1;
                                     if (result.results.bindings.length)
-                                        this.nodes[link] = {name: this.labels[link], face: result.results.bindings[0].i.value };
+                                        this.nodes[link] = {name: this.labels[link], face: result.results.bindings[0].i.value, color: "#e7d2ea" };
                                     if(this.count == this.len*3)
                                     {
                                         this.make_connections();
@@ -313,26 +318,26 @@ export default{
                 switch(true){
                     case(edgeLabelIsImage):
                         if(!this.nodes[sub] || this.nodes[sub].face == OHOSLink)
-                            this.nodes[sub] = { name: this.labels[sub], face: obje };
+                            this.nodes[sub] = { name: this.labels[sub], face: obje, color: "#e7d2ea" };
                         else
                             if(this.nodes[sub])
                             {
-                                this.nodes[obje] = { name: this.labels[obje], face: obje };
-                                this.edges[i] = { source: sub, target: obje, label: this.labels[pre] };
+                                this.nodes[obje] = { name: this.labels[obje], face: obje, color: "#e7d2ea" };
+                                this.edges[i] = { source: sub, target: obje, label: this.labels[pre], color: "#e7d2ea" };
                             }
                         break;
                     case(!edgeLabelIsImage):
                         switch(true){
                             case(!this.nodes[sub]):
-                                this.nodes[sub] = { name: this.labels[sub], face: OHOSLink };
-                                    this.nodes[obje] = { name: this.labels[obje], face: OHOSLink };
+                                this.nodes[sub] = { name: this.labels[sub], face: OHOSLink, color: "#e7d2ea" };
+                                    this.nodes[obje] = { name: this.labels[obje], face: OHOSLink, color: "#e7d2ea" };
                                 break;
                             case(this.nodes[sub]):
-                                this.nodes[obje] = { name: this.labels[obje], face: OHOSLink };
+                                this.nodes[obje] = { name: this.labels[obje], face: OHOSLink, color: "#e7d2ea" };
                                 break;
                         }
-                        this.nodes[obje] = { name: this.labels[obje], face: OHOSLink };
-                        this.edges[i] = { source: sub, target: obje, label: this.labels[pre] };
+                        this.nodes[obje] = { name: this.labels[obje], face: OHOSLink, color: "#e7d2ea" };
+                        this.edges[i] = { source: sub, target: obje, label: this.labels[pre], color: "#e7d2ea" };
                         break;
                 }
                 this.nodes[sub].name = this.labels[sub];
@@ -423,11 +428,11 @@ export default{
   </div>
   <div>
     <p>Legends</p>
-    <p style = "color:#e7d2ea>
+    <p style = "color:#e7d2ea">
         OHOS
     </p>
     <p class = "line OHOSLine"></p>
-    <p style = "color:#fed32c>
+    <p style = "color:#fed32c">
         DBPedia
     </p>
     <p class = "line DBPediaLine"></p>
@@ -457,25 +462,8 @@ export default{
 .face-picture {
   pointer-events: none;
 }
-.OHOSLine {
+p.OHOSLine:after {
     background-color: #e7d2ea;
-}
-.DBPediaLine {
-    background-color: #fed32c;
-}
-.WikiDataLine {
-    background-color: #990000;
-}
-.OHOSLine {
-    background-color: #000;
-{
-.OHOSLine {
-    background-color: #000;
-}
-.OHOSLine {
-    background-color: #000;
-}
-.line{
     content: "";
     display: inline-block;
     height: 5px;
@@ -483,4 +471,23 @@ export default{
     vertical-align: middle;
     width: 5%;
 }
+p.DBPediaLine:after {
+    background-color: #fed32c;
+    content: "";
+    display: inline-block;
+    height: 5px;
+    position: relative;
+    vertical-align: middle;
+    width: 5%;
+}
+p.WikiDataLine:after {
+    background-color: #990000;
+    content: "";
+    display: inline-block;
+    height: 5px;
+    position: relative;
+    vertical-align: middle;
+    width: 5%;
+}
+
 </style>
