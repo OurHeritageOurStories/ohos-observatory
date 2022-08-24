@@ -80,4 +80,3 @@ AWS built ohos_observatory_frontend image
     image: <AWS Account ID>.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend
     
     
- 
