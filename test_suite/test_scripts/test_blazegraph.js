@@ -16,7 +16,7 @@ it('should check Blazegraph is up', async()=>{
 
 it('should insert fake facebook', async()=>{
     await pactum.spec()
-        .post('http://localhost:8000/graph?')
+        .post('http://localhost:8000/graph-full-access?')
         .withHeaders('Content-Type', 'text/plain')
         .withBody('<http://www.example.com/kev> <http://www.example.com/knows> <http://www.example.com/will> . ')
         .expectStatus(200)
@@ -27,7 +27,7 @@ it('should insert fake facebook', async()=>{
 
 it('should insert invalid fake facebook', async()=>{
     await pactum.spec()
-        .post('http://localhost:8000/graph?')
+        .post('http://localhost:8000/graph-full-access?')
         .withHeaders('Content-Type', 'text/plain')
         .withBody('<http://www.example.com/"?> <http://www.example.com/> <http://www.example.com///...> . ')
         .expectStatus(200)
@@ -38,7 +38,7 @@ it('should insert invalid fake facebook', async()=>{
 
 it('should reject insert invalid fake facebook', async()=>{
     await pactum.spec()
-        .post('http://localhost:8000/graph?')
+        .post('http://localhost:8000/graph-full-access?')
         .withHeaders('Content-Type', 'text/plain')
         .withBody('<http://www.example.com/"?> <http://www.example.com/> <http://www.example.com/<http://www.example.com/"?> <http://www.example.com/>> . ')
         .expectStatus(500)
@@ -47,7 +47,7 @@ it('should reject insert invalid fake facebook', async()=>{
 
 it('should reject insertion of incomplete fake facebook', async()=>{
     await pactum.spec()
-        .post('http://localhost:8000/graph?')
+        .post('http://localhost:8000/graph-full-access?')
         .withHeaders('Content-Type', 'text/plain')
         .withBody('<http://www.example.com/knows> <http://www.example.com/will> . ')
         .expectStatus(500)
@@ -55,7 +55,7 @@ it('should reject insertion of incomplete fake facebook', async()=>{
 
 it('should reject inserting with the wrong headers', async()=>{
     await pactum.spec()
-    .post('http://localhost:8000/graph?')
+    .post('http://localhost:8000/graph-full-access?')
     .withHeaders('Content-Type', 'application/trix')
     .withBody('<http://www.example.com/kev> <http://www.example.com/knows> <http://www.example.com/will> . ')
     .expectStatus(500)
@@ -63,7 +63,7 @@ it('should reject inserting with the wrong headers', async()=>{
 
 it('should add a nested triple', async()=>{
     await pactum.spec()
-        .post('http://localhost:8000/graph?')
+        .post('http://localhost:8000/graph-full-access?')
         .withHeaders('Content-Type', 'application/x-n-triples-RDR')
         .withBody('<http://www.example.com/bobby> <http://www.example.com/dislikes> <http://www.example.com/timmy> . \n<< <http://www.example.com/bobby> <http://www.example.com/dislikes> <http://www.example.com/timmy> >> <http://www.example.com/says> <http://www.example.com/jane> .')
         .expectStatus(200)
@@ -74,7 +74,7 @@ it('should add a nested triple', async()=>{
 
 it('should reject addition of incomplete a nested triple', async()=>{
     await pactum.spec()
-        .post('http://localhost:8000/graph?')
+        .post('http://localhost:8000/graph-full-access?')
         .withHeaders('Content-Type', 'application/x-n-triples-RDR')
         .withBody('<http://www.example.com/bobby> <http://www.example.com/dislikes> <http://www.example.com/timmy> . \n<< <http://www.example.com/bobby> <http://www.example.com/dislikes> <http://www.example.com/timmy> >> <http://www.example.com/says> .')
         .expectStatus(500)
@@ -84,7 +84,7 @@ it('should reject addition of incomplete a nested triple', async()=>{
 it('should reject inserting a nested triple with the wrong headers', async()=>{
 
     await pactum.spec()
-        .post('http://localhost:8000/graph?')
+        .post('http://localhost:8000/graph-full-access?')
         .withHeaders('Content-Type', 'application/trix')
         .withBody('<http://www.example.com/bobby> <http://www.example.com/dislikes> <http://www.example.com/timmy> . \n<< <http://www.example.com/bobby> <http://www.example.com/dislikes> <http://www.example.com/timmy> >> <http://www.example.com/says> <http://www.example.com/jane> .')
         .expectStatus(500);
@@ -92,7 +92,7 @@ it('should reject inserting a nested triple with the wrong headers', async()=>{
 
 it('should safely deal with inserting Cuneiform Unicode characters', async()=>{
   await pactum.spec()
-  .post('http://localhost:8000/graph?')
+  .post('http://localhost:8000/graph-full-access?')
   .withHeaders('Content-Type', 'text/plain')
   .withBody('<http://www.example.com/𒀀> <http://www.example.com/𒀌𒀚> <http://www.example.com/𒀰> . ')
   .expectStatus(200)
@@ -100,7 +100,7 @@ it('should safely deal with inserting Cuneiform Unicode characters', async()=>{
 
 it('should safely deal with inserting U+168x Ogham Unicode characters', async()=>{
   await pactum.spec()
-  .post('http://localhost:8000/graph?')
+  .post('http://localhost:8000/graph-full-access?')
   .withHeaders('Content-Type', 'text/plain')
   .withBody('<http://www.example.com/ᚅ> <http://www.example.com/ᚉ> <http://www.example.com/ᚏ> . ')
   .expectStatus(200)
@@ -108,7 +108,7 @@ it('should safely deal with inserting U+168x Ogham Unicode characters', async()=
 
 it('should safely deal with inserting U+169x Ogham Unicode characters', async()=>{
   await pactum.spec()
-  .post('http://localhost:8000/graph?')
+  .post('http://localhost:8000/graph-full-access?')
   .withHeaders('Content-Type', 'text/plain')
   .withBody('<http://www.example.com/ᚑ> <http://www.example.com/ᚕ> <http://www.example.com/᚛> . ')
   .expectStatus(200)
@@ -116,7 +116,7 @@ it('should safely deal with inserting U+169x Ogham Unicode characters', async()=
 
 it('should safely deal with inserting flag emojis', async()=>{
   await pactum.spec()
-  .post('http://localhost:8000/graph?')
+  .post('http://localhost:8000/graph-full-access?')
   .withHeaders('Content-Type', 'text/plain')
   .withBody('<http://www.example.com/🇧🇮> <http://www.example.com/🇧🇶ᚕ> <http://www.example.com/🇫🇮> . ')
   .expectStatus(200)
@@ -124,7 +124,7 @@ it('should safely deal with inserting flag emojis', async()=>{
 
 it('should safely deal with blanks', async()=>{
   await pactum.spec()
-  .post('http://localhost:8000/graph?')
+  .post('http://localhost:8000/graph-full-access?')
   .withHeaders('Content-Type', 'text/plain')
   .withBody('<http://www.example.com/kev> <http://www.example.com/knows> <http://www.example.com/> . ')
   .expectStatus(200)
@@ -132,7 +132,7 @@ it('should safely deal with blanks', async()=>{
 
 it('should safely deal with blank IRIs', async()=>{
   await pactum.spec()
-  .post('http://localhost:8000/graph?')
+  .post('http://localhost:8000/graph-full-access?')
   .withHeaders('Content-Type', 'text/plain')
   .withBody('<http://www.example.com/kev> <http://www.example.com/knows> <http://example.com/.well-known/genid/d26a2d0e98334696f4ad70a677abc1f6> . ')
   .expectStatus(200)
@@ -217,7 +217,7 @@ it('should check that the fake facebook nested triple has been inserted', async(
 
 it('should add more fake facebook', async()=>{
     await pactum.spec()
-    .post('http://localhost:8000/graph?')
+    .post('http://localhost:8000/graph-full-access?')
     .withHeaders('Content-Type', 'text/plain')
     .withBody('<http://www.example.com/jonik> <http://www.example.com/knows> <http://www.example.com/bob> . ')
     .expectStatus(200)
@@ -265,7 +265,7 @@ it('should check that aditional bits fake facebook have been inserted correctly'
 
 it('should remove Jonik the test database', async()=>{
     await pactum.spec()
-        .delete('http://localhost:8000/graph?s=<http://www.example.com/jonik>')
+        .delete('http://localhost:8000/graph-full-access?s=<http://www.example.com/jonik>')
         .expectStatus(200)
         .expectBodyContains(
             '<data modified="'
@@ -357,7 +357,7 @@ it('should find a set of results without Jonik', async()=>{
 
 it('should get rid of everything', async()=>{
     await pactum.spec()
-        .delete('http://localhost:8000/graph?DROP ALL')
+        .delete('http://localhost:8000/graph-full-access?DROP ALL')
         .expectStatus(200)
         .expectBodyContains(
             '<data modified="'
