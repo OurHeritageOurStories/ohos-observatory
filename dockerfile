@@ -4,4 +4,4 @@ WORKDIR /usr/src/app
 COPY ./observatory .
 EXPOSE 3000
 RUN npm install
-CMD [ "npm", "run", "dev", "--host", "0.1.0.1", "--host" ]
+CMD [ "npm", "run", "dev" ]

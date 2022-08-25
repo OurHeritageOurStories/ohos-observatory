@@ -39,7 +39,7 @@ export default defineConfig({
   },
   //envDir:'./',
   server:{
-    host: true,
+    host: "0.1.2.3",
     proxy:{
       //'/foo':'http://ohos_observatory_kong:8000',
       '/foo':'ohos_observatory_kong:8000',
