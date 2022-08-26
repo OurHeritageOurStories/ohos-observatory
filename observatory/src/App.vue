@@ -166,12 +166,9 @@ input[type='radio'] {
 .tabcontent a {
     color: #ca5ed6; 
 }
-.slidecontainer {
-  width: 15%;
-}
 .slider {
   -webkit-appearance: none;
-  width: 15%;
+  width: 25%;
   height: 10px;
   border-radius: 5px;
   background: #e7d2ea;
