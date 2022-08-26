@@ -1,0 +1,7 @@
+FROM kong:2.8.1-alpine
+USER root
+RUN export KONG_DATABASE=off
+COPY kong.yml /
+RUN KONG_DECLARATIVE_CONFIG=kong.yml
+RUN cp /etc/kong/kong.conf.default /etc/kong/kong.conf
+#RUN docker exec kong start -c kong.conf
