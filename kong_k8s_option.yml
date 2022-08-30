@@ -5,33 +5,44 @@ metadata:
 spec:
   ingressClassName: kong
   rules:
-  - http:
+  - host: //kong_blazegraph:8080/bigdata/#splash
+    http:
       paths:
-      - path: /foo
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: echo
-            port:
-              number: 80
-      - path: /graph/hello
-        backend:
-          service: 
-            name: kong_blazegraph
-      - path: /graph?
-        backend:
-          service:
-            name: kong_blazegraph_api_query_post
-      - path: /graph-full-access?
-        backend:
-          service:
-            name: kong_blazegraph_api_query_post_full_access
-      - path: /annotation/hello
-        backend:
-          service:
-            name: kong_miiify
-      - path: /annotation/
-        backend:
-          service:
-            name: kong_miiify_add_anotation
+        - path: /graph/hello
+          pathType: ImplementationSpecific
+          backend:
+            service: 
+              name: kong_blazegraph
+    - host: //kong_blazegraph:8080/bigdata/sparql
+      http:
+        paths:
+        - path: /graph?
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: kong_blazegraph_api_query_post
+    - host: //kong_blazegraph:8080/bigdata/sparql
+      http:
+        paths:
+        - path: /graph-full-access?
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: kong_blazegraph_api_query_post_full_access
+    - host: //kong_miiify:8080
+      http:
+        paths:
+        - path: /annotation/hello
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: kong_miiify
+    - host: //kong_miiify:8080/annotations/
+      http:
+        paths:
+        - path: /annotation/
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: kong_miiify_add_anotation
       
