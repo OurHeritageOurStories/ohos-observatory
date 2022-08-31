@@ -400,8 +400,8 @@ export default{
         list_subjects(){
             try {
                 for (let i = 0; i < this.subjects.results.bindings.length; i++) {
-                let subject = this.subjects.results.bindings[i].s.value;
-                this.subjects_list.push(subject);
+                    let subject = this.subjects.results.bindings[i].s.value;
+                    this.subjects_list.push(subject);
                 }
                 this.fill_dropdown();
             }
@@ -426,7 +426,7 @@ export default{
             for (var i = 0; i < this.subjects_list.length; i++) {
                 var optn = this.subjects_list[i];
                 var el = document.createElement("option");
-                el.textContent = optn;
+                el.textContent = optn.split("/").pop().replaceAll("_", " ");
                 el.value = optn;
                 select.appendChild(el);
             }
