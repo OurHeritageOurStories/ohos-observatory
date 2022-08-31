@@ -108,6 +108,7 @@ export default{
             ),
             eventHandlers: {
               "node:click": ({ node }) => {
+                document.getElementById('dropdown').value = node;
                 var promise = this.fetch_related_promise(node);
                 promise.then(
                     (result)=>{
@@ -428,8 +429,8 @@ export default{
             this.list_subjects();
         },
         fill_dropdown() {
-        var select = document.getElementById("dropdown");
-        this.subjects_list = this.subjects_list.sort();
+            var select = document.getElementById("dropdown");
+            this.subjects_list = this.subjects_list.sort();
             for (var i = 0; i < this.subjects_list.length; i++) {
                 var optn = this.subjects_list[i];
                 var el = document.createElement("option");
