@@ -16,7 +16,6 @@ export default{
     components: { TableLite },
     data(){
         return{
-
             items: null,
             label: null,
             relatedData: reactive([]),
@@ -50,9 +49,10 @@ export default{
               },
             }), 
             relatedJSON: null,
-            graph_status: "Select data in the Select tab please",          
+            graph_status: "Select data in the Select tab please",
             playground_data:null,
-
+            subjects: null,
+            subjects_list: [],
             nodes: {},
             edges: {},
             labels: {},
@@ -60,7 +60,6 @@ export default{
             len: null,
             count: 0,
             fetched_data_copy: null,
-            node_limit: localStorage.getItem("nodeLimit"),
             componentKey: 0,
             zoomLevel: ref(0.7),
             configs: reactive(
@@ -109,6 +108,7 @@ export default{
             ),
             eventHandlers: {
               "node:click": ({ node }) => {
+                document.getElementById('dropdown').value = node;
                 var promise = this.fetch_related_promise(node);
                 promise.then(
                     (result)=>{
@@ -126,6 +126,7 @@ export default{
     },
     created(){
         this.create_graph()
+        this.fetch_subjects()
     },
     methods:{
         publish_table(relatedData, node)
@@ -370,21 +371,66 @@ export default{
             this.len = null;
             this.count = 0;
             this.fetched_data_copy = null;
-            localStorage.setItem("nodeLimit", this.node_limit);
             this.componentKey += 1;
             this.graph_status = "Fetching data... If this message disappears but the graph doesn't show within a few seconds, switch between tabs";
-            if (isNaN(this.node_limit)){
-                this.node_limit = 100;
+            try {
+                this.user_query = document.getElementById('dropdown').value;
+            } catch (error) {
+                this.user_query = "http://dbpedia.org/resource/Spratton";
             }
-            //fetch('api/graph?query=SELECT DISTINCT ?s ?p ?o WHERE {<http://dbpedia.org/resource/Spratton> ?p ?o BIND(<http://dbpedia.org/resource/Spratton> AS ?s)} LIMIT ' + this.node_limit,{ //1st degree            
-            fetch("api/graph?query=SELECT DISTINCT ?s ?p ?o WHERE {<http://dbpedia.org/resource/Spratton> ?p1 ?s. ?s ?p ?o.} LIMIT " + this.node_limit,{ //2nd degree
-            //fetch("api/graph?query=SELECT DISTINCT ?s ?p ?o WHERE {<http://dbpedia.org/resource/Spratton> ?p1 ?s2. ?s2 ?p2 ?s. ?s ?p ?o.} LIMIT " + this.node_limit,{ //3rd degree
+            fetch("api/graph?query=SELECT DISTINCT ?s ?p ?o WHERE { BIND(<" + this.user_query + "> AS ?s) <" + this.user_query + "> ?p ?o.}" ,{
                 headers:{"Accept":"application/sparql-results+json"}
             })
                 .then(response=>response.json())
                 .then(response=>(this.post=response))
-                .then(response=>this.draw_graph(response));
-    }
+                .then(response=>this.draw_graph(response))
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            fetch("api/graph?query=SELECT DISTINCT ?s ?p ?o WHERE { <" + this.user_query + "> ?p1 ?s. ?s ?p ?o.}" ,{
+            headers:{"Accept":"application/sparql-results+json"}
+            })
+                .then(response=>response.json())
+                .then(response=>(this.post=response))
+                .then(response=>this.draw_graph(response))
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        },
+        list_subjects(){
+            try {
+                for (let i = 0; i < this.subjects.results.bindings.length; i++) {
+                let subject = this.subjects.results.bindings[i].s.value;
+                this.subjects_list.push(subject);
+                }
+                this.fill_dropdown();
+            }
+            catch(error) {
+                console.error('Error:', error);
+            }
+        },
+        fetch_subjects(){ 
+            fetch("api/graph?query=SELECT DISTINCT ?s {?s ?p ?o}",{           
+            headers:{"Accept":"application/sparql-results+json"}
+            })
+                .then(response=>response.json())
+                .then(response=>(this.subjects = response))
+                .then(response=>this.list_subjects())
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        },
+        fill_dropdown() {
+            var select = document.getElementById("dropdown");
+            this.subjects_list = this.subjects_list.sort();
+            for (var i = 0; i < this.subjects_list.length; i++) {
+                var optn = this.subjects_list[i];
+                var el = document.createElement("option");
+                el.textContent = optn;
+                el.value = optn;
+                select.appendChild(el);
+            }
+        }        
     }
 }
 
@@ -434,10 +480,10 @@ export default{
       />
     </template>
   </v-network-graph>
-  <div id="nodeLimit">
-  <label style="font-size:12px;">Set max nodes: {{ node_limit }}  </label>
-  <input  type="range" v-model="node_limit" id="node_limit" min="1" max="200" class="slider"/>
-  <button @click="create_graph" id="node_limit_button" class="button">Refresh</button>
+  <div id="refreshDiv">
+  <p style="font-size:12px;">Set central node: </p>
+  <select id="dropdown"></select>
+  <button @click="create_graph" id="refresh_button" class="button">Refresh</button>
   </div>
   <table-lite
     :is-static-mode="true"
