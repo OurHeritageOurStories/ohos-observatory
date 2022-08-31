@@ -397,14 +397,7 @@ export default{
                     console.error('Error:', error);
                 });
         },
-        resolveAfter3Seconds() {
-            return new Promise(resolve => {
-            setTimeout(() => {
-            resolve('resolved');
-            }, 3000);
-            });
-        },
-        async list_subjects(){
+        list_subjects(){
             try {
                 for (let i = 0; i < this.subjects.results.bindings.length; i++) {
                 let subject = this.subjects.results.bindings[i].s.value;
@@ -413,8 +406,7 @@ export default{
                 this.fill_dropdown();
             }
             catch(error) {
-                const wait = await this.resolveAfter3Seconds();
-                this.list_subjects();
+                console.error('Error:', error);
             }
         },
         fetch_subjects(){ 
@@ -423,10 +415,10 @@ export default{
             })
                 .then(response=>response.json())
                 .then(response=>(this.subjects = response))
+                .then(response=>this.list_subjects())
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-            this.list_subjects();
         },
         fill_dropdown() {
             var select = document.getElementById("dropdown");
