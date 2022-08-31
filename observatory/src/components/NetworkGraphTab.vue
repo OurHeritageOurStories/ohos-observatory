@@ -19,23 +19,17 @@ export default{
             items: null,
             label: null,
             relatedData: reactive([]),
+            props: reactive(["http://dbpedia.org/ontology/ceremonialCounty", "http://dbpedia.org/ontology/deathPlace", "http://dbpedia.org/ontology/birthPlace", "http://dbpedia.org/ontology/country", "http://dbpedia.org/ontology/WikiPageExternalLink", "http://dbpedia.org/ontology/region", "rdfs:comment", "geo:lat", "geo:long", "foaf:depiction", "http://dbpedia.org/ontology/birthPlace", "http://dbpedia.org/ontology/deathPlace", "http://dbpedia.org/ontology/officialName"]),
             table: reactive({
               columns: [
                 {
-                  label: "Subject",
-                  field: "subject",
-                  width: "3%",
-                  sortable: true,
-                  isKey: true,
-                },
-                {
-                  label: "Predicate",
+                  label: "Relation",
                   field: "predicate",
                   width: "10%",
                   sortable: true,
                 },
                 {
-                  label: "Object",
+                  label: "Entity",
                   field: "object",
                   width: "15%",
                   sortable: true,
@@ -56,6 +50,7 @@ export default{
             labels: {},
             layouts: {},
             len: null,
+            len2: null,
             count: 0,
             fetched_data_copy: null,
             node_limit: localStorage.getItem("nodeLimit"),
@@ -107,12 +102,22 @@ export default{
             ),
             eventHandlers: {
               "node:click": ({ node }) => {
-                var promise = this.fetch_related_promise(node);
+                var promise = this.fetch_related_dbpedia_promise(node);
                 promise.then(
                     (result)=>{
                         this.relatedData = reactive([]);
                         this.relatedJSON = result;
-                        this.publish_table(this.relatedData, node);
+                        this.publish_table(this.relatedData, node, "dbpedia");
+                    },
+                    (error)=>{
+                        throw "Error: " + error;
+                    }
+                );
+                promise = this.fetch_related_wikidata_promise(node);
+                promise.then(
+                    (result)=>{
+                        this.relatedJSON = result;
+                        this.publish_table(this.relatedData, node, "wikidata");
                     },
                     (error)=>{
                         throw "Error: " + error;
@@ -126,18 +131,25 @@ export default{
         this.create_graph()
     },
     methods:{
-        publish_table(relatedData, node)
+        publish_table(relatedData, node, source)
         {
             this.items = {};
             for (let i = 0; i < this.relatedJSON.results.bindings.length; i++) {
-                this.items[this.relatedJSON.results.bindings[i].op.value] = this.relatedJSON.results.bindings[i].o.value;
-                let link = this.relatedJSON.results.bindings[i].s.value;
-                                this.items[this.relatedJSON.results.bindings[i].a.value] = link;
+                var objectLabel = "";
+                if("lo" in this.relatedJSON.results.bindings[i])
+                    objectLabel = this.relatedJSON.results.bindings[i].lo.value;
+                else
+                    objectLabel = this.relatedJSON.results.bindings[i].o.value;
+                this.items[this.relatedJSON.results.bindings[i].op.value] = objectLabel;
             }
             for (const [key, value] of Object.entries(this.items)) {
             let label = ""
             let link = key;
-            let j = this.len + 1;
+            var colour = "";
+            if (source == "dbpedia")
+                colour = "#fed32c";
+            else
+                colour = "#990000";
             var OHOSLink = "https://ohos.ac.uk/wp-content/uploads/2021/12/cropped-OHOSIcon_Large.png";
             var refArray = link.split("/");
             switch(link.includes("wikidata.org/")){
@@ -149,11 +161,10 @@ export default{
                             (result)=>{
                                 var retRef = Object.keys(result.entities)[0];
                                 pred = result.entities[retRef].labels.en.value;
-                                this.nodes[value] = { name: value, face: OHOSLink, color: "#fed32c" };
-                                this.edges[key] = { source: node, target: value, label: pred, color: "#fed32c" };
-                                j = j + 1;
+                                this.nodes[value] = { name: value, face: OHOSLink, color: colour };
+                                this.edges[key] = { source: node, target: value, label: pred, color: colour };
+                                this.len2 = this.len2 + 1;
                                 relatedData.push({
-                                subject: this.labels[node],
                                 predicate: pred,
                                 object: value,
                               });
@@ -167,8 +178,13 @@ export default{
                         var pred = key;
                         var predArray =  pred.split("/");
                         pred = lodash.startCase(predArray[predArray.length-1]);
+                        console.log(key, key in this.props)
+                        if(this.props.includes(key))
+                        {
+                            this.nodes[value] = { name: value, face: OHOSLink, color: colour };
+                            this.edges[key] = { source: node, target: value, label: pred, color: colour };
+                        }
                         relatedData.push({
-                            subject: this.labels[node],
                             predicate: pred,
                             object: value,
                           });
@@ -199,16 +215,47 @@ export default{
             });
             return promise;
         },
-        fetch_related_promise(link){
+        fetch_related_dbpedia_promise(link){
           var refArray = link.split("/");
           var ref =  refArray[refArray.length-1];  
           let label = null;
           let endpoint = 'https://query.wikidata.org/sparql';
-          let sparqlQuery = "SELECT DISTINCT ?op ?o ?oo ?a ?s  WHERE { " +
-            "SERVICE <http://dbpedia.org/sparql>  {<http://dbpedia.org/resource/" + ref + "> ?op ?o. " +
-            "<http://dbpedia.org/resource/" + ref + "> owl:sameAs ?oo " +
-            "filter( regex(str(?oo), 'wikidata' ) && (LANG(?o) = 'en' || LANG(?o) = ''))} " +
-            "SERVICE <https://query.wikidata.org/sparql>{ ?oo ?a ?s.}}";
+          let sparqlQuery = "SELECT  DISTINCT ?op ?o ?lo ?lop ?i WHERE { " + 
+          "SERVICE <http://dbpedia.org/sparql>  {<http://dbpedia.org/resource/"+ref+"> ?op ?o. " + 
+          "<http://dbpedia.org/resource/"+ref+"> owl:sameAs ?oo." +
+          "?op rdfs:label ?lop." +
+          "FILTER(regex(str(?oo), 'wikidata' ) && (LANG(?lop)='en' || LANG(?lop)='')) " +
+          "MINUS{<http://dbpedia.org/resource/"+ref+"> ?op ?o. " +
+          "FILTER(LANG(?o)!='en' && LANG(?o)!='')} " +
+          "OPTIONAL{<http://dbpedia.org/resource/"+ref+"> ?op ?o. " +
+          "?o rdfs:label ?lo. " +
+          "?o <http://dbpedia.org/ontology/thumbnail> ?i " +
+          "FILTER((LANG(?lo)='en' || LANG(?lo)=''))}}}";
+          let fullUrl = endpoint + '?query=' + encodeURIComponent( sparqlQuery );
+          let headers = { 'Accept': 'application/sparql-results+json' };
+          let promise = new Promise(function (resolve, reject){
+              fetch( fullUrl, { headers } )
+                    .then(response => response.json())
+                    .then(response => (label = response))
+                    .then(response => {
+                      resolve(response);
+                    });
+          });
+          return promise;
+      },
+      fetch_related_wikidata_promise(link){
+          var refArray = link.split("/");
+          var ref =  refArray[refArray.length-1];  
+          let label = null;
+          let endpoint = 'https://query.wikidata.org/sparql';
+          let sparqlQuery = "SELECT DISTINCT ?s ?a ?o ?la ?ls WHERE { "+
+ "SERVICE <http://dbpedia.org/sparql>  {<http://dbpedia.org/resource/"+ref+"> owl:sameAs ?oo. "+
+    "                                    FILTER(regex(str(?oo), 'wikidata' ) ) "+
+   "    }         SERVICE <https://query.wikidata.org/sparql>{?oo ?op ?o. "+
+  "                                                   ?o rdfs:label ?lo.  }      "+
+ "SERVICE wikibase:label { #BabelRainbow "+
+  "  bd:serviceParam wikibase:language 'en' "+
+  "}      }";
           let fullUrl = endpoint + '?query=' + encodeURIComponent( sparqlQuery );
           let headers = { 'Accept': 'application/sparql-results+json' };
           let promise = new Promise(function (resolve, reject){
@@ -349,6 +396,7 @@ export default{
             console.log("Drawing graph...");
             var results = fetched_data.results.bindings;
             this.len = results.length;
+            this.len2 = this.len;
             for (let i = 0; i < this.len; i++){
                 this.fetch_label(results[i].s.value);
                 this.fetch_label(results[i].o.value);
@@ -364,6 +412,12 @@ export default{
             if (isNaN(this.node_limit)){
                 this.node_limit = 100;
             }
+            fetch('api/graph?query=SELECT DISTINCT ?s ?p ?o WHERE { BIND(<http://dbpedia.org/resource/Spratton> AS ?s) <http://dbpedia.org/resource/Spratton> ?p ?o.}' ,{
+                headers:{"Accept":"application/sparql-results+json"}
+            })
+                .then(response=>response.json())
+                .then(response=>(this.post=response))
+                .then(response=>this.draw_graph(response));
             fetch('api/graph?query=SELECT DISTINCT ?s ?p ?o WHERE { <http://dbpedia.org/resource/Spratton> ?p1 ?s. ?s ?p ?o.}' ,{
                 headers:{"Accept":"application/sparql-results+json"}
             })
