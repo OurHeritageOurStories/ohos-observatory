@@ -19,7 +19,7 @@ export default{
             items: null,
             label: null,
             relatedData: reactive([]),
-            props: reactive(["http://dbpedia.org/ontology/ceremonialCounty", "http://dbpedia.org/ontology/deathPlace", "http://dbpedia.org/ontology/birthPlace", "http://dbpedia.org/ontology/country", "http://dbpedia.org/ontology/WikiPageExternalLink", "http://dbpedia.org/ontology/region", "rdfs:comment", "geo:lat", "geo:long", "foaf:depiction", "http://dbpedia.org/ontology/birthPlace", "http://dbpedia.org/ontology/deathPlace", "http://dbpedia.org/ontology/officialName"]),
+            props: reactive(["http://dbpedia.org/ontology/ceremonialCounty", "http://dbpedia.org/ontology/deathPlace", "http://dbpedia.org/ontology/birthPlace", "http://dbpedia.org/ontology/country", "http://dbpedia.org/ontology/WikiPageExternalLink", "http://dbpedia.org/ontology/region", "rdfs:comment", "geo:lat", "geo:long", "foaf:depiction", "http://dbpedia.org/ontology/birthPlace", "http://dbpedia.org/ontology/deathPlace", "http://dbpedia.org/ontology/officialName", "http://www.wikidata.org/prop/direct/P18", "http://www.wikidata.org/prop/direct/P21", "http://www.wikidata.org/prop/direct/P27", "http://www.wikidata.org/prop/direct/P569", "http://www.wikidata.org/prop/direct/P19", "http://www.wikidata.org/prop/direct/P570", "http://www.wikidata.org/prop/direct/P20", "http://www.wikidata.org/prop/direct/P22", "http://www.wikidata.org/prop/direct/P25", "http://www.wikidata.org/prop/direct/P26", "http://www.wikidata.org/prop/direct/P40", "http://www.wikidata.org/prop/direct/P106", "http://www.wikidata.org/prop/direct/P69", "http://www.wikidata.org/prop/direct/P641", "http://www.wikidata.org/prop/direct/P607", "http://www.wikidata.org/prop/direct/P241", "http://www.wikidata.org/prop/direct/P166", "http://www.wikidata.org/prop/direct/P17", "http://www.wikidata.org/prop/direct/P7959", "http://dbpedia.org/ontology/award", "http://dbpedia.org/ontology/battle", "http://dbpedia.org/ontology/militaryBranch", "http://dbpedia.org/ontology/restingPlace", "http://dbpedia.org/ontology/serviceEndYear", "http://dbpedia.org/ontology/serviceStartYear", "http://dbpedia.org/ontology/relation", "http://dbpedia.org/ontology/thumbnail", "http://dbpedia.org/prop/birthDate", "http://dbpedia.org/prop/birthName", "http://dbpedia.org/prop/birthPlace", "http://dbpedia.org/prop/rank", "http://dbpedia.org/prop/deathDate", "http://dbpedia.org/prop/deathPlace", "http://dbpedia.org/prop/placeofburial"]),
             table: reactive({
               columns: [
                 {
@@ -108,16 +108,19 @@ export default{
                         this.relatedData = reactive([]);
                         this.relatedJSON = result;
                         this.publish_table(this.relatedData, node, "dbpedia");
-                    },
-                    (error)=>{
-                        throw "Error: " + error;
-                    }
-                );
-                promise = this.fetch_related_wikidata_promise(node);
-                promise.then(
-                    (result)=>{
-                        this.relatedJSON = result;
-                        this.publish_table(this.relatedData, node, "wikidata");
+                        if("oo" in this.relatedJSON.results.bindings[0])
+                        {
+                            promise = this.fetch_related_wikidata_promise(node, this.relatedJSON.results.bindings[0].oo.value);
+                            promise.then(
+                                (result)=>{
+                                    this.relatedJSON = result;
+                                    this.publish_table(this.relatedData, node, "wikidata");
+                                },
+                                (error)=>{
+                                    throw "Error: " + error;
+                                }
+                            );
+                        }
                     },
                     (error)=>{
                         throw "Error: " + error;
@@ -134,13 +137,16 @@ export default{
         publish_table(relatedData, node, source)
         {
             this.items = {};
-            for (let i = 0; i < this.relatedJSON.results.bindings.length; i++) {
+            for (let ii = 0; ii < this.relatedJSON.results.bindings.length; ii++) {
                 var objectLabel = "";
-                if("lo" in this.relatedJSON.results.bindings[i])
-                    objectLabel = this.relatedJSON.results.bindings[i].lo.value;
+                if("lo" in this.relatedJSON.results.bindings[ii])
+                    objectLabel = this.relatedJSON.results.bindings[ii].lo.value;
                 else
-                    objectLabel = this.relatedJSON.results.bindings[i].o.value;
-                this.items[this.relatedJSON.results.bindings[i].op.value] = objectLabel;
+                    objectLabel = this.relatedJSON.results.bindings[ii].o.value;
+                if("i" in this.relatedJSON.results.bindings[ii])
+                    this.items[this.relatedJSON.results.bindings[ii].oopLabel.value] = [this.relatedJSON.results.bindings[ii].i.value, objectLabel];
+                else
+                    this.items[this.relatedJSON.results.bindings[ii].oopLabel.value] = ["https://ohos.ac.uk/wp-content/uploads/2021/12/cropped-OHOSIcon_Large.png", objectLabel];
             }
             for (const [key, value] of Object.entries(this.items)) {
             let label = ""
@@ -150,7 +156,6 @@ export default{
                 colour = "#fed32c";
             else
                 colour = "#990000";
-            var OHOSLink = "https://ohos.ac.uk/wp-content/uploads/2021/12/cropped-OHOSIcon_Large.png";
             var refArray = link.split("/");
             switch(link.includes("wikidata.org/")){
                     case true:
@@ -161,12 +166,14 @@ export default{
                             (result)=>{
                                 var retRef = Object.keys(result.entities)[0];
                                 pred = result.entities[retRef].labels.en.value;
-                                this.nodes[value] = { name: value, face: OHOSLink, color: colour };
-                                this.edges[key] = { source: node, target: value, label: pred, color: colour };
-                                this.len2 = this.len2 + 1;
+                                if(this.props.includes(key))
+                                {
+                                    this.nodes[value[1]] = { name: value[1], face: value[0], color: colour };
+                                    this.edges[key] = { source: node, target: value[1], label: pred, color: colour };
+                                }
                                 relatedData.push({
                                 predicate: pred,
-                                object: value,
+                                object: value[1],
                               });
                             },
                             (error)=>{
@@ -178,15 +185,14 @@ export default{
                         var pred = key;
                         var predArray =  pred.split("/");
                         pred = lodash.startCase(predArray[predArray.length-1]);
-                        console.log(key, key in this.props)
                         if(this.props.includes(key))
                         {
-                            this.nodes[value] = { name: value, face: OHOSLink, color: colour };
-                            this.edges[key] = { source: node, target: value, label: pred, color: colour };
+                            this.nodes[value[1]] = { name: value[1], face: value[0], color: colour };
+                            this.edges[key] = { source: node, target: value[1], label: pred, color: colour };
                         }
                         relatedData.push({
                             predicate: pred,
-                            object: value,
+                            object: value[1],
                           });
                           break;
                 }
@@ -220,14 +226,14 @@ export default{
           var ref =  refArray[refArray.length-1];  
           let label = null;
           let endpoint = 'https://query.wikidata.org/sparql';
-          let sparqlQuery = "SELECT  DISTINCT ?op ?o ?lo ?lop ?i WHERE { " + 
-          "SERVICE <http://dbpedia.org/sparql>  {<http://dbpedia.org/resource/"+ref+"> ?op ?o. " + 
+          let sparqlQuery = "SELECT  DISTINCT ?oo ?oopLabel ?o ?lo ?lop ?i WHERE { " + 
+          "SERVICE <http://dbpedia.org/sparql>  {<http://dbpedia.org/resource/"+ref+"> ?oopLabel ?o. " + 
           "<http://dbpedia.org/resource/"+ref+"> owl:sameAs ?oo." +
-          "?op rdfs:label ?lop." +
+          "?oopLabel rdfs:label ?lop." +
           "FILTER(regex(str(?oo), 'wikidata' ) && (LANG(?lop)='en' || LANG(?lop)='')) " +
-          "MINUS{<http://dbpedia.org/resource/"+ref+"> ?op ?o. " +
+          "MINUS{<http://dbpedia.org/resource/"+ref+"> ?oopLabel ?o. " +
           "FILTER(LANG(?o)!='en' && LANG(?o)!='')} " +
-          "OPTIONAL{<http://dbpedia.org/resource/"+ref+"> ?op ?o. " +
+          "OPTIONAL{<http://dbpedia.org/resource/"+ref+"> ?oopLabel ?o. " +
           "?o rdfs:label ?lo. " +
           "?o <http://dbpedia.org/ontology/thumbnail> ?i " +
           "FILTER((LANG(?lo)='en' || LANG(?lo)=''))}}}";
@@ -243,19 +249,17 @@ export default{
           });
           return promise;
       },
-      fetch_related_wikidata_promise(link){
+      fetch_related_wikidata_promise(link, wikiLink){
           var refArray = link.split("/");
           var ref =  refArray[refArray.length-1];  
           let label = null;
           let endpoint = 'https://query.wikidata.org/sparql';
-          let sparqlQuery = "SELECT DISTINCT ?s ?a ?o ?la ?ls WHERE { "+
- "SERVICE <http://dbpedia.org/sparql>  {<http://dbpedia.org/resource/"+ref+"> owl:sameAs ?oo. "+
-    "                                    FILTER(regex(str(?oo), 'wikidata' ) ) "+
-   "    }         SERVICE <https://query.wikidata.org/sparql>{?oo ?op ?o. "+
-  "                                                   ?o rdfs:label ?lo.  }      "+
- "SERVICE wikibase:label { #BabelRainbow "+
-  "  bd:serviceParam wikibase:language 'en' "+
-  "}      }";
+          let sparqlQuery = "SELECT  ?oop ?oopLabel ?o ?pLabel ?lo ?i WHERE { " +
+ "<"+wikiLink+"> ?oop ?o.  " +
+  "SERVICE wikibase:label { bd:serviceParam wikibase:language 'en'. }  " +
+  "?p wikibase:directClaim ?oop . " +
+  "?o rdfs:label ?lo . " +
+  "filter( (LANG(?lo) = 'en' || LANG(?lo) = '')) }  ";
           let fullUrl = endpoint + '?query=' + encodeURIComponent( sparqlQuery );
           let headers = { 'Accept': 'application/sparql-results+json' };
           let promise = new Promise(function (resolve, reject){
