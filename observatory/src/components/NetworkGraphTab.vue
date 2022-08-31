@@ -108,9 +108,13 @@ export default{
                         this.relatedData = reactive([]);
                         this.relatedJSON = result;
                         this.publish_table(this.relatedData, node, "dbpedia");
-                        if("oo" in this.relatedJSON.results.bindings[0])
+                        var val = "";
+                        if(this.relatedJSON.results.bindings[0])
+                            val = this.relatedJSON.results.bindings[0].oo.value;
+                        else 
+                            val = node;
                         {
-                            promise = this.fetch_related_wikidata_promise(node, this.relatedJSON.results.bindings[0].oo.value);
+                            promise = this.fetch_related_wikidata_promise(node, val);
                             promise.then(
                                 (result)=>{
                                     this.relatedJSON = result;
@@ -144,9 +148,9 @@ export default{
                 else
                     objectLabel = this.relatedJSON.results.bindings[ii].o.value;
                 if("i" in this.relatedJSON.results.bindings[ii])
-                    this.items[this.relatedJSON.results.bindings[ii].oopLabel.value] = [this.relatedJSON.results.bindings[ii].i.value, objectLabel];
+                    this.items[this.relatedJSON.results.bindings[ii].oopLabel.value] = [this.relatedJSON.results.bindings[ii].i.value, objectLabel, this.relatedJSON.results.bindings[ii].o.value];
                 else
-                    this.items[this.relatedJSON.results.bindings[ii].oopLabel.value] = ["https://ohos.ac.uk/wp-content/uploads/2021/12/cropped-OHOSIcon_Large.png", objectLabel];
+                    this.items[this.relatedJSON.results.bindings[ii].oopLabel.value] = ["https://ohos.ac.uk/wp-content/uploads/2021/12/cropped-OHOSIcon_Large.png", objectLabel, this.relatedJSON.results.bindings[ii].o.value];
             }
             for (const [key, value] of Object.entries(this.items)) {
             let label = ""
@@ -168,8 +172,8 @@ export default{
                                 pred = result.entities[retRef].labels.en.value;
                                 if(this.props.includes(key))
                                 {
-                                    this.nodes[value[1]] = { name: value[1], face: value[0], color: colour };
-                                    this.edges[key] = { source: node, target: value[1], label: pred, color: colour };
+                                    this.nodes[value[2]] = { name: value[1], face: value[0], color: colour };
+                                    this.edges[key] = { source: node, target: value[2], label: pred, color: colour };
                                 }
                                 relatedData.push({
                                 predicate: pred,
@@ -187,8 +191,8 @@ export default{
                         pred = lodash.startCase(predArray[predArray.length-1]);
                         if(this.props.includes(key))
                         {
-                            this.nodes[value[1]] = { name: value[1], face: value[0], color: colour };
-                            this.edges[key] = { source: node, target: value[1], label: pred, color: colour };
+                            this.nodes[value[2]] = { name: value[1], face: value[0], color: colour };
+                            this.edges[key] = { source: node, target: value[2], label: pred, color: colour };
                         }
                         relatedData.push({
                             predicate: pred,
