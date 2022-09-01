@@ -60,3 +60,14 @@ services:
         - GET
         - PUT
         - DELETE
+
+  - name: iiif_manifest
+    url: http://ohos-iiif-manifest:5000
+    routes:
+      - name: ohos-iiif-manifest
+        paths:
+          - /manifest/
+        strip_path: true
+        preserve_host: true
+        methods: 
+        - GET

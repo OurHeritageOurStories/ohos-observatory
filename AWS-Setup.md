@@ -1,4 +1,4 @@
-# First time set-up on AWS A/c research-ohos AC id 259004456259
+# First time set-up on AWS A/c research-ohos AC ID <AWS Account ID>
 
 Login to AWS web console from the link 
 https://research-ohos.signin.aws.amazon.com/console
@@ -57,11 +57,11 @@ docker images -a
 
 The downloaded image will have the following name and tag 
 
-259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend  latest
+<AWS Account ID>.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend  latest
 
  
 ## Run the docker Image downloaded from ECR locally
-If you wish to run the newly built image from AWS, edit the docker-compose file by replacing the locally built image, ohos_observatory_frontend with 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend
+If you wish to run the newly built image from AWS, edit the docker-compose file by replacing the locally built image, ohos_observatory_frontend with <AWS Account ID>.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend
 
 Then you can run the docker-compose up command
 
@@ -77,7 +77,6 @@ AWS built ohos_observatory_frontend image
 
   kong_vue_frontend:
   
-    image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend
+    image: <AWS Account ID>.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend
     
     
- 

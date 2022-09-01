@@ -1,20 +1,11 @@
-lines = open(r'ai_lab_2.ttl').read().split('\n')
+lines = open(r'ai_lab_3.ttl').read().split('\n')
 triplets = []
-f = open("ai_lab_2_extracted.ttl", "w")
+f = open("ai_lab_3_extracted.ttl", "w")
 for j, i in enumerate(lines):
-	if "tanc:source" in i:
-		line = i.replace("<<<", "<").replace("tanc", "<").replace(" <http://dbpedia.org/resource/", "> <http://dbpedia.org/resource/").replace(">>>", "> .\n>>").split(">>")[0]
+	if "tanc:mention" in i:
+		line = i.replace("<<", "<").replace(" tanc:mentions", "> <tanc:mentions>").replace(">>>", "> .\n>>").split(">>")[0]
 		f.write(line)
-		#print(line)
-	elif "tanc:similarity" in i:
-		subject = i.split("tanc:")[1][9:-3]
-		while "tanc:start" not in lines[j+1]:
-			#print(subject, lines[j+1].split(":")[1].split(" ")[1], lines[j+1].split(":")[2].split(" ")[0])
-			if lines[j+1].split(":")[1].split(" ")[1] == "Wikidata":
-				obj = "<http://www.wikidata.org/entity/" + lines[j+1].split(":")[2].split(" ")[0] + "> .\n"
-			else:
-				obj = "<http://dbpedia.org/resource/" + lines[j+1].split(":")[2].split(" ")[0] + "> .\n"
-			line = subject + " <:is_type> " + obj
-			j=j+1
-			#print(line)
-			f.write(line)
+	elif "tanc:surfaceForm" in i:
+		line = lines[j-3].replace("<<<", "<").replace(" <", "> <").replace(" tanc:", "> <tanc:").replace(">>>", "> .\n>>").split(">>>")[0]
+		print(i, lines[j-3], line, lines[j-3].replace("<<<", "<"), lines[j-3].replace("<<<", "<").replace(" <", "> <"), lines[j-3].replace("<<<", "<").replace(" <", "> <").replace(" tanc:", "> <tanc:"), lines[j-3].replace("<<<", "<").replace(" <", "> <").replace(" tanc:", "> <tanc:").replace(">>>", "> .\n>>"))
+		f.write(line)
