@@ -118,6 +118,10 @@ export default{
                             promise.then(
                                 (result)=>{
                                     this.relatedJSON = result;
+                                    console.log(!this.relatedJSON.results.bindings[0])
+                                    console.log(val == node)
+                                    if(this.relatedJSON.results.bindings[0] && val == node)
+                                        alert("No more possible expansion");
                                     this.publish_table(this.relatedData, node, "wikidata");
                                 },
                                 (error)=>{
