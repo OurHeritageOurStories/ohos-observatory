@@ -109,18 +109,17 @@ export default{
                         this.relatedJSON = result;
                         this.publish_table(this.relatedData, node, "dbpedia");
                         var val = "";
+                        var count = 0;
                         if(this.relatedJSON.results.bindings[0])
                             val = this.relatedJSON.results.bindings[0].oo.value;
                         else 
-                            val = node;
+                            {val = node; count = 1;}
                         {
                             promise = this.fetch_related_wikidata_promise(node, val);
                             promise.then(
                                 (result)=>{
                                     this.relatedJSON = result;
-                                    console.log(!this.relatedJSON.results.bindings[0])
-                                    console.log(val == node)
-                                    if(this.relatedJSON.results.bindings[0] && val == node)
+                                    if(!this.relatedJSON.results.bindings[0] && count)
                                         alert("No more possible expansion");
                                     this.publish_table(this.relatedData, node, "wikidata");
                                 },
