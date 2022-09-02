@@ -17,6 +17,9 @@ export default{
     data(){
         return{
             items: null,
+            iframe: {
+                src: "https://query.wikidata.org/embed.html#SELECT%20%20DISTINCT%20%3Foo%20%3FooLabel%20%3Fa%20%3FaLabel%20%3Fs%20%3FsLabel%20%3Fp%20%3FpLabel%20WHERE%20%7B%20SERVICE%20%3Chttp%3A%2F%2Fdbpedia.org%2Fsparql%3E%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2FSpratton%3E%20owl%3AsameAs%20%3Foo.%7D%0A%20%20%20%20SERVICE%20%3Chttps%3A%2F%2Fquery.wikidata.org%2Fsparql%3E%7B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Foo%20%3Fa%20%3Fs.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22en%22.%20%7D%20%0A%20%20%3Fp%20wikibase%3AdirectClaim%20%3Fa%20.%0A%20%20%3Fs%20rdfs%3Alabel%20%3Fls%20.%0A%20%20filter%28%20%28LANG%28%3Fls%29%20%3D%20%27en%27%20%7C%7C%20LANG%28%3Fls%29%20%3D%20%27%27%29%29%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D",
+              },
             label: null,
             relatedData: reactive([]),
             props: reactive(["http://dbpedia.org/ontology/ceremonialCounty", "http://dbpedia.org/ontology/deathPlace", "http://dbpedia.org/ontology/birthPlace", "http://dbpedia.org/ontology/country", "http://dbpedia.org/ontology/WikiPageExternalLink", "http://dbpedia.org/ontology/region", "rdfs:comment", "geo:lat", "geo:long", "foaf:depiction", "http://dbpedia.org/ontology/birthPlace", "http://dbpedia.org/ontology/deathPlace", "http://dbpedia.org/ontology/officialName", "http://www.wikidata.org/prop/direct/P18", "http://www.wikidata.org/prop/direct/P21", "http://www.wikidata.org/prop/direct/P27", "http://www.wikidata.org/prop/direct/P569", "http://www.wikidata.org/prop/direct/P19", "http://www.wikidata.org/prop/direct/P570", "http://www.wikidata.org/prop/direct/P20", "http://www.wikidata.org/prop/direct/P22", "http://www.wikidata.org/prop/direct/P25", "http://www.wikidata.org/prop/direct/P26", "http://www.wikidata.org/prop/direct/P40", "http://www.wikidata.org/prop/direct/P106", "http://www.wikidata.org/prop/direct/P69", "http://www.wikidata.org/prop/direct/P641", "http://www.wikidata.org/prop/direct/P607", "http://www.wikidata.org/prop/direct/P241", "http://www.wikidata.org/prop/direct/P166", "http://www.wikidata.org/prop/direct/P17", "http://www.wikidata.org/prop/direct/P7959", "http://dbpedia.org/ontology/award", "http://dbpedia.org/ontology/battle", "http://dbpedia.org/ontology/militaryBranch", "http://dbpedia.org/ontology/restingPlace", "http://dbpedia.org/ontology/serviceEndYear", "http://dbpedia.org/ontology/serviceStartYear", "http://dbpedia.org/ontology/relation", "http://dbpedia.org/ontology/thumbnail", "http://dbpedia.org/prop/birthDate", "http://dbpedia.org/prop/birthName", "http://dbpedia.org/prop/birthPlace", "http://dbpedia.org/prop/rank", "http://dbpedia.org/prop/deathDate", "http://dbpedia.org/prop/deathPlace", "http://dbpedia.org/prop/placeofburial"]),
@@ -103,6 +106,7 @@ export default{
             eventHandlers: {
               "node:click": ({ node }) => {
                 var promise = this.fetch_related_dbpedia_promise(node);
+                this.display_wikidata_visualizer(node);
                 promise.then(
                     (result)=>{
                         this.relatedData = reactive([]);
@@ -138,9 +142,45 @@ export default{
         };
     },
     created(){
+        this.display_wikidata_visualizer("http://dbpedia.org/resource/Spratton")
         this.create_graph()
     },
     methods:{
+        display_wikidata_visualizer(node)
+        {
+            console.log("harshad");
+            let sparqlQuery = "";
+            if(node)
+            {
+              sparqlQuery = "SELECT  DISTINCT ?oo ?ooLabel ?a ?aLabel ?s ?sLabel ?p ?pLabel  " +
+              "WHERE { SERVICE <http://dbpedia.org/sparql>  " +
+              "{<http://dbpedia.org/resource/Spratton> owl:sameAs ?oo.} " +
+              "SERVICE <https://query.wikidata.org/sparql>{ " +
+              "?oo ?a ?s. " +
+              "SERVICE wikibase:label { bd:serviceParam wikibase:language 'en'. }  " +
+              "?p wikibase:directClaim ?a . " +
+              "?s rdfs:label ?ls . " +
+              "filter( (LANG(?ls) = 'en' || LANG(?ls) = ''))}}";
+            }
+            else
+            {
+              sparqlQuery = "SELECT  ?a ?aLabel ?oop ?oopLabel ?o ?oLabel ?pLabel ?lo  WHERE { " +
+              "BIND(<http://www.wikidata.org/entity/Q2321038> AS ?a) " +
+              "?a ?oop ?o.  " +
+              "SERVICE wikibase:label { bd:serviceParam wikibase:language 'en'. }  " +
+              "?p wikibase:directClaim ?oop . " +
+              "?o rdfs:label ?lo . " +
+              "filter( (LANG(?lo) = 'en' || LANG(?lo) = ''))}  ";
+            }
+
+
+
+          let endpoint = 'https://query.wikidata.org/embed.html#';
+          
+          this.iframe.src = endpoint + encodeURIComponent( sparqlQuery );
+          
+          console.log(this.iframe.src);
+        },
         publish_table(relatedData, node, source)
         {
             this.items = {};
@@ -173,9 +213,10 @@ export default{
                             (result)=>{
                                 var retRef = Object.keys(result.entities)[0];
                                 pred = result.entities[retRef].labels.en.value;
-                                if(this.props.includes(key))
+                                if(this.props.includes(key) && node != value[2])
                                 {
-                                    this.nodes[value[2]] = { name: value[1], face: value[0], color: colour };
+                                    if(!(value[2] in this.nodes))
+                                        this.nodes[value[2]] = { name: value[1], face: value[0], color: colour };
                                     this.edges[key] = { source: node, target: value[2], label: pred, color: colour };
                                 }
                                 relatedData.push({
@@ -513,6 +554,8 @@ export default{
     :total="table.totalRecordCount"
     :sortable="table.sortable"
   ></table-lite>
+  
+  <iframe style="width: 80vw; height: 50vh; border: none;" :src="iframe.src" referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups" ></iframe>
 </template>
 
 <style lang="scss" scoped>
