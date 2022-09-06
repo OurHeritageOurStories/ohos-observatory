@@ -19,23 +19,17 @@ export default{
             items: null,
             label: null,
             relatedData: reactive([]),
+            props: reactive(["http://dbpedia.org/ontology/ceremonialCounty", "http://dbpedia.org/ontology/deathPlace", "http://dbpedia.org/ontology/birthPlace", "http://dbpedia.org/ontology/country", "http://dbpedia.org/ontology/WikiPageExternalLink", "http://dbpedia.org/ontology/region", "rdfs:comment", "geo:lat", "geo:long", "foaf:depiction", "http://dbpedia.org/ontology/birthPlace", "http://dbpedia.org/ontology/deathPlace", "http://dbpedia.org/ontology/officialName", "http://www.wikidata.org/prop/direct/P18", "http://www.wikidata.org/prop/direct/P21", "http://www.wikidata.org/prop/direct/P27", "http://www.wikidata.org/prop/direct/P569", "http://www.wikidata.org/prop/direct/P19", "http://www.wikidata.org/prop/direct/P570", "http://www.wikidata.org/prop/direct/P20", "http://www.wikidata.org/prop/direct/P22", "http://www.wikidata.org/prop/direct/P25", "http://www.wikidata.org/prop/direct/P26", "http://www.wikidata.org/prop/direct/P40", "http://www.wikidata.org/prop/direct/P106", "http://www.wikidata.org/prop/direct/P69", "http://www.wikidata.org/prop/direct/P641", "http://www.wikidata.org/prop/direct/P607", "http://www.wikidata.org/prop/direct/P241", "http://www.wikidata.org/prop/direct/P166", "http://www.wikidata.org/prop/direct/P17", "http://www.wikidata.org/prop/direct/P7959", "http://dbpedia.org/ontology/award", "http://dbpedia.org/ontology/battle", "http://dbpedia.org/ontology/militaryBranch", "http://dbpedia.org/ontology/restingPlace", "http://dbpedia.org/ontology/serviceEndYear", "http://dbpedia.org/ontology/serviceStartYear", "http://dbpedia.org/ontology/relation", "http://dbpedia.org/ontology/thumbnail", "http://dbpedia.org/prop/birthDate", "http://dbpedia.org/prop/birthName", "http://dbpedia.org/prop/birthPlace", "http://dbpedia.org/prop/rank", "http://dbpedia.org/prop/deathDate", "http://dbpedia.org/prop/deathPlace", "http://dbpedia.org/prop/placeofburial"]),
             table: reactive({
               columns: [
                 {
-                  label: "Subject",
-                  field: "subject",
-                  width: "3%",
-                  sortable: true,
-                  isKey: true,
-                },
-                {
-                  label: "Predicate",
+                  label: "Relation",
                   field: "predicate",
                   width: "10%",
                   sortable: true,
                 },
                 {
-                  label: "Object",
+                  label: "Entity",
                   field: "object",
                   width: "15%",
                   sortable: true,
@@ -58,6 +52,7 @@ export default{
             labels: {},
             layouts: {},
             len: null,
+            len2: null,
             count: 0,
             fetched_data_copy: null,
             componentKey: 0,
@@ -75,9 +70,9 @@ export default{
                 node: {
                   normal: {
                     radius: 12,
-                    color: "#b3bdee",
+                    color: node => node.color,
                     strokeWidth: 5,
-                    strokeColor: "#b3bdee",
+                    strokeColor: node => node.color,
                   },
                   label: {
                     visible: true,
@@ -87,7 +82,7 @@ export default{
                 edge: {
                   normal: {
                     width: 1,
-                    color: "#b3bdee",
+                    color: edge => edge.color,
                   },
                   gap: 50,
                   type: "curve",
@@ -109,12 +104,32 @@ export default{
             eventHandlers: {
               "node:click": ({ node }) => {
                 document.getElementById('dropdown').value = node;
-                var promise = this.fetch_related_promise(node);
+                var promise = this.fetch_related_dbpedia_promise(node);
                 promise.then(
                     (result)=>{
                         this.relatedData = reactive([]);
                         this.relatedJSON = result;
-                        this.publish_table(this.relatedData, node);
+                        this.publish_table(this.relatedData, node, "dbpedia");
+                        var val = "";
+                        var count = 0;
+                        if(this.relatedJSON.results.bindings[0])
+                            val = this.relatedJSON.results.bindings[0].oo.value;
+                        else 
+                            {val = node; count = 1;}
+                        {
+                            promise = this.fetch_related_wikidata_promise(node, val);
+                            promise.then(
+                                (result)=>{
+                                    this.relatedJSON = result;
+                                    if(!this.relatedJSON.results.bindings[0] && count)
+                                        alert("No more possible expansion");
+                                    this.publish_table(this.relatedData, node, "wikidata");
+                                },
+                                (error)=>{
+                                    throw "Error: " + error;
+                                }
+                            );
+                        }
                     },
                     (error)=>{
                         throw "Error: " + error;
@@ -129,17 +144,28 @@ export default{
         this.fetch_subjects()
     },
     methods:{
-        publish_table(relatedData, node)
+        publish_table(relatedData, node, source)
         {
             this.items = {};
-            for (let i = 0; i < this.relatedJSON.results.bindings.length; i++) {
-                this.items[this.relatedJSON.results.bindings[i].op.value] = this.relatedJSON.results.bindings[i].o.value;
-                let link = this.relatedJSON.results.bindings[i].s.value;
-                                this.items[this.relatedJSON.results.bindings[i].a.value] = link;
+            for (let ii = 0; ii < this.relatedJSON.results.bindings.length; ii++) {
+                var objectLabel = "";
+                if("lo" in this.relatedJSON.results.bindings[ii])
+                    objectLabel = this.relatedJSON.results.bindings[ii].lo.value;
+                else
+                    objectLabel = this.relatedJSON.results.bindings[ii].o.value;
+                if("i" in this.relatedJSON.results.bindings[ii])
+                    this.items[this.relatedJSON.results.bindings[ii].oopLabel.value] = [this.relatedJSON.results.bindings[ii].i.value, objectLabel, this.relatedJSON.results.bindings[ii].o.value];
+                else
+                    this.items[this.relatedJSON.results.bindings[ii].oopLabel.value] = ["https://ohos.ac.uk/wp-content/uploads/2021/12/cropped-OHOSIcon_Large.png", objectLabel, this.relatedJSON.results.bindings[ii].o.value];
             }
             for (const [key, value] of Object.entries(this.items)) {
             let label = ""
             let link = key;
+            var colour = "";
+            if (source == "dbpedia")
+                colour = "#fed32c";
+            else
+                colour = "#990000";
             var refArray = link.split("/");
             switch(link.includes("wikidata.org/")){
                     case true:
@@ -150,10 +176,14 @@ export default{
                             (result)=>{
                                 var retRef = Object.keys(result.entities)[0];
                                 pred = result.entities[retRef].labels.en.value;
+                                if(this.props.includes(key))
+                                {
+                                    this.nodes[value[2]] = { name: value[1], face: value[0], color: colour };
+                                    this.edges[key] = { source: node, target: value[2], label: pred, color: colour };
+                                }
                                 relatedData.push({
-                                subject: this.labels[node],
                                 predicate: pred,
-                                object: value,
+                                object: value[1],
                               });
                             },
                             (error)=>{
@@ -165,10 +195,14 @@ export default{
                         var pred = key;
                         var predArray =  pred.split("/");
                         pred = lodash.startCase(predArray[predArray.length-1]);
+                        if(this.props.includes(key))
+                        {
+                            this.nodes[value[2]] = { name: value[1], face: value[0], color: colour };
+                            this.edges[key] = { source: node, target: value[2], label: pred, color: colour };
+                        }
                         relatedData.push({
-                            subject: this.labels[node],
                             predicate: pred,
-                            object: value,
+                            object: value[1],
                           });
                           break;
                 }
@@ -197,16 +231,45 @@ export default{
             });
             return promise;
         },
-        fetch_related_promise(link){
+        fetch_related_dbpedia_promise(link){
           var refArray = link.split("/");
           var ref =  refArray[refArray.length-1];  
           let label = null;
           let endpoint = 'https://query.wikidata.org/sparql';
-          let sparqlQuery = "SELECT DISTINCT ?op ?o ?oo ?a ?s  WHERE { " +
-            "SERVICE <http://dbpedia.org/sparql>  {<http://dbpedia.org/resource/" + ref + "> ?op ?o. " +
-            "<http://dbpedia.org/resource/" + ref + "> owl:sameAs ?oo " +
-            "filter( regex(str(?oo), 'wikidata' ) && (LANG(?o) = 'en' || LANG(?o) = ''))} " +
-            "SERVICE <https://query.wikidata.org/sparql>{ ?oo ?a ?s.}}";
+          let sparqlQuery = "SELECT  DISTINCT ?oo ?oopLabel ?o ?lo ?lop ?i WHERE { " + 
+          "SERVICE <http://dbpedia.org/sparql>  {<http://dbpedia.org/resource/"+ref+"> ?oopLabel ?o. " + 
+          "<http://dbpedia.org/resource/"+ref+"> owl:sameAs ?oo." +
+          "?oopLabel rdfs:label ?lop." +
+          "FILTER(regex(str(?oo), 'wikidata' ) && (LANG(?lop)='en' || LANG(?lop)='')) " +
+          "MINUS{<http://dbpedia.org/resource/"+ref+"> ?oopLabel ?o. " +
+          "FILTER(LANG(?o)!='en' && LANG(?o)!='')} " +
+          "OPTIONAL{<http://dbpedia.org/resource/"+ref+"> ?oopLabel ?o. " +
+          "?o rdfs:label ?lo. " +
+          "?o <http://dbpedia.org/ontology/thumbnail> ?i " +
+          "FILTER((LANG(?lo)='en' || LANG(?lo)=''))}}}";
+          let fullUrl = endpoint + '?query=' + encodeURIComponent( sparqlQuery );
+          let headers = { 'Accept': 'application/sparql-results+json' };
+          let promise = new Promise(function (resolve, reject){
+              fetch( fullUrl, { headers } )
+                    .then(response => response.json())
+                    .then(response => (label = response))
+                    .then(response => {
+                      resolve(response);
+                    });
+          });
+          return promise;
+      },
+      fetch_related_wikidata_promise(link, wikiLink){
+          var refArray = link.split("/");
+          var ref =  refArray[refArray.length-1];  
+          let label = null;
+          let endpoint = 'https://query.wikidata.org/sparql';
+          let sparqlQuery = "SELECT  ?oop ?oopLabel ?o ?pLabel ?lo ?i WHERE { " +
+ "<"+wikiLink+"> ?oop ?o.  " +
+  "SERVICE wikibase:label { bd:serviceParam wikibase:language 'en'. }  " +
+  "?p wikibase:directClaim ?oop . " +
+  "?o rdfs:label ?lo . " +
+  "filter( (LANG(?lo) = 'en' || LANG(?lo) = '')) }  ";
           let fullUrl = endpoint + '?query=' + encodeURIComponent( sparqlQuery );
           let headers = { 'Accept': 'application/sparql-results+json' };
           let promise = new Promise(function (resolve, reject){
@@ -250,7 +313,7 @@ export default{
                                 (result)=>{
                                     this.count = this.count + 1;
                                     if (result.results.bindings.length)
-                                        this.nodes[link] = {name: this.labels[link], face: result.results.bindings[0].i.value };
+                                        this.nodes[link] = {name: this.labels[link], face: result.results.bindings[0].i.value, color: "#e7d2ea" };
                                     if(this.count == this.len*3)
                                     {
                                         this.make_connections();
@@ -316,26 +379,26 @@ export default{
                 switch(true){
                     case(edgeLabelIsImage):
                         if(!this.nodes[sub] || this.nodes[sub].face == OHOSLink)
-                            this.nodes[sub] = { name: this.labels[sub], face: obje };
+                            this.nodes[sub] = { name: this.labels[sub], face: obje, color: "#e7d2ea" };
                         else
                             if(this.nodes[sub])
                             {
-                                this.nodes[obje] = { name: this.labels[obje], face: obje };
-                                this.edges[i] = { source: sub, target: obje, label: this.labels[pre] };
+                                this.nodes[obje] = { name: this.labels[obje], face: obje, color: "#e7d2ea" };
+                                this.edges[i] = { source: sub, target: obje, label: this.labels[pre], color: "#e7d2ea" };
                             }
                         break;
                     case(!edgeLabelIsImage):
                         switch(true){
                             case(!this.nodes[sub]):
-                                this.nodes[sub] = { name: this.labels[sub], face: OHOSLink };
-                                    this.nodes[obje] = { name: this.labels[obje], face: OHOSLink };
+                                this.nodes[sub] = { name: this.labels[sub], face: OHOSLink, color: "#e7d2ea" };
+                                    this.nodes[obje] = { name: this.labels[obje], face: OHOSLink, color: "#e7d2ea" };
                                 break;
                             case(this.nodes[sub]):
-                                this.nodes[obje] = { name: this.labels[obje], face: OHOSLink };
+                                this.nodes[obje] = { name: this.labels[obje], face: OHOSLink, color: "#e7d2ea" };
                                 break;
                         }
-                        this.nodes[obje] = { name: this.labels[obje], face: OHOSLink };
-                        this.edges[i] = { source: sub, target: obje, label: this.labels[pre] };
+                        this.nodes[obje] = { name: this.labels[obje], face: OHOSLink, color: "#e7d2ea" };
+                        this.edges[i] = { source: sub, target: obje, label: this.labels[pre], color: "#e7d2ea" };
                         break;
                 }
                 this.nodes[sub].name = this.labels[sub];
@@ -346,19 +409,12 @@ export default{
             this.graph_status = "Drawing graph...";
             console.log("Drawing graph...");
             var results = fetched_data.results.bindings;
-            let obj = null;
-            var sub = null;
-            var pre = null;
-            var obje = null;
             this.len = results.length;
+            this.len2 = this.len;
             for (let i = 0; i < this.len; i++){
-                obj = results[i];
-                sub = obj.s.value;
-                pre = obj.p.value;
-                obje = obj.o.value;
-                this.fetch_label(sub);
-                this.fetch_label(obje);
-                this.fetch_label(pre);      
+                this.fetch_label(results[i].s.value);
+                this.fetch_label(results[i].o.value);
+                this.fetch_label(results[i].p.value);      
             }
             this.graph_status = "";
             console.log("The graph should be ready. If it doesn't display, switch between tabs.")
@@ -485,6 +541,21 @@ export default{
   <select id="dropdown"></select>
   <button @click="create_graph" id="refresh_button" class="button">Refresh</button>
   </div>
+  <div>
+    <p>Legends</p>
+    <p style = "color:#e7d2ea">
+        OHOS
+    </p>
+    <p class = "line OHOSLine"></p>
+    <p style = "color:#fed32c">
+        DBPedia
+    </p>
+    <p class = "line DBPediaLine"></p>
+    <p style = "color:#990000">
+        WikiData
+    </p>
+    <p class = "line WikiDataLine"></p>
+  </div>
   <table-lite
     :is-static-mode="true"
     :columns="table.columns"
@@ -505,6 +576,34 @@ export default{
 // by the background circle.
 .face-picture {
   pointer-events: none;
+}
+
+p.OHOSLine:after {
+    background-color: #e7d2ea;
+    content: "";
+    display: inline-block;
+    height: 5px;
+    position: relative;
+    vertical-align: middle;
+    width: 5%;
+}
+p.DBPediaLine:after {
+    background-color: #fed32c;
+    content: "";
+    display: inline-block;
+    height: 5px;
+    position: relative;
+    vertical-align: middle;
+    width: 5%;
+}
+p.WikiDataLine:after {
+    background-color: #990000;
+    content: "";
+    display: inline-block;
+    height: 5px;
+    position: relative;
+    vertical-align: middle;
+    width: 5%;
 }
 
 </style>
