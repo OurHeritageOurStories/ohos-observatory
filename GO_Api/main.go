@@ -22,6 +22,10 @@ type rdf_triple struct {
 	Object    string `json:"object"`
 }
 
+func (rdf rdf_triple) String() string {
+	return fmt.Sprintf("%rdf", rdf)
+}
+
 //type rdf_graph struct {
 ////Triple rdf_triple `json:"Triple"`
 //Triple rdf_triple
@@ -29,8 +33,9 @@ type rdf_triple struct {
 //}
 
 type rdf_graph struct { //this serves as the initial basic cache
-	id    string
-	graph []rdf_triple
+	Id    string       `json:"id"`
+	Graph []rdf_triple `json:"graph"`
+	//Graph string `json:"graph"`
 }
 
 var rdf_triples_example = []rdf_triple{
@@ -44,18 +49,33 @@ var rdf_triples_example = []rdf_triple{
 //	//{Subject: "tim", Predicate: "knows", Object: "dave"}
 //}
 
-var rdf_graph_example = rdf_graph{
-	id: "test",
-	graph: []rdf_triple{
-		rdf_triple{
-			Subject:   "bill",
-			Predicate: "and",
-			Object:    "ben",
+var rdf_graph_example = []rdf_graph{
+	{Id: "test",
+		Graph: []rdf_triple{
+			rdf_triple{
+				Subject:   "bill",
+				Predicate: "and",
+				Object:    "ben",
+			},
+			rdf_triple{
+				Subject:   "dick",
+				Predicate: "and",
+				Object:    "dom",
+			},
 		},
-		rdf_triple{
-			Subject:   "dick",
-			Predicate: "and",
-			Object:    "dom",
+	},
+	{Id: "test2",
+		Graph: []rdf_triple{
+			rdf_triple{
+				Subject:   "2bill",
+				Predicate: "an2d",
+				Object:    "ben2",
+			},
+			rdf_triple{
+				Subject:   "2dick",
+				Predicate: "a2nd",
+				Object:    "do2m",
+			},
 		},
 	},
 }
@@ -90,11 +110,22 @@ func main() {
 
 	router.GET("/manifest/:query", getManifestFromCache)
 
-	router.Run("localhost:9090")
+	router.Run(":9090")
+
+	//router.Run()
+
+	//httpPort := "9090"
 }
 
 func getExampleWebData(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, rdf_graph_example)
+	//c.IndentedJSON(http.StatusOK, "dlja")
+	//c.IndentedJSON(http.StatusOK, reflect.TypeOf(rdf_graph_example))
+	//c.IndentedJSON(http.StatusOK, fmt.Println(rdf_graph_example))
+	//c.In(http.StatusOK, rdf_graph_example)
+	//c.GetString()
+	//c.JSON(http.StatusOK, rdf_graph_example)
+	//c.IndentedJSON(http.StatusOK, rdf_triples_example)
 }
 
 //
