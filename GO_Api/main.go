@@ -28,7 +28,7 @@ type rdf_triple struct {
 ////rdf_triple interface{}
 //}
 
-type rdf_graph struct {
+type rdf_graph struct { //this serves as the initial basic cache
 	id    string
 	graph []rdf_triple
 }
@@ -60,15 +60,15 @@ var rdf_graph_example = rdf_graph{
 	},
 }
 
-type graph_cache_struct struct {
-	Key string `json:"Key"`
-	//Graph []rdf_triple `json:"Graph"`
-	Graph rdf_graph `json:"Graph"`
-}
+//type graph_cache_struct struct {
+//	Key string `json:"Key"`
+//	//Graph []rdf_triple `json:"Graph"`
+//	Graph rdf_graph `json:"Graph"`
+//}
 
-var graph_cache = []graph_cache_struct{
-	{Key: "test", Graph: rdf_graph_example},
-}
+//var graph_cache = []graph_cache_struct{
+//	{Key: "test", Graph: rdf_graph_example},
+//}
 
 func main() {
 	router := gin.Default()
@@ -148,9 +148,9 @@ func getGraphFromKongAPI(c *gin.Context, search_query string) {
 		log.Fatalln(err)
 	}
 	stringBody := string(body)
-	stringBody = rdf_triple{stringBody}
-	cache_addition := graph_cache_struct{Key: query, Graph: stringBody}
-	graph_cache = append(graph_cache, cache_addition)
+	//stringBody = rdf_triple{stringBody}
+	//cache_addition := graph_cache_struct{Key: query, Graph: stringBody}
+	//graph_cache = append(graph_cache, cache_addition)
 	c.IndentedJSON(http.StatusOK, stringBody)
 }
 
