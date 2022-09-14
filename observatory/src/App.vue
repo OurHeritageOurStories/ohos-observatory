@@ -196,5 +196,7 @@ input[type='radio'] {
   background: #ca5ed6;
   cursor: pointer;
 }
-
+#minus {
+  visibility: hidden;
+}
 </style>
