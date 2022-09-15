@@ -47,18 +47,25 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 
 3. Open a terminal in the flask_responses_to_iiif_utility directory, run 'docker build -t ohos-iiif-manifest .'
 
-4. Run dockercompose.yaml with the command 'docker-compose up --remove-orphans' to generate a local Blazegraph, Miiify, Flask-based IIIF generator, and GraphDB server, the Vue front-end, and a Kong API.
+4. Open a terminal in the GO_Api directory, run 'docker build -t ohos_go_api .'
 
-5. Transfer kong_config.yml to the Kong API
+5. Run dockercompose.yaml with the command 'docker-compose up --remove-orphans' to generate a local Blazegraph, Miiify, Flask-based IIIF generator, and GraphDB server, the Vue front-end, and a Kong API.
+
+6. Transfer kong_config.yml to the Kong API
 
     a. This can either be done as per the Kong documentation, or via Insomnia. It requires sending a POST request to 'http://localhost:8001/config', with the contents of kong_config.yml, and the header 'Content-Type: text/yaml'. You should get a response of a JSON file containing details about the various routes that have been created.
 
     b. To test that this has worked, you should be able to contact miiify via http://localhost:8000/annotation/hello. Either run 'http http://localhost:8000/annotation/hello' (requires HTTPie), 'curl http://localhost:8000/annotation/hello', or go directly through Insomnia. You should receive the response > Welcome to miiify!
 
-6. Data can then be sent to Blazegraph by sending a post to http://localhost:8000/graph-full-access?
+7. Data can then be sent to Blazegraph by sending a post to http://localhost:8000/graph-full-access?
 
-7. Go to 'localhost:3000' on your browser.
+8. Go to 'localhost:3000' on your browser.
 
+##   Notes about the Go API
+
+The GO api is currently in fairly early stages of development, it is not yet used in the main Observatory. To check whether it works, once you have completed step 8, above, run the following command (requires HTTPie) ` http http://localhost:8000/graph?query=SELECT%20%20%3Fp%20%3Fo%20%3Fq%20%3Fr%20where%20%20%7B%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2FBrixworth%3E%20%3Fp%20%3Fo%20.%20%3Fq%20%3Fr%20%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2FBrixworth%3E%20.%7D%20 `
+
+The format for requests to the GO api is currently ` http://localhost:8000/graph?query= `, followed by an Sparql query that has been url encoded. This is almost guaranteed to change during development. 
 
 ## How to access the SPARQL endpoint. 
 
