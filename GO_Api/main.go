@@ -7,6 +7,8 @@ import (
 
 	"net/http"
 
+	"net/url"
+
 	"github.com/gin-gonic/gin"
 
 	"bytes"
@@ -14,6 +16,8 @@ import (
 	"encoding/json"
 
 	"fmt"
+
+	"strings"
 )
 
 type rdf_triple struct {
@@ -100,7 +104,6 @@ func getExampleWebData(c *gin.Context) {
 
 func queryGraphFromCache(c *gin.Context) {
 	query := c.Query("query")
-	fmt.Println(query)
 	//if checkCacheContents(query) {
 	//c.IndentedJSON(http.StatusOK, graph_cache)
 	//} else {
@@ -135,7 +138,8 @@ func getGraphFromKongAPI(c *gin.Context, search_query string) {
 	if len(query) == 0 {
 		query = c.Query("query")
 	}
-	resp, err := http.Get("http://ohos_observatory_kong:8000/graph?" + query)
+	escapedQuery := url.QueryEscape(query)
+	resp, err := http.Get("http://ohos_observatory_kong:8000/graph?" + strings.ReplaceAll(escapedQuery, "+", "%20"))
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -154,7 +158,7 @@ func postToGraphFromKongAPI(c *gin.Context) {
 		"Object":    "insertion",
 	})
 	responseBody := bytes.NewBuffer(postBody)
-	resp, err := http.Post("http://ohos_observatory_kong:8000/graph?", "application/json", responseBody)
+	resp, err := http.Post("http://ohos_observatory_kong:8000/graph-full-access?", "application/json", responseBody)
 	if err != nil {
 		log.Fatalf("An error occured %v", err)
 	}
@@ -169,7 +173,7 @@ func postToGraphFromKongAPI(c *gin.Context) {
 
 func deleteFromGraphFromKongAPI(c *gin.Context) {
 	query := c.Query("query")
-	resp, err := http.NewRequest("DELETE", "http://ohos_observatory_kong:8000/graph?"+query, nil) //https://groups.google.com/g/golang-nuts/c/-wAwU8av2oo
+	resp, err := http.NewRequest("DELETE", "http://ohos_observatory_kong:8000/graph-full-access?"+query, nil) //https://groups.google.com/g/golang-nuts/c/-wAwU8av2oo
 	if err != nil {
 		log.Fatalln(err)
 	}
