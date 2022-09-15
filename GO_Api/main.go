@@ -26,28 +26,15 @@ func (rdf rdf_triple) String() string {
 	return fmt.Sprintf("%rdf", rdf)
 }
 
-//type rdf_graph struct {
-////Triple rdf_triple `json:"Triple"`
-//Triple rdf_triple
-////rdf_triple interface{}
-//}
-
 type rdf_graph struct { //this serves as the initial basic cache
 	Id    string       `json:"id"`
 	Graph []rdf_triple `json:"graph"`
-	//Graph string `json:"graph"`
 }
 
 var rdf_triples_example = []rdf_triple{
 	{Subject: "dave", Predicate: "knows", Object: "tim"},
 	{Subject: "tim", Predicate: "knows", Object: "dave"},
 }
-
-//var rdf_graph_example = []rdf_graph{
-//	Triple{Subject: "dave", Predicate: "knows", Object: "tim"},
-//	//rdf_triple{Subject: "dave", Predicate: "knows", Object: "tim"},
-//	//{Subject: "tim", Predicate: "knows", Object: "dave"}
-//}
 
 var rdf_graph_example = []rdf_graph{
 	{Id: "test",
@@ -80,24 +67,14 @@ var rdf_graph_example = []rdf_graph{
 	},
 }
 
-//type graph_cache_struct struct {
-//	Key string `json:"Key"`
-//	//Graph []rdf_triple `json:"Graph"`
-//	Graph rdf_graph `json:"Graph"`
-//}
-
-//var graph_cache = []graph_cache_struct{
-//	{Key: "test", Graph: rdf_graph_example},
-//}
-
 func main() {
 	router := gin.Default()
 
 	router.GET("/graph/hello", getExampleWebData)
 
-	router.GET("/graph/:query", queryGraphFromCache)
-	router.POST("/graph/:query", postToGraphFromKongAPI)
-	router.DELETE("/graph/:query", deleteFromGraphFromKongAPI)
+	router.GET("/graph", queryGraphFromCache)
+	router.POST("/graph/post", postToGraphFromKongAPI)
+	router.DELETE("/graph/delete", deleteFromGraphFromKongAPI)
 
 	//router.GET("/graph/federated?:query", federatedQuery)
 
@@ -111,21 +88,10 @@ func main() {
 	router.GET("/manifest/:query", getManifestFromCache)
 
 	router.Run(":9090")
-
-	//router.Run()
-
-	//httpPort := "9090"
 }
 
 func getExampleWebData(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, rdf_graph_example)
-	//c.IndentedJSON(http.StatusOK, "dlja")
-	//c.IndentedJSON(http.StatusOK, reflect.TypeOf(rdf_graph_example))
-	//c.IndentedJSON(http.StatusOK, fmt.Println(rdf_graph_example))
-	//c.In(http.StatusOK, rdf_graph_example)
-	//c.GetString()
-	//c.JSON(http.StatusOK, rdf_graph_example)
-	//c.IndentedJSON(http.StatusOK, rdf_triples_example)
 }
 
 //
@@ -133,7 +99,8 @@ func getExampleWebData(c *gin.Context) {
 //
 
 func queryGraphFromCache(c *gin.Context) {
-	query := c.Param("query")
+	query := c.Query("query")
+	fmt.Println(query)
 	//if checkCacheContents(query) {
 	//c.IndentedJSON(http.StatusOK, graph_cache)
 	//} else {
@@ -141,23 +108,21 @@ func queryGraphFromCache(c *gin.Context) {
 	//}
 }
 
-//func getAnnotationFromCache(c *gin.Context) {
-//	query := c.Param("query")
-//	method := ""
+//func getAnnotationFromCache(c *gin.Context) { //annotation server currently unused in front end, thus commented out
+//	query := c.Query("query")
 //if checkCacheContents(query) {
 //	c.IndentedJSON(http.StatusOK, graph_cache)
 //} else {
-//	method = c.Request.Method
 //	getAnnotationFromKongAPI(query, method)
 //}
 //}
 
-func getManifestFromCache(c *gin.Context) {
-	//query := c.Param("query")
+func getManifestFromCache(c *gin.Context) { // currently, it doesn't accept a query
+	//query := c.Query("query")
 	//if checkCacheContents(query) {
 	//	c.IndentedJSON(http.StatusOK, graph_cache)
 	//} else {
-	getManifestFromKongAPI(c) //, query)currently, it doesn't accept a query
+	getManifestFromKongAPI(c) //, query)
 	//}
 }
 
@@ -168,7 +133,7 @@ func getManifestFromCache(c *gin.Context) {
 func getGraphFromKongAPI(c *gin.Context, search_query string) {
 	query := search_query
 	if len(query) == 0 {
-		query = c.Param("query")
+		query = c.Query("query")
 	}
 	resp, err := http.Get("http://ohos_observatory_kong:8000/graph?" + query)
 	if err != nil {
@@ -179,9 +144,6 @@ func getGraphFromKongAPI(c *gin.Context, search_query string) {
 		log.Fatalln(err)
 	}
 	stringBody := string(body)
-	//stringBody = rdf_triple{stringBody}
-	//cache_addition := graph_cache_struct{Key: query, Graph: stringBody}
-	//graph_cache = append(graph_cache, cache_addition)
 	c.IndentedJSON(http.StatusOK, stringBody)
 }
 
@@ -202,13 +164,11 @@ func postToGraphFromKongAPI(c *gin.Context) {
 		log.Fatalln(err)
 	}
 	stringBody := string(body)
-	log.Printf(stringBody)
 	c.IndentedJSON(http.StatusOK, stringBody)
 }
 
 func deleteFromGraphFromKongAPI(c *gin.Context) {
-	query := c.Param("query")
-	//	resp, err := http.Delete("http://ohos_observatory_kong:8000/graph?" + query)
+	query := c.Query("query")
 	resp, err := http.NewRequest("DELETE", "http://ohos_observatory_kong:8000/graph?"+query, nil) //https://groups.google.com/g/golang-nuts/c/-wAwU8av2oo
 	if err != nil {
 		log.Fatalln(err)
@@ -226,29 +186,26 @@ func deleteFromGraphFromKongAPI(c *gin.Context) {
 //
 
 //func getAnnotationFromKongAPI(c *gin.Context) {
-//	query := c.Param("query")
+//	query := c.Query("query")
 //}
 
 //func postAnnotationToKongAPI(c *gin.Context) {
-//	query := c.Param("query")
+//	query := c.Query("query")
 //}
 
 //func putAnnotationToKongAPI(c *gin.Context) {
-//	query := c.Param("query")
+//	query := c.Query("query")
 //}
 
 //func deleteAnnotationFromKongAPI(c *gin.Context) {
-//	query := c.Param("query")
+//	query := c.Query("query")
 //}
 
 //
 //We are, however, using the manifest
 //
 
-func getManifestFromKongAPI(c *gin.Context) { //, query string) {
-	//if query == nil {
-	//	query := c.Param("query") Currently, it doesn't accept a query, its in testing
-	//}
+func getManifestFromKongAPI(c *gin.Context) { //currently the functionality of the manifest getter is limted. You ask it for one, it'll give you something small based on the dataset that you then work with
 	resp, err := http.Get("http://ohos_observatory_kong:8000/manifest/")
 	if err != nil {
 		log.Fatalln(err)
@@ -258,15 +215,5 @@ func getManifestFromKongAPI(c *gin.Context) { //, query string) {
 		log.Fatalln(err)
 	}
 	stringBody := string(body)
-	//addToCache(query, stringBody)
 	c.IndentedJSON(http.StatusOK, stringBody)
 }
-
-//func checkCacheContents(query) {
-//TODO this may be non-needed
-//TODO implement this running on a seperate thread to check if it'll end up increasing the speed
-//}
-
-//func federatedQuery() {
-//
-//}

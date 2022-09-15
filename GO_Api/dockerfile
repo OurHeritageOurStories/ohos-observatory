@@ -6,7 +6,4 @@ RUN go mod download
 COPY *.go ./
 RUN go build -o /ohos-go-api
 EXPOSE 9090
-#RUN go run .
-#CMD ["run", "go", "."]
 CMD ["/ohos-go-api"]
-#CMD ["go", "run", "."]
