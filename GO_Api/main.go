@@ -171,18 +171,27 @@ func postToGraphFromKongAPI(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, stringBody)
 }
 
-func deleteFromGraphFromKongAPI(c *gin.Context) {
-	query := c.Query("query")
-	resp, err := http.NewRequest("DELETE", "http://ohos_observatory_kong:8000/graph-full-access?"+query, nil) //https://groups.google.com/g/golang-nuts/c/-wAwU8av2oo
+func deleteFromGraphFromKongAPI(c *gin.Context, search_query string) {
+	query := search_query
+	if len(query) == 0 {
+		query = c.Query("query")
+	}
+	escapedQuery := url.QueryEscape(query)
+	client := &http.Client{}                                                                                                                                 //I think its this that Gin doesn't like
+	req, err := http.NewRequest(http.MethodDelete, "http://ohos_observatory_kong:8000/graph-full-access?"+strings.ReplaceAll(escapedQuery, "+", "%20"), nil) //https://groups.google.com/g/golang-nuts/c/-wAwU8av2oo
 	if err != nil {
 		log.Fatalln(err)
 	}
-	body, err := ioutil.ReadAll(resp.Body)
+	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	stringBody := string(body)
-	c.IndentedJSON(http.StatusOK, stringBody)
+	defer resp.Body.Close()
+	respBody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	c.IndentedJSON(http.StatusOK, respBody)
 }
 
 //
