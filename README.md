@@ -51,7 +51,7 @@ NOTE: The Vue app can be run with or without the database/Kong running in the ba
 
 5. Transfer kong_config.yml to the Kong API
 
-    a. This can either be done as per the Kong documentation, or via Insomnia. It requires sending a POST request to 'http://localhost:8001/config', with the contents of kong_config.yml, and the header 'Content-Type: text/yaml'. You should get a response of a JSON file containing details about the various routes that have been created.
+    a. This can either be done as per the Kong documentation, or via Insomnia. It requires sending a POST request to 'http://localhost:8001/config', with the contents of kong_config.yml, and the header 'Content-Type: text/yaml'. `curl -H 'Content-Type: text/yaml' --data-binary @kong_config.yml http://localhost:8001/config` is one way to do this. You should get a response of a JSON file containing details about the various routes that have been created.
 
     b. To test that this has worked, you should be able to contact miiify via http://localhost:8000/annotation/hello. Either run 'http http://localhost:8000/annotation/hello' (requires HTTPie), 'curl http://localhost:8000/annotation/hello', or go directly through Insomnia. You should receive the response > Welcome to miiify!
 
