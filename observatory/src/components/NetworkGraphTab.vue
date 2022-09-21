@@ -430,7 +430,9 @@ export default {
             if (this.degrees_separation == 1) {
                 this.one_degrees();
             } else if (this.degrees_separation == 2) {
-                this.two_degrees();             
+                this.two_degrees();
+            } else if (this.degrees_separation == 3) {
+                this.three_degrees();                             
             } else {
                 console.error("Crazy degrees!", error);
             }
@@ -449,11 +451,32 @@ export default {
                 });
         },
         two_degrees() {
-            let oo_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {<" + this.user_query + "> ?p ?s . ?s ?p ?o.}}";
-            let os_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {?s ?p ?o . <" + this.user_query + "> ?p ?o.}}";
-            let ss_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {?s ?p ?o . ?o ?p <" + this.user_query + ">.}}";
-            let so_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {?s ?p <" + this.user_query + "> . ?s ?p ?o.}}";
+            let oo_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {<" + this.user_query + "> ?p1 ?s . ?s ?p ?o.}}";
+            let os_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {<" + this.user_query + "> ?p1 ?o . ?s ?p ?o.}}";
+            let ss_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {?o ?p1 <" + this.user_query + "> . ?s ?p ?o.}}";
+            let so_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {?s ?p1 <" + this.user_query + "> . ?s ?p ?o.}}";
+              
             fetch("api/graph?query=SELECT * WHERE {" + so_search + " UNION " + os_search + " UNION " + ss_search + " UNION " + oo_search + "}", {
+                    headers: { "Accept": "application/sparql-results+json" }
+                    })
+                    .then((response) => response.json())
+                    .then(response => (this.post = response))
+                    .then(response => this.draw_graph(response))
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+        },
+        three_degrees() {
+            let oos_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {<" + this.user_query + "> ?p1 ?s2 . ?s2 ?p2 ?o. ?s ?p ?o.}}";
+            let oss_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {<" + this.user_query + "> ?p1 ?s1 . ?o ?p2 ?s1. ?s ?p ?o.}}";
+            let sss_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {?s1 ?p1 <" + this.user_query + "> . ?o ?p2 ?s1. ?s ?p ?o.}}";
+            let sos_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {?s1 ?p1 <" + this.user_query + "> . ?s1 ?p2 ?o. ?s ?p ?o.}}";
+            let ooo_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {<" + this.user_query + "> ?p1 ?o1 . ?o1 ?p2 ?s. ?s ?p ?o.}}";
+            let oso_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {<" + this.user_query + "> ?p1 ?o1 . ?s ?p2 ?o1. ?s ?p ?o.}}";
+            let sso_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {?s1 ?p1 <" + this.user_query + "> . ?s ?p2 ?s1. ?s ?p ?o.}}";
+            let soo_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {?s1 ?p1 <" + this.user_query + "> . ?s1 ?p2 ?s. ?s ?p ?o.}}";            
+              
+            fetch("api/graph?query=SELECT DISTINCT * WHERE {" + oos_search + " UNION " + oss_search + " UNION " + sss_search + " UNION " + sos_search + " UNION " + ooo_search + " UNION " + oso_search + " UNION " + sso_search + " UNION " + soo_search + "}", {
                     headers: { "Accept": "application/sparql-results+json" }
                     })
                     .then((response) => response.json())
@@ -504,11 +527,11 @@ export default {
             }
         },
         increment() {
-            if (this.degrees_separation < 2) {
+            if (this.degrees_separation < 3) {
                 this.degrees_separation++;
                 document.getElementById("minus").style.visibility = "visible";
             }
-            if (this.degrees_separation == 2) {
+            if (this.degrees_separation == 3) {
                 document.getElementById("plus").style.visibility = "hidden";
             }
         },
