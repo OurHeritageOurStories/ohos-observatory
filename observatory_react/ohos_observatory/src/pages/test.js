@@ -1,14 +1,4 @@
 import React from "react";
-//import reportWebVitals from "../reportWebVitals";
-//import sendToAnalytics from "../index";
-
-//sendToAnalytics(console.log);
-
-//sendToAnalytics("test");
-
-//sendToAnalytics(Date.now());
-
-//sendToAnalytics(reportWebVitals.getFID);
 
 const Test = () => { 
     return (

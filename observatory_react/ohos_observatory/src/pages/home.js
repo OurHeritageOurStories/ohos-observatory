@@ -1,20 +1,5 @@
 import React from "react";
 import {Test_prop, Test} from "./test_prop";
-import { ButtonChild } from "./from_child_to_parent";
-
-class ParentComponent extends React.Component{
-    state = { pressed: '' }
-    handlePressed = (pressedOrNot) => {
-        this.setState({pressed: pressedOrNot});
-    }
-    render(){
-        return (
-            <div>
-                <ButtonChild onOnOrOf={this.handlePressed}/>
-            </div>
-        )
-    }
-}
 
 const Home = () => {
     return (
