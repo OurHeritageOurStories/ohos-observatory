@@ -19,6 +19,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import reportHandler from "./reportHandler";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -26,3 +28,20 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+reportWebVitals(reportHandler);
+
+//function sendToAnalytics(metric){
+//  const body = JSON.stringify(metric);
+//  const url = "api/analytics";
+//  if (navigator.sendBeacon){
+//    navigator.sendBeacon(url, body);
+//  } else {
+//    fetch(url, {body, method: "post", keepalive: true});
+//  }
+//}
+
+//reportWebVitals(sendToAnalytics);
+
+
+//export default sendToAnalytics;
