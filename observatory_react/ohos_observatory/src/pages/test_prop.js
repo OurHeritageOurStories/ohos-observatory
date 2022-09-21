@@ -9,10 +9,8 @@ function Test_prop(){
         <div>
             <Test test1="dave"/>
             <Test test1="3"/>
-            <Test test1="dlkajal"/>
         </div>
     )
 }
 
 export { Test_prop, Test };
-//export default Test;
