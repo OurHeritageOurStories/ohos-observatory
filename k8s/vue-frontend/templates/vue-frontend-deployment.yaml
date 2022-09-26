@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vue-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vue-frontend
+  template:
+    metadata:
+      labels:
+        app: vue-frontend
+    spec:
+      containers:
+        - name: vue-frondent
+          image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend:latest
+          ports:
+            - containerPort: 3000
+              name: vue-frontend

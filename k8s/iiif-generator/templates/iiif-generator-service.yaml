@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: iiif-generator
+  labels:
+    app: iiif-generator
+spec:
+  ports:
+    - port: 5050
+      name: iiif-generator
+  clusterIP: None
+  selector:
+    app: iiif-generator

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blazegraph
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: blazegraph
+  template:
+    metadata:
+      labels:
+        app: blazegraph
+    spec:
+      containers:
+        - name: blazegraph
+          image: lyrasis/blazegraph:2.1.5
+          ports:
+            - containerPort: 3497
+              name: blazegraph
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kong-service
+  labels:
+    app: kong
+spec:
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8000
+      name: proxy
+  selector:
+    app: kong
+    tier: frontend
+  type: LoadBalancer
