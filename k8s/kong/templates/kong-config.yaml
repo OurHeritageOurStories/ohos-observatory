@@ -19,6 +19,7 @@ data:
 
       - name: blazegraph-hello
         url: https://blazegraph/bigdata/#splash
+        port: 3497
         routes:
           - name: blazegraph-hello
             paths:
@@ -29,6 +30,7 @@ data:
         
       - name: blazegraph-public-query
         url: https://blazegraph/bigdata/sparql
+        port: 3497
         routes:
           - name: blazegraph-public
             paths:
@@ -40,6 +42,7 @@ data:
 
       - name: blazegraph-full-access
         url: https://blazegraph/bigdata/sparql
+        port: 3497
         routes:
           - name: blazegraph-full-access
             paths: 
@@ -67,7 +70,7 @@ data:
 
       - name: iiif-generator
         url: https://iiif-generator
-        port: 
+        port: 5050
         routes:
           - name: iiif-generator
             paths:

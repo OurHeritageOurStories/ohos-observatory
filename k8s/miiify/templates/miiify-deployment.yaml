@@ -15,7 +15,6 @@ spec:
       containers:
         - name: miiify
           image: jptmoore/miiify
-          args: ["--config=/etc/config/config.json"]
           ports:
             - containerPort: 8080
               name: miiify

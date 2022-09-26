@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLables:
+      app: react-frontend
+  template:
+    metadata:
+      labels:
+        app: react-frontend
+    spec:
+      containers:
+        - name: react-frontend
+          image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/react-frontend:latest #TODO Check this is real
+          ports:
+            - containerPort: 3001
+              name: react-frontend
