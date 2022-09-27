@@ -26,8 +26,8 @@ data:
               - /graph/hello
             strip_path: true
             methods:
-              - GET
-        
+              - GET       
+
       - name: blazegraph-public-query
         url: https://blazegraph/bigdata/sparql
         port: 3497
@@ -62,12 +62,12 @@ data:
             paths:
               - /v1
               - /
-              preserve_host: true
-              methods:
-                - GET
-                - HEAD
-                - OPTIONS
-
+            preserve_host: true
+            methods:
+              - GET
+              - HEAD
+              - OPTIONS
+              
       - name: iiif-generator
         url: https://iiif-generator
         port: 5050
