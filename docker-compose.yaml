@@ -48,3 +48,10 @@ services:
     container_name: ohos-iiif-manifest
     ports:
       - "5000:5000"
+
+  ohos_go_api: 
+    image: ohos_go_api
+    hostname: ohos_go_api
+    container_name: ohos_go_api
+    ports:
+      - "9090:9090"
