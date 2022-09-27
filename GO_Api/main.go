@@ -78,7 +78,7 @@ func main() {
 
 	router.GET("/graph", queryGraphFromCache)
 	router.POST("/graph/post", postToGraphFromKongAPI)
-	router.DELETE("/graph/delete", deleteFromGraphFromKongAPI)
+	//router.DELETE("/graph/delete", deleteFromGraphFromKongAPI)
 
 	//router.GET("/graph/federated?:query", federatedQuery)
 
