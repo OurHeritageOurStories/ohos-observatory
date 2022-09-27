@@ -78,7 +78,7 @@ func main() {
 
 	router.GET("/graph", queryGraphFromCache)
 	router.POST("/graph/post", postToGraphFromKongAPI)
-	//router.DELETE("/graph/delete", deleteFromGraphFromKongAPI)
+	router.DELETE("/graph/delete", deleteFromGraphFromKongAPI)
 
 	//router.GET("/graph/federated?:query", federatedQuery)
 
@@ -171,11 +171,8 @@ func postToGraphFromKongAPI(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, stringBody)
 }
 
-func deleteFromGraphFromKongAPI(c *gin.Context, search_query string) {
-	query := search_query
-	if len(query) == 0 {
-		query = c.Query("query")
-	}
+func deleteFromGraphFromKongAPI(c *gin.Context) {
+	query := c.Query("query")
 	escapedQuery := url.QueryEscape(query)
 	client := &http.Client{}                                                                                                                                 //I think its this that Gin doesn't like
 	req, err := http.NewRequest(http.MethodDelete, "http://ohos_observatory_kong:8000/graph-full-access?"+strings.ReplaceAll(escapedQuery, "+", "%20"), nil) //https://groups.google.com/g/golang-nuts/c/-wAwU8av2oo
