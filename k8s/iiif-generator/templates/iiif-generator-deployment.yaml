@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: iiif-generator
-          image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-iiif-generator:latest #TODO check this exists
+          image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/iiif-generator:latest #TODO check this exists
           ports: 
             - containerPort: 5050
               name: iiif-generator

@@ -19,6 +19,6 @@ spec:
             - containerPort: 3497
               name: blazegraph
       securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+        runAsUser: 000
+        runAsGroup: 000
+        fsGroup: 000

@@ -58,7 +58,7 @@ data:
         url: https://miiify
         port: 8080
         routes:
-          - name: root
+          - name: miiify
             paths:
               - /v1
               - /
@@ -67,7 +67,7 @@ data:
               - GET
               - HEAD
               - OPTIONS
-              
+
       - name: iiif-generator
         url: https://iiif-generator
         port: 5050
@@ -79,4 +79,28 @@ data:
             preserve_host: true
             methods:
               - POST
+              - GET
+        
+      - name: vue-frontend
+        url: https://vue-frontend
+        port: 3000
+        routes:
+          - name: vue-frontend
+            paths:
+              - /observatory/
+            strip_path: true
+            preserve_host: true
+            methods:
+              - GET
+      
+      - name: react-frontend
+        url: https://react-frontend
+        port: 3001
+        routes:
+          - name: react-frontend
+            paths:
+              - /react/
+            strip_path: true
+            preserve_host: true
+            methods:
               - GET

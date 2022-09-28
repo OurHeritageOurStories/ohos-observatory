@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: go-api
-          image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-go-api:latest #TODO check this exists
+          image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/go-api:latest #TODO check this exists
           ports:
             - containerPort: 5000
               name: go-api
