@@ -23,8 +23,8 @@ services:
   
   kong_vue_frontend:
     image: ohos_observatory_frontend #259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend
-    hostname: kong_vue_frontend
-    container_name: kong_vue_frontend
+    hostname: kong_react_frontend
+    container_name: kong_react_frontend
     ports:
       - "3000:3000"
 
