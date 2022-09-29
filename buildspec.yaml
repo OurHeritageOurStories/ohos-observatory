@@ -60,7 +60,7 @@ phases:
         - docker ps 
        
         - pwd
-        - cd ../observatory-react/ohos-observatory
+        - cd ../observatory_react/ohos_observatory
         - pwd  
         - cat dockerfile
         
