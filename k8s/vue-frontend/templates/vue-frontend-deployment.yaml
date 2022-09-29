@@ -14,7 +14,9 @@ spec:
     spec:
       containers:
         - name: vue-frondent
-          image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend:latest #this looks to be not pulling correctly when working locally as its private on ecr
+          image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend:latest
+          #image: local/image_testing_attempt
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
               name: vue-frontend
