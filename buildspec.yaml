@@ -23,27 +23,61 @@ phases:
         - pwd
         - cd ohos-observatory
         - pwd  
-        - cat docker-compose.yaml
         - cat dockerfile
         
+        - aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 259004456259.dkr.ecr.eu-west-2.amazonaws.com
         - docker images -a
 
-        # Build Docker image and push to ECR with latest tag
-        - aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 259004456259.dkr.ecr.eu-west-2.amazonaws.com
+        # Build vue-frontend Docker image and push to ECR with latest tag
         - docker build -t ohos_observatory_frontend .
         - docker images -a
         - docker tag ohos_observatory_frontend:latest 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend:latest
         - docker push 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend:latest
         
-         # Build Docker image and push to ECR with build tag
+         # Build vue frontend Docker image and push to ECR with build tag
         - docker images -a
         - docker tag ohos_observatory_frontend:latest 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend:v_${CODEBUILD_BUILD_NUMBER}
         - docker push 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend:v_${CODEBUILD_BUILD_NUMBER}
 
+ 
+        - pwd
+        - cd GO_Api
+        - pwd  
+        - cat dockerfile
         
+        - docker images -a
+
+        # Build go-api Docker image and push to ECR with latest tag
+        - docker build -t go_api .
+        - docker images -a
+        - docker tag go_api:latest 259004456259.dkr.ecr.eu-west-2.amazonaws.com/go-api:latest
+        - docker push 259004456259.dkr.ecr.eu-west-2.amazonaws.com/go-api:latest
+        
+         # Build go-api Docker image and push to ECR with build tag
+        - docker images -a
+        - docker tag go_api:latest 259004456259.dkr.ecr.eu-west-2.amazonaws.com/go-api:v_${CODEBUILD_BUILD_NUMBER}
+        - docker push 259004456259.dkr.ecr.eu-west-2.amazonaws.com/go-api:v_${CODEBUILD_BUILD_NUMBER}
         - docker ps 
        
+        - pwd
+        - cd ../observatory-react/ohos-observatory
+        - pwd  
+        - cat dockerfile
+        
+        - docker images -a
 
+        # Build react-frontend Docker image and push to ECR with latest tag
+        - docker build -t react_frontend .
+        - docker images -a
+        - docker tag react_frontend:latest 259004456259.dkr.ecr.eu-west-2.amazonaws.com/react-frontend:latest
+        - docker push 259004456259.dkr.ecr.eu-west-2.amazonaws.com/react-frontend:latest
+        
+         # Build react-frontend Docker image and push to ECR with build tag
+        - docker images -a
+        - docker tag react_frontend:latest 259004456259.dkr.ecr.eu-west-2.amazonaws.com/react-frontend:v_${CODEBUILD_BUILD_NUMBER}
+        - docker push 259004456259.dkr.ecr.eu-west-2.amazonaws.com/react-frontend:v_${CODEBUILD_BUILD_NUMBER}
+        - docker ps 
+        
   post_build:
     commands:
         - echo ____Build status = $CODEBUILD_BUILD_SUCCEEDING @ `date`____........
