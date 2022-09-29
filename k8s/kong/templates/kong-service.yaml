@@ -6,7 +6,7 @@ metadata:
     app: kong
 spec:
   ports:
-    - port: {{ .Values.service.port }}
+    - port: 80
       targetPort: 8000
       name: proxy
   selector:

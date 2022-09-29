@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: blazegraph
-          image: lyrasis/blazegraph:2.1.5
+          image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/lyrasis-blazegraph:latest
           ports:
             - containerPort: 3497
               name: blazegraph
