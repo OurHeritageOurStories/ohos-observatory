@@ -18,7 +18,8 @@ export default{
         return{
             items: null,
             iframe: {
-                src: "https://query.wikidata.org/embed.html#SELECT%20%20%3Fa%20%3FaLabel%20%3Foop%20%3FoopLabel%20%3Fo%20%3FoLabel%20%3FpLabel%20%3Flo%20%20WHERE%20%7B%20%0A%20%0A%20%20BIND%28%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ2321038%3E%20AS%20%3Fa%29%0A%20%20%3Fa%20%3Foop%20%3Fo.%20%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22en%22.%20%7D%20%0A%20%20%3Fp%20wikibase%3AdirectClaim%20%3Foop%20.%0A%20%20%3Fo%20rdfs%3Alabel%20%3Flo%20.%0A%20%20filter%28%20%28LANG%28%3Flo%29%20%3D%20%27en%27%20%7C%7C%20LANG%28%3Flo%29%20%3D%20%27%27%29%29%0A%20%7D%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20",
+                src: "",
+                loaded: false
               },
             label: null,
             relatedData: reactive([]),
@@ -148,7 +149,7 @@ export default{
     methods:{
         display_wikidata_visualizer(node)
         {
-            console.log("harshad");
+            console.log(node);
             let sparqlQuery = "";
             if(node)
             {
@@ -176,8 +177,10 @@ export default{
 
 
           let endpoint = 'https://query.wikidata.org/embed.html#';
-          
-          this.iframe.src ="https://query.wikidata.org/embed.html#SELECT%20%20%3Fa%20%3FaLabel%20%3Foop%20%3FoopLabel%20%3Fo%20%3FoLabel%20%3FpLabel%20%3Flo%20%20WHERE%20%7B%20%0A%20%0A%20%20BIND%28%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ2321038%3E%20AS%20%3Fa%29%0A%20%20%3Fa%20%3Foop%20%3Fo.%20%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22en%22.%20%7D%20%0A%20%20%3Fp%20wikibase%3AdirectClaim%20%3Foop%20.%0A%20%20%3Fo%20rdfs%3Alabel%20%3Flo%20.%0A%20%20filter%28%20%28LANG%28%3Flo%29%20%3D%20%27en%27%20%7C%7C%20LANG%28%3Flo%29%20%3D%20%27%27%29%29%0A%20%7D%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20";
+
+          let fullUrl = endpoint + encodeURIComponent( sparqlQuery );
+          this.iframe.loaded = true;
+          this.iframe.src =fullUrl;
           
           console.log(this.iframe.src);
         },
