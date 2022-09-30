@@ -19,14 +19,6 @@ export default{
     <div id="load_data_vue">
         <LoadDataVue />
     </div>
-    <h4 id="upload_file_heading">If you would upload a file containing a graph database, please do so here</h4>
-    <div id="upload_file_vue">
-        <UploadDataFileVue />
-    </div>
-    <h4 id="choose_forign_url_heading">If you would like to load a graph database from an external url, please do so here</h4>
-    <div id="choose_forign_url_vue">
-        <ChooseDataUriVue />
-    </div>
 </div>
 </template>
 <style>
