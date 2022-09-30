@@ -26,7 +26,7 @@ export default{
     methods:{
         delete_data_promise(){
             let promise = new Promise(function (resolve, reject){
-                fetch('api/graph?DROP ALL',{
+                fetch('api/graph-full-access?DROP ALL', {
                     method: "DELETE"
                 })
                     .then(function(response){
@@ -48,7 +48,7 @@ export default{
                 (result)=>{
                     switch(choice){
                         case "manufactured":
-                            fetch('api/graph?',{
+                            fetch('api/graph-full-access?',{
                                 method:"POST",
                                 headers:{"Content-Type":"text/plain"},
                                 body:this.manufactured_data
@@ -60,7 +60,7 @@ export default{
                                 })
                             break;
                         case "playground":
-                            fetch('api/graph?',{
+                            fetch('api/graph-full-access?',{
                                 method:"POST",
                                 headers:{"Content-Type":"text/plain"},
                                 body: this.playground_data
@@ -72,7 +72,7 @@ export default{
                                 })
                             break;
                         case "ai_lab_2":
-                            fetch('api/graph?',{
+                            fetch('api/graph-full-access?',{
                                 method:"POST",
                                 headers:{"Content-Type":"text/plain"},
                                 body:this.ai_lab_2
@@ -84,7 +84,7 @@ export default{
                                 })
                             break;
                         case "ai_lab_1":
-                            fetch('api/graph?',{
+                            fetch('api/graph-full-access?',{
                                 method:"POST",
                                 headers:{"Content-Type":"application/x-turtle-RDR"},
                                 body:this.ai_lab_1
