@@ -107,7 +107,6 @@ export default {
                 })
             ),
             eventHandlers: {
-              "node:click": ({ node }) => {
                 document.getElementById('dropdown').value = node;
                 var promise = this.fetch_related_dbpedia_promise(node);
                 this.display_wikidata_visualizer(node);
@@ -139,19 +138,18 @@ export default {
                         },
                         (error) => {
                             throw "Error: " + error;
-
                         }
                     );
                 },
             }
         };
     },
-    created(){
+    created() {
         this.display_wikidata_visualizer("http://dbpedia.org/resource/Spratton")
         this.create_graph()
         this.fetch_subjects()
     },
-    methods:{
+    methods: {
         display_wikidata_visualizer(node)
         {
             console.log(node);
@@ -189,8 +187,7 @@ export default {
           
           console.log(this.iframe.src);
         },
-        publish_table(relatedData, node, source)
-        {
+        publish_table(relatedData, node, source) {
             this.items = {};
             for (let ii = 0; ii < this.relatedJSON.results.bindings.length; ii++) {
                 var objectLabel = "";
@@ -224,7 +221,7 @@ export default {
                                 if(this.props.includes(key) && node != value[2])
                                 {
                                     if(!(value[2] in this.nodes))
-                                        this.nodes[value[2]] = { name: value[1], face: value[0], color: colour };
+                                    this.nodes[value[2]] = { name: value[1], face: value[0], color: colour };
                                     this.edges[key] = { source: node, target: value[2], label: pred, color: colour };
                                 }
                                 relatedData.push({
@@ -480,7 +477,7 @@ export default {
             } else if (this.degrees_separation == 2) {
                 this.two_degrees();
             } else if (this.degrees_separation == 3) {
-                this.three_degrees();                             
+                this.three_degrees();
             } else {
                 console.error("Crazy degrees!", error);
             }
@@ -503,16 +500,15 @@ export default {
             let os_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {<" + this.user_query + "> ?p1 ?o . ?s ?p ?o.}}";
             let ss_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {?o ?p1 <" + this.user_query + "> . ?s ?p ?o.}}";
             let so_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {?s ?p1 <" + this.user_query + "> . ?s ?p ?o.}}";
-              
             fetch("api/graph?query=SELECT * WHERE {" + so_search + " UNION " + os_search + " UNION " + ss_search + " UNION " + oo_search + "}", {
-                    headers: { "Accept": "application/sparql-results+json" }
-                    })
-                    .then((response) => response.json())
-                    .then(response => (this.post = response))
-                    .then(response => this.draw_graph(response))
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
+                headers: { "Accept": "application/sparql-results+json" }
+            })
+                .then((response) => response.json())
+                .then(response => (this.post = response))
+                .then(response => this.draw_graph(response))
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         },
         three_degrees() {
             let oos_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {<" + this.user_query + "> ?p1 ?s2 . ?s2 ?p2 ?o. ?s ?p ?o.}}";
@@ -522,18 +518,17 @@ export default {
             let ooo_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {<" + this.user_query + "> ?p1 ?o1 . ?o1 ?p2 ?s. ?s ?p ?o.}}";
             let oso_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {<" + this.user_query + "> ?p1 ?o1 . ?s ?p2 ?o1. ?s ?p ?o.}}";
             let sso_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {?s1 ?p1 <" + this.user_query + "> . ?s ?p2 ?s1. ?s ?p ?o.}}";
-            let soo_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {?s1 ?p1 <" + this.user_query + "> . ?s1 ?p2 ?s. ?s ?p ?o.}}";            
-              
+            let soo_search = "{ SELECT DISTINCT ?s ?p ?o WHERE {?s1 ?p1 <" + this.user_query + "> . ?s1 ?p2 ?s. ?s ?p ?o.}}";
             fetch("api/graph?query=SELECT DISTINCT * WHERE {" + oos_search + " UNION " + oss_search + " UNION " + sss_search + " UNION " + sos_search + " UNION " + ooo_search + " UNION " + oso_search + " UNION " + sso_search + " UNION " + soo_search + "}", {
-                    headers: { "Accept": "application/sparql-results+json" }
-                    })
-                    .then((response) => response.json())
-                    .then(response => (this.post = response))
-                    .then(response => this.draw_graph(response))
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-        },      
+                headers: { "Accept": "application/sparql-results+json" }
+            })
+                .then((response) => response.json())
+                .then(response => (this.post = response))
+                .then(response => this.draw_graph(response))
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        },
         list_subjects() {
             try {
                 for (let i = 0; i < this.subjects.results.bindings.length; i++) {
@@ -589,90 +584,67 @@ export default {
                 document.getElementById("plus").style.visibility = "visible";
             }
             if (this.degrees_separation == 1) {
-                document.getElementById("minus").style.visibility = "hidden"; 
+                document.getElementById("minus").style.visibility = "hidden";
             }
         }
     }
 }
 
 </script>
-
+    
 <template>
-<div id="graphStatus" style="font-size:12px;">{{ graph_status }}</div>
-<div id="zoomStatus">
-    <label style="font-size:12px;">Set zoom level  </label>
-    <input type="range" v-model="zoomLevel" min="0.4" max="5" step="0.1" class="slider">
-</div>
-<v-network-graph
-    v-model:zoom-level="zoomLevel"
-    :nodes="nodes"
-    :edges="edges"
-    :layouts="layouts"
-    :configs="configs"
-    :event-handlers="eventHandlers"
-    :key="componentKey"
-  >
-    <defs>
-      <clipPath id="faceCircle" clipPathUnits="objectBoundingBox">
-        <circle cx="0.5" cy="0.5" r="0.5" />
-      </clipPath>
-    </defs>
-    <template #edge-label="{ edge, ...slotProps }">
-      <v-edge-label :text="edge.label" align="center" vertical-align="above" v-bind="slotProps" />
-    </template>
-    <template #override-node="{ nodeId, scale, config, ...slotProps }">
-      <circle class="face-circle" :r="config.radius * scale" fill="#ffffff" v-bind="slotProps" />
-      <image
-        class="face-picture"
-        :x="-config.radius * scale"
-        :y="-config.radius * scale"
-        :width="config.radius * scale * 2"
-        :height="config.radius * scale * 2"
-        :xlink:href="`${nodes[nodeId].face}`"
-        clip-path="url(#faceCircle)"
-      />
-      <circle
-        class="face-circle"
-        :r="config.radius * scale"
-        fill="none"
-        stroke="#808080"
-        :stroke-width="1 * scale"
-        v-bind="slotProps"
-      />
-    </template>
-  </v-network-graph>
-  <div id="nodeLimit">
-  <label style="font-size:12px;">Set max nodes: {{ node_limit }}  </label>
-  <input  type="range" v-model="node_limit" id="node_limit" min="1" max="200" class="slider"/>
-  <button @click="create_graph" id="node_limit_button" class="button">Refresh</button>
-  <span style="font-size:12px;">The limit might not be precise. If the graph appears odd, switch between tabs.</span>
-  </div>
-  <div>
-    <p>Legends</p>
-    <p style = "color:#e7d2ea">
-        OHOS
-    </p>
-    <p class = "line OHOSLine"></p>
-    <p style = "color:#fed32c">
-        DBPedia
-    </p>
-    <p class = "line DBPediaLine"></p>
-    <p style = "color:#990000">
-        WikiData
-    </p>
-    <p class = "line WikiDataLine"></p>
-  </div>
-  <table-lite
-    :is-static-mode="true"
-    :columns="table.columns"
-    :rows="table.rows"
-    :total="table.totalRecordCount"
-    :sortable="table.sortable"
-  ></table-lite>
-  
-  <iframe style="width: 80vw; height: 50vh; border: none;" :src="iframe.src" referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups" ></iframe>
+    <div id="graphStatus" style="font-size:12px;">{{ graph_status }}</div>
+    <div id="zoomStatus">
+        <label style="font-size:12px;">Set zoom level </label>
+        <input type="range" v-model="zoomLevel" min="0.1" max="5" step="0.1" class="slider">
+    </div>
+    <v-network-graph v-model:zoom-level="zoomLevel" :nodes="nodes" :edges="edges" :layouts="layouts" :configs="configs"
+        :event-handlers="eventHandlers" :key="componentKey">
+        <defs>
+            <clipPath id="faceCircle" clipPathUnits="objectBoundingBox">
+                <circle cx="0.5" cy="0.5" r="0.5" />
+            </clipPath>
+        </defs>
+        <template #edge-label="{ edge, ...slotProps }">
+            <v-edge-label :text="edge.label" align="center" vertical-align="above" v-bind="slotProps" />
+        </template>
+        <template #override-node="{ nodeId, scale, config, ...slotProps }">
+            <circle class="face-circle" :r="config.radius * scale" fill="#ffffff" v-bind="slotProps" />
+            <image class="face-picture" :x="-config.radius * scale" :y="-config.radius * scale"
+                :width="config.radius * scale * 2" :height="config.radius * scale * 2"
+                :xlink:href="`${nodes[nodeId].face}`" clip-path="url(#faceCircle)" />
+            <circle class="face-circle" :r="config.radius * scale" fill="none" stroke="#808080"
+                :stroke-width="1 * scale" v-bind="slotProps" />
+        </template>
+    </v-network-graph>
+    <div id="refreshDiv">
+        <p style="font-size:12px;">Central node: </p>
+        <select id="dropdown"></select> <br>
+        <label style="font-size:12px;"> Degrees of separation: {{degrees_separation}}</label>
+        <button id="minus" class="button" visibility="hidden" @click="decrement()">−</button>
+        <button id="plus" class="button" @click="increment()">+</button>
+        <button @click="create_graph" id="refresh_button" class="button">Refresh</button>
+    </div>
+    <div>
+        <p>Legends</p>
+        <p style="color:#e7d2ea">
+            OHOS
+        </p>
+        <p class="line OHOSLine"></p>
+        <p style="color:#fed32c">
+            DBPedia
+        </p>
+        <p class="line DBPediaLine"></p>
+        <p style="color:#990000">
+            WikiData
+        </p>
+        <p class="line WikiDataLine"></p>
+    </div>
+    <table-lite :is-static-mode="true" :columns="table.columns" :rows="table.rows" :total="table.totalRecordCount"
+        :sortable="table.sortable"></table-lite>
+        <iframe style="width: 80vw; height: 50vh; border: none;" :src="iframe.src" referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups" ></iframe>
 </template>
-
+    
 <style lang="scss" scoped>
 // transitions when scaling on mouseover.
 .face-circle,
@@ -716,4 +688,4 @@ p.WikiDataLine:after {
     width: 5%;
 }
 </style>
-
+    
