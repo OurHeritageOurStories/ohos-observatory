@@ -10,4 +10,4 @@ spec:
       name: vue-frontend
   clusterIP: None
   selector:
-    app: vue-frontned
+    app: vue-frontend

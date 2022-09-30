@@ -18,37 +18,35 @@ data:
     services:
 
       - name: blazegraph-hello
-        url: https://blazegraph/bigdata/#splash
+        url: http://blazegraph/bigdata/#splash
         port: 3497
         routes:
           - name: blazegraph-hello
             paths:
               - /graph/hello
-            strip_path: true
+            preserve_host: true
             methods:
               - GET       
 
       - name: blazegraph-public-query
-        url: https://blazegraph/bigdata/sparql
+        url: http://blazegraph/bigdata/sparql
         port: 3497
         routes:
           - name: blazegraph-public
             paths:
               - /graph?
             preserve_host: true
-            strip_path: true
             methods:
               - GET
 
       - name: blazegraph-full-access
-        url: https://blazegraph/bigdata/sparql
+        url: http://blazegraph/bigdata/sparql
         port: 3497
         routes:
           - name: blazegraph-full-access
             paths: 
               - /graph-full-access?
             preserve_host: true
-            strip_path: true
             methods:
               - GET
               - POST
@@ -69,7 +67,7 @@ data:
               - OPTIONS
 
       - name: iiif-generator
-        url: https://iiif-generator
+        url: http://iiif-generator
         port: 5050
         routes:
           - name: iiif-generator
@@ -82,19 +80,18 @@ data:
               - GET
         
       - name: vue-frontend
-        url: https://vue-frontend
+        url: http://vue-frontend
         port: 3000
         routes:
           - name: vue-frontend
             paths:
-              - /observatory/
-            strip_path: true
+              - /vue-frontend
             preserve_host: true
             methods:
               - GET
       
       - name: react-frontend
-        url: https://react-frontend
+        url: http://react-frontend
         port: 3001
         routes:
           - name: react-frontend
