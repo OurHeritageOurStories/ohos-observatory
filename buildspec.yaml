@@ -60,7 +60,7 @@ phases:
         - docker ps 
        
         - pwd
-        - cd ../observatory-react/ohos-observatory
+        - cd ../observatory_react/ohos_observatory
         - pwd  
         - cat dockerfile
         
@@ -78,6 +78,7 @@ phases:
         - docker push 259004456259.dkr.ecr.eu-west-2.amazonaws.com/react-frontend:v_${CODEBUILD_BUILD_NUMBER}
         - docker ps 
         
+        - cd ../../
   post_build:
     commands:
         - echo ____Build status = $CODEBUILD_BUILD_SUCCEEDING @ `date`____........
