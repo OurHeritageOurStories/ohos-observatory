@@ -13,7 +13,7 @@ spec:
         app: vue-frontend
     spec:
       containers:
-        - name: vue-frondent
+        - name: vue-frontend
           image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend:latest
           #image: local/image_testing_attempt
           #imagePullPolicy: IfNotPresent

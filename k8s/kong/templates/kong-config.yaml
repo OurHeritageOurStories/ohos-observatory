@@ -66,14 +66,13 @@ data:
               - HEAD
               - OPTIONS
 
-      - name: iiif-generator
-        url: http://iiif-generator
-        port: 5050
+      - name: iiifgenerator
+        url: http://iiifgenerator
+        port: 5000
         routes:
-          - name: iiif-generator
+          - name: iiifgenerator
             paths:
-              - /annotation/
-            strip_path: true
+              - /annotation
             preserve_host: true
             methods:
               - POST
@@ -101,3 +100,17 @@ data:
             preserve_host: true
             methods:
               - GET
+
+      #- name: goapi
+      #  url: https://goapi
+      #  port: 12000
+      #  routes:
+      #    - name: goapi
+      #      paths:
+      #        - /go
+      #      preserve_host: true
+      #      methods:
+      #        - GET
+      #        - POST
+      #        - DELETE
+      #        - PUT

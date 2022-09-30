@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: goapi
+  labels:
+    app: goapi
+spec:
+  ports:
+    - port: 5000
+      name: goapi
+  clusterIP: None
+  selector:
+    app: goapi

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iiifgenerator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iiifgenerator
+  template:
+    metadata:
+      labels:
+        app: iiifgenerator
+    spec:
+      containers:
+        - name: iiifgenerator
+          image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/iiif-generator:latest
+          imagePullPolicy: IfNotPresent
+          ports: 
+            - containerPort: 5000
+              name: iiifgenerator
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000

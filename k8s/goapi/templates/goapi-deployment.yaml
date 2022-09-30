@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: go-api
+  name: goapi
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: go-api
+      app: goapi
   template:
     metadata:
       labels:
-        app: go-api
+        app: goapi
     spec:
       containers:
-        - name: go-api
+        - name: goapi
           image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/go-api:latest
           ports:
             - containerPort: 5000
-              name: go-api
+              name: goapi
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
