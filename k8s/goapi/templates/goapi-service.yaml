@@ -6,7 +6,7 @@ metadata:
     app: goapi
 spec:
   ports:
-    - port: 5000
+    - port: 9090
       name: goapi
   clusterIP: None
   selector:
