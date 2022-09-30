@@ -35,7 +35,6 @@ export default{
     <div class="tabs">
         <a v-on:click="activetab='1'" v-bind:class="[ activetab === '1' ? 'active' : '' ]">Home</a>
         <a v-on:click="activetab='2'" v-bind:class="[ activetab === '2' ? 'active' : '' ]">Change Dataset</a>
-        <a v-on:click="activetab='3'" v-bind:class="[ activetab === '3' ? 'active' : '' ]">Add</a>
         <a v-on:click="activetab='4'" v-bind:class="[ activetab === '4' ? 'active' : '' ]">Explore</a>
         <a v-on:click="activetab='5'" v-bind:class="[ activetab === '5' ? 'active' : '' ]">IIIF manifest from the backend</a>
     </div>
