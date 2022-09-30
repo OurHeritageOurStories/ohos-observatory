@@ -19,9 +19,9 @@ data:
 
       - name: blazegraph-hello
         url: http://blazegraph/bigdata/#splash
-        port: 3497
+        port: 8889
         routes:
-          - name: blazegraph-hello
+          - name: blazegraph
             paths:
               - /graph/hello
             preserve_host: true
@@ -30,7 +30,7 @@ data:
 
       - name: blazegraph-public-query
         url: http://blazegraph/bigdata/sparql
-        port: 3497
+        port: 8889
         routes:
           - name: blazegraph-public
             paths:
@@ -41,7 +41,7 @@ data:
 
       - name: blazegraph-full-access
         url: http://blazegraph/bigdata/sparql
-        port: 3497
+        port: 8889
         routes:
           - name: blazegraph-full-access
             paths: 
@@ -101,16 +101,16 @@ data:
             methods:
               - GET
 
-      #- name: goapi
-      #  url: https://goapi
-      #  port: 12000
-      #  routes:
-      #    - name: goapi
-      #      paths:
-      #        - /go
-      #      preserve_host: true
-      #      methods:
-      #        - GET
-      #        - POST
-      #        - DELETE
-      #        - PUT
+      - name: goapi
+        url: https://goapi
+        port: 9090
+        routes:
+          - name: goapi
+            paths:
+              - /go
+            preserve_host: true
+            methods:
+              - GET
+              - POST
+              - DELETE
+              - PUT

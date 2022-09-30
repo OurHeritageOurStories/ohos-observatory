@@ -16,7 +16,7 @@ spec:
         - name: blazegraph
           image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/lyrasis-blazegraph:latest
           ports:
-            - containerPort: 3497
+            - containerPort: 8889
               name: blazegraph
       securityContext:
         runAsUser: 000
