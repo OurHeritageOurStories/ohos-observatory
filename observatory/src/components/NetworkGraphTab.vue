@@ -17,6 +17,10 @@ export default {
     data() {
         return {
             items: null,
+            iframe: {
+                src: "",
+                loaded: false
+              },
             label: null,
             relatedData: reactive([]),
             props: reactive(["http://dbpedia.org/ontology/ceremonialCounty", "http://dbpedia.org/ontology/deathPlace", "http://dbpedia.org/ontology/birthPlace", "http://dbpedia.org/ontology/country", "http://dbpedia.org/ontology/WikiPageExternalLink", "http://dbpedia.org/ontology/region", "rdfs:comment", "geo:lat", "geo:long", "foaf:depiction", "http://dbpedia.org/ontology/birthPlace", "http://dbpedia.org/ontology/deathPlace", "http://dbpedia.org/ontology/officialName", "http://www.wikidata.org/prop/direct/P18", "http://www.wikidata.org/prop/direct/P21", "http://www.wikidata.org/prop/direct/P27", "http://www.wikidata.org/prop/direct/P569", "http://www.wikidata.org/prop/direct/P19", "http://www.wikidata.org/prop/direct/P570", "http://www.wikidata.org/prop/direct/P20", "http://www.wikidata.org/prop/direct/P22", "http://www.wikidata.org/prop/direct/P25", "http://www.wikidata.org/prop/direct/P26", "http://www.wikidata.org/prop/direct/P40", "http://www.wikidata.org/prop/direct/P106", "http://www.wikidata.org/prop/direct/P69", "http://www.wikidata.org/prop/direct/P641", "http://www.wikidata.org/prop/direct/P607", "http://www.wikidata.org/prop/direct/P241", "http://www.wikidata.org/prop/direct/P166", "http://www.wikidata.org/prop/direct/P17", "http://www.wikidata.org/prop/direct/P7959", "http://dbpedia.org/ontology/award", "http://dbpedia.org/ontology/battle", "http://dbpedia.org/ontology/militaryBranch", "http://dbpedia.org/ontology/restingPlace", "http://dbpedia.org/ontology/serviceEndYear", "http://dbpedia.org/ontology/serviceStartYear", "http://dbpedia.org/ontology/relation", "http://dbpedia.org/ontology/thumbnail", "http://dbpedia.org/prop/birthDate", "http://dbpedia.org/prop/birthName", "http://dbpedia.org/prop/birthPlace", "http://dbpedia.org/prop/rank", "http://dbpedia.org/prop/deathDate", "http://dbpedia.org/prop/deathPlace", "http://dbpedia.org/prop/placeofburial"]),
@@ -103,48 +107,90 @@ export default {
                 })
             ),
             eventHandlers: {
-                "node:click": ({ node }) => {
-                    document.getElementById('dropdown').value = node;
-                    var promise = this.fetch_related_dbpedia_promise(node);
-                    promise.then(
-                        (result) => {
-                            this.relatedData = reactive([]);
-                            this.relatedJSON = result;
-                            this.publish_table(this.relatedData, node, "dbpedia");
-                            var val = "";
-                            var count = 0;
-                            if (this.relatedJSON.results.bindings[0])
-                                val = this.relatedJSON.results.bindings[0].oo.value;
-                            else { val = node; count = 1; }
-                            {
-                                promise = this.fetch_related_wikidata_promise(node, val);
-                                promise.then(
-                                    (result) => {
-                                        this.relatedJSON = result;
-                                        if (!this.relatedJSON.results.bindings[0] && count)
-                                            alert("No more possible expansion");
-                                        this.publish_table(this.relatedData, node, "wikidata");
-                                    },
-                                    (error) => {
-                                        throw "Error: " + error;
-                                    }
-                                );
+              "node:click": ({ node }) => {
+                document.getElementById('dropdown').value = node;
+                var promise = this.fetch_related_dbpedia_promise(node);
+                this.display_wikidata_visualizer(node);
+                promise.then(
+                    (result)=>{
+                        this.relatedData = reactive([]);
+                        this.relatedJSON = result;
+                        this.publish_table(this.relatedData, node, "dbpedia");
+                        var val = "";
+                        var count = 0;
+                        if(this.relatedJSON.results.bindings[0])
+                            val = this.relatedJSON.results.bindings[0].oo.value;
+                        else 
+                            {val = node; count = 1;}
+                        {
+                            promise = this.fetch_related_wikidata_promise(node, val);
+                            promise.then(
+                                (result)=>{
+                                    this.relatedJSON = result;
+                                    if(!this.relatedJSON.results.bindings[0] && count)
+                                        alert("No more possible expansion");
+                                    this.publish_table(this.relatedData, node, "wikidata");
+                                },
+                                (error)=>{
+                                    throw "Error: " + error;
+                                }
+                            );
                             }
                         },
                         (error) => {
                             throw "Error: " + error;
+
                         }
                     );
                 },
             }
         };
     },
-    created() {
+    created(){
+        this.display_wikidata_visualizer("http://dbpedia.org/resource/Spratton")
         this.create_graph()
         this.fetch_subjects()
     },
-    methods: {
-        publish_table(relatedData, node, source) {
+    methods:{
+        display_wikidata_visualizer(node)
+        {
+            console.log(node);
+            let sparqlQuery = "";
+            if(node)
+            {
+              sparqlQuery = "SELECT  DISTINCT ?oo ?ooLabel ?a ?aLabel ?s ?sLabel ?p ?pLabel  " +
+              "WHERE { SERVICE <http://dbpedia.org/sparql>  " +
+              "{<http://dbpedia.org/resource/Spratton> owl:sameAs ?oo.} " +
+              "SERVICE <https://query.wikidata.org/sparql>{ " +
+              "?oo ?a ?s. " +
+              "SERVICE wikibase:label { bd:serviceParam wikibase:language 'en'. }  " +
+              "?p wikibase:directClaim ?a . " +
+              "?s rdfs:label ?ls . " +
+              "filter( (LANG(?ls) = 'en' || LANG(?ls) = ''))}}";
+            }
+            else
+            {
+              sparqlQuery = "SELECT  ?a ?aLabel ?oop ?oopLabel ?o ?oLabel ?pLabel ?lo  WHERE { " +
+              "BIND(<http://www.wikidata.org/entity/Q2321038> AS ?a) " +
+              "?a ?oop ?o.  " +
+              "SERVICE wikibase:label { bd:serviceParam wikibase:language 'en'. }  " +
+              "?p wikibase:directClaim ?oop . " +
+              "?o rdfs:label ?lo . " +
+              "filter( (LANG(?lo) = 'en' || LANG(?lo) = ''))}  ";
+            }
+
+
+
+          let endpoint = 'https://query.wikidata.org/embed.html#';
+
+          let fullUrl = endpoint + encodeURIComponent( sparqlQuery );
+          this.iframe.loaded = true;
+          this.iframe.src =fullUrl;
+          
+          console.log(this.iframe.src);
+        },
+        publish_table(relatedData, node, source)
+        {
             this.items = {};
             for (let ii = 0; ii < this.relatedJSON.results.bindings.length; ii++) {
                 var objectLabel = "";
@@ -175,8 +221,10 @@ export default {
                             (result) => {
                                 var retRef = Object.keys(result.entities)[0];
                                 pred = result.entities[retRef].labels.en.value;
-                                if (this.props.includes(key)) {
-                                    this.nodes[value[2]] = { name: value[1], face: value[0], color: colour };
+                                if(this.props.includes(key) && node != value[2])
+                                {
+                                    if(!(value[2] in this.nodes))
+                                        this.nodes[value[2]] = { name: value[1], face: value[0], color: colour };
                                     this.edges[key] = { source: node, target: value[2], label: pred, color: colour };
                                 }
                                 relatedData.push({
@@ -550,55 +598,79 @@ export default {
 </script>
 
 <template>
-    <div id="graphStatus" style="font-size:12px;">{{ graph_status }}</div>
-    <div id="zoomStatus">
-        <label style="font-size:12px;">Set zoom level </label>
-        <input type="range" v-model="zoomLevel" min="0.4" max="5" step="0.1" class="slider">
-    </div>
-    <v-network-graph v-model:zoom-level="zoomLevel" :nodes="nodes" :edges="edges" :layouts="layouts" :configs="configs"
-        :event-handlers="eventHandlers" :key="componentKey">
-        <defs>
-            <clipPath id="faceCircle" clipPathUnits="objectBoundingBox">
-                <circle cx="0.5" cy="0.5" r="0.5" />
-            </clipPath>
-        </defs>
-        <template #edge-label="{ edge, ...slotProps }">
-            <v-edge-label :text="edge.label" align="center" vertical-align="above" v-bind="slotProps" />
-        </template>
-        <template #override-node="{ nodeId, scale, config, ...slotProps }">
-            <circle class="face-circle" :r="config.radius * scale" fill="#ffffff" v-bind="slotProps" />
-            <image class="face-picture" :x="-config.radius * scale" :y="-config.radius * scale"
-                :width="config.radius * scale * 2" :height="config.radius * scale * 2"
-                :xlink:href="`${nodes[nodeId].face}`" clip-path="url(#faceCircle)" />
-            <circle class="face-circle" :r="config.radius * scale" fill="none" stroke="#808080"
-                :stroke-width="1 * scale" v-bind="slotProps" />
-        </template>
-    </v-network-graph>
-    <div id="refreshDiv">
-        <p style="font-size:12px;">Central node: </p>
-        <select id="dropdown"></select> <br>
-        <label style="font-size:12px;"> Degrees of separation: {{degrees_separation}}</label>
-        <button id="minus" class="button" visibility="hidden" @click="decrement()">−</button>
-        <button id="plus" class="button" @click="increment()">+</button>
-        <button @click="create_graph" id="refresh_button" class="button">Refresh</button>
-    </div>
-    <div>
-        <p>Legends</p>
-        <p style="color:#e7d2ea">
-            OHOS
-        </p>
-        <p class="line OHOSLine"></p>
-        <p style="color:#fed32c">
-            DBPedia
-        </p>
-        <p class="line DBPediaLine"></p>
-        <p style="color:#990000">
-            WikiData
-        </p>
-        <p class="line WikiDataLine"></p>
-    </div>
-    <table-lite :is-static-mode="true" :columns="table.columns" :rows="table.rows" :total="table.totalRecordCount"
-        :sortable="table.sortable"></table-lite>
+<div id="graphStatus" style="font-size:12px;">{{ graph_status }}</div>
+<div id="zoomStatus">
+    <label style="font-size:12px;">Set zoom level  </label>
+    <input type="range" v-model="zoomLevel" min="0.4" max="5" step="0.1" class="slider">
+</div>
+<v-network-graph
+    v-model:zoom-level="zoomLevel"
+    :nodes="nodes"
+    :edges="edges"
+    :layouts="layouts"
+    :configs="configs"
+    :event-handlers="eventHandlers"
+    :key="componentKey"
+  >
+    <defs>
+      <clipPath id="faceCircle" clipPathUnits="objectBoundingBox">
+        <circle cx="0.5" cy="0.5" r="0.5" />
+      </clipPath>
+    </defs>
+    <template #edge-label="{ edge, ...slotProps }">
+      <v-edge-label :text="edge.label" align="center" vertical-align="above" v-bind="slotProps" />
+    </template>
+    <template #override-node="{ nodeId, scale, config, ...slotProps }">
+      <circle class="face-circle" :r="config.radius * scale" fill="#ffffff" v-bind="slotProps" />
+      <image
+        class="face-picture"
+        :x="-config.radius * scale"
+        :y="-config.radius * scale"
+        :width="config.radius * scale * 2"
+        :height="config.radius * scale * 2"
+        :xlink:href="`${nodes[nodeId].face}`"
+        clip-path="url(#faceCircle)"
+      />
+      <circle
+        class="face-circle"
+        :r="config.radius * scale"
+        fill="none"
+        stroke="#808080"
+        :stroke-width="1 * scale"
+        v-bind="slotProps"
+      />
+    </template>
+  </v-network-graph>
+  <div id="nodeLimit">
+  <label style="font-size:12px;">Set max nodes: {{ node_limit }}  </label>
+  <input  type="range" v-model="node_limit" id="node_limit" min="1" max="200" class="slider"/>
+  <button @click="create_graph" id="node_limit_button" class="button">Refresh</button>
+  <span style="font-size:12px;">The limit might not be precise. If the graph appears odd, switch between tabs.</span>
+  </div>
+  <div>
+    <p>Legends</p>
+    <p style = "color:#e7d2ea">
+        OHOS
+    </p>
+    <p class = "line OHOSLine"></p>
+    <p style = "color:#fed32c">
+        DBPedia
+    </p>
+    <p class = "line DBPediaLine"></p>
+    <p style = "color:#990000">
+        WikiData
+    </p>
+    <p class = "line WikiDataLine"></p>
+  </div>
+  <table-lite
+    :is-static-mode="true"
+    :columns="table.columns"
+    :rows="table.rows"
+    :total="table.totalRecordCount"
+    :sortable="table.sortable"
+  ></table-lite>
+  
+  <iframe style="width: 80vw; height: 50vh; border: none;" :src="iframe.src" referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups" ></iframe>
 </template>
 
 <style lang="scss" scoped>
