@@ -88,7 +88,7 @@ func main() {
 	//router.POST("/annotation:query", postAnnotationToKongAPI)
 	//router.PUT("/annotation:query", putAnnotationToKongAPI)
 	//router.DELETE("/annotation:query", deleteAnnotationFromKongAPI)
-
+	router.POST("/graph/posttriple", postTriplesExample)
 	router.GET("/manifest/:query", getManifestFromCache)
 
 	router.Run(":9090")
@@ -96,6 +96,10 @@ func main() {
 
 func getExampleWebData(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, rdf_graph_example)
+}
+
+func postTriplesExample(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, rdf_triples_example)
 }
 
 //
@@ -139,10 +143,13 @@ func getGraphFromKongAPI(c *gin.Context, search_query string) {
 		query = c.Query("query")
 	}
 	escapedQuery := url.QueryEscape(query)
-	resp, err := http.Get("http://ohos_observatory_kong:8000/graph?" + strings.ReplaceAll(escapedQuery, "+", "%20"))
+	resp, err := http.Get("http://ohos_observatory_kong:8000/graph?query=" + strings.ReplaceAll(escapedQuery, "+", "%20")) //req, err :=
+	//req.Header.Set("Accept", "text/rdf+n3") //works: application/x-turtle, application/x-n-triples-RDR, application/rdf+xml, application/x-binary-rdf-results-table; sometimes: application/json; no: text/plain, text/rdf+n3
 	if err != nil {
 		log.Fatalln(err)
 	}
+	//req.Header.Set("Content-Type", "text/rdf+n3")
+	//resp, err := http.DefaultClient.Do(req)
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatalln(err)
@@ -152,16 +159,20 @@ func getGraphFromKongAPI(c *gin.Context, search_query string) {
 }
 
 func postToGraphFromKongAPI(c *gin.Context) {
-	postBody, _ := json.Marshal(map[string]string{ //TODO this is just a sample
+	postBody, _ := json.Marshal(map[string]string{ //TODO this is just a sample, and doesn't work here
 		"Subject":   "test",
 		"Predicate": "triple",
 		"Object":    "insertion",
 	})
 	responseBody := bytes.NewBuffer(postBody)
-	resp, err := http.Post("http://ohos_observatory_kong:8000/graph-full-access?", "application/json", responseBody)
+	resp, err := http.Post("http://ohos_observatory_kong:8000/graph-full-access?query=", "application/json", responseBody)
+	//req, err := http.NewRequest("POST", "http://ohos_observatory_kong:8000/graph-full-access?query=", responseBody)
 	if err != nil {
 		log.Fatalf("An error occured %v", err)
 	}
+	//req.Header.Set("Accept", "text/rdf+n3")
+	//req.Header.Set("Content-Type", "text/rdf+n3")
+	//resp, err := http.DefaultClient.Do(req)
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
@@ -175,7 +186,7 @@ func deleteFromGraphFromKongAPI(c *gin.Context) {
 	query := c.Query("query")
 	escapedQuery := url.QueryEscape(query)
 	client := &http.Client{}                                                                                                                                 //I think its this that Gin doesn't like
-	req, err := http.NewRequest(http.MethodDelete, "http://ohos_observatory_kong:8000/graph-full-access?"+strings.ReplaceAll(escapedQuery, "+", "%20"), nil) //https://groups.google.com/g/golang-nuts/c/-wAwU8av2oo
+	req, err := http.NewRequest(http.MethodDelete, "http://ohos_observatory_kong:8000/graph-full-access?delete?"+strings.ReplaceAll(escapedQuery, "+", "%20"), nil) //https://groups.google.com/g/golang-nuts/c/-wAwU8av2oo
 	if err != nil {
 		log.Fatalln(err)
 	}
