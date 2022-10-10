@@ -7,10 +7,12 @@ spec:
   selector:
     matchLabels:
       app: react-frontend
+      app.kubernetes.io/name: react-frontend
   template:
     metadata:
       labels:
         app: react-frontend
+        app.kubernetes.io/name: react-frontend
     spec:
       containers:
         - name: react-frontend

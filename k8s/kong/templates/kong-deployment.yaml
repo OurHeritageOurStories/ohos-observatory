@@ -9,12 +9,14 @@ spec:
     matchLabels:
       app: kong
       tier: frontend
+      app.kubernetes.io/name: kong
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app: kong
+        app.kubernetes.io/name: kong
         tier: frontend
     spec:
       containers:

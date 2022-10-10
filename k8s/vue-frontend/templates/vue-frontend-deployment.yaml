@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: vue-frontend
-          image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend:latest
+          image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend:v_14
           #image: local/image_testing_attempt
           #imagePullPolicy: IfNotPresent
           ports:
