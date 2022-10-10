@@ -107,6 +107,7 @@ export default {
                 })
             ),
             eventHandlers: {
+                "node:click": ({ node }) => {
                 document.getElementById('dropdown').value = node;
                 var promise = this.fetch_related_dbpedia_promise(node);
                 this.display_wikidata_visualizer(node);
