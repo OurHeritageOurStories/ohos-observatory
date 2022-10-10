@@ -7,4 +7,4 @@ helm install react-frontend react-frontend
 helm install kong kong --set service.port=5000
 helm install iiif-generator iiif-generator
 
-minikube tunnel
+kubectl port-forward svc/kong 5000:5000
