@@ -62,7 +62,7 @@ services:
         - DELETE
 
   - name: iiif_manifest
-    url: http://ohos-iiif-manifest:5000
+    url: http://ohos-iiif-manifest:5050
     routes:
       - name: ohos-iiif-manifest
         paths:
