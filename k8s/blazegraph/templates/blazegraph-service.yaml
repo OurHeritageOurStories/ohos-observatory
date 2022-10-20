@@ -6,7 +6,7 @@ metadata:
     app: blazegraph
 spec:
   ports:
-    - port: 8889
+    - port: 8080
       name: blazegraph
   clusterIP: None
   selector:
