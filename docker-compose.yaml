@@ -1,18 +1,12 @@
 version: "3.9"
 networks:
-  #kong-net:
-  #  driver: bridge
   default:
     name: kong-net
 services:
   kong:
     image: kong:2.8.1-alpine
-    #image: ohos-kong-alt
     hostname: ohos_observatory_kong
-    #container_name: ohos-kong-alt
     container_name: ohos_observatory_kong
-    #networks:
-    #  - kong-net
     environment:
       KONG_DATABASE: 'off'
       KONG_DECLARATIVE_CONFIG: 'kong_config.yml'
@@ -21,36 +15,30 @@ services:
       KONG_PROXY_ERROR_LOG: '/dev/stderr'
       KONG_ADMIN_ERROR_LOG: '/dev/stderr'
       KONG_ADMIN_LISTEN: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
-    #command: "kong start -c kong_config.yml"
     command: "kong start"
-    #healthcheck:
-    #  test: ["CMD", "curl", "-f", "http://kong:8000"]
-    #  interval: 5s
-    #  timeout: 2s
-    #  retries: 15
     ports:
       - "8000:8000"
       - "8443:8443"
       - "8001:8001"
       - "8444:8444"
   
-  #kong_vue_frontend:
-  #  image: ohos_observatory_frontend #259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend
-  #  hostname: kong_vue_frontend
-  #  container_name: kong_vue_frontend
-  #  ports:
-  #    - "3000:3000"#
+  kong_vue_frontend:
+    image: ohos_observatory_frontend #259004456259.dkr.ecr.eu-west-2.amazonaws.com/ohos-observatory-frontend
+    hostname: kong_vue_frontend
+    container_name: kong_vue_frontend
+    ports:
+      - "3000:3000"#
 
-  #kong_blazegraph:
-  #  image: lyrasis/blazegraph:2.1.5
-  #  hostname: kong_blazegraph
-  #  container_name: kong_blazegraph
-  #  ports:
-  #    - "3497:3497"
+  kong_blazegraph:
+    image: lyrasis/blazegraph:2.1.5
+    hostname: kong_blazegraph
+    container_name: kong_blazegraph
+    ports:
+      - "3497:3497"
       
-  #kong_miiify:
-  #  image: jptmoore/miiify
-  #  hostname: kong_miiify
-  #  container_name: kong_miiify
-  #  ports:
-  #    - "8080:8080"
+  kong_miiify:
+    image: jptmoore/miiify
+    hostname: kong_miiify
+    container_name: kong_miiify
+    ports:
+      - "8080:8080"
