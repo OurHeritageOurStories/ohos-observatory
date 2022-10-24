@@ -39,15 +39,15 @@ export default defineConfig({
   },
   //envDir:'./',
   server:{
-    host: "0.1.2.3",
+    //host: "0.1.2.3",
     proxy:{
       //'/foo':'http://ohos_observatory_kong:8000',
-      '/foo':'ohos_observatory_kong:8000',
+      '/foo':'http://cgdc-observatory.net/bigdata/',
       //'/foo':import.meta.env.VITE_API_ENDPOINT,
       //'/foo':import.meta.env.VITE_API_ENDPOINT,
       '/api':{
         //target:'http://ohos_observatory_kong:8000',
-        target:'ohos_observatory_kong:8000',
+        target:'http://cgdc-observatory.net/bigdata/',
         //target: import.meta.env.VITE_API_ENDPOINT,
         //target:import.meta.env.VITE_API_ENDPOINT,
         changeOrigin:true,
