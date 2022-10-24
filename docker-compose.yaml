@@ -27,7 +27,7 @@ services:
     hostname: kong_vue_frontend
     container_name: kong_vue_frontend
     ports:
-      - "3000:3000"#
+      - "3000:3000"
 
   kong_blazegraph:
     image: lyrasis/blazegraph:2.1.5
