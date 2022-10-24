@@ -38,7 +38,7 @@ services:
         - DELETE 
       
   - name: kong_miiify
-    url: http://kong_miiify:8080
+    url: https://kong_miiify:8080
     routes:
       - name: kong_miiify_routes_home
         paths:
@@ -48,7 +48,7 @@ services:
         - GET
         
   - name: kong_miiify_add_anotation
-    url: http://kong_miiify:8080/annotations/
+    url: https://kong_miiify:8080/annotations/
     routes:
       - name: kong_miiify_routes_add_annotation
         paths:
