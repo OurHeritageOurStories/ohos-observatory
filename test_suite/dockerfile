@@ -1,0 +1,7 @@
+FROM node:lts-alpine
+WORKDIR /app
+COPY package*.json ./
+COPY ./test_scripts ./test_scripts
+EXPOSE 9724
+RUN npm install 
+CMD ["npm", "run", "test"]
