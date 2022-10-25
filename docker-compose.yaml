@@ -9,7 +9,6 @@ services:
     container_name: ohos_observatory_kong
     environment:
       KONG_DATABASE: 'off'
-      KONG_DECLARATIVE_CONFIG: 'kong_config.yml'
       KONG_PROXY_ACCESS_LOG: '/dev/stdout'
       KONG_ADMIN_ACCESS_LOG: '/dev/stdout'
       KONG_PROXY_ERROR_LOG: '/dev/stderr'
