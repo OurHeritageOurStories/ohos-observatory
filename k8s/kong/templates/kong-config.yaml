@@ -1,0 +1,107 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kong-config
+data:
+  KONG_DATABASE_KEY: "off"
+  KONG_PROXY_ACCESS_LOG_KEY: "/dev/stdout"
+  KONG_ADMIN_ACCESS_LOG_KEY: "/dev/stdout"
+  KONG_PROXY_ERROR_LOG_KEY: "/dev/stdout"
+  KONG_ADMIN_ERROR_LOG_KEY: "/dev/stdout"
+  KONG_PROXY_LISTEN_KEY: "0.0.0.0:8000, 0.0.0.0:8443 ssl"
+  KONG_ADMIN_LISTEN_KEY: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
+  KONG_DECLARATIVE_CONFIG_KEY: "/etc/config/kong.yml"
+  kong.yml: |
+    _format_version: "2.1"
+    _transform: true
+
+    services:
+
+      - name: blazegraph
+        url: http://blazegraph
+        port: 8889
+        routes:
+          - name: blazegraph
+            paths:
+              - /graph/hello
+            strip_path: true
+            preserve_host: true
+            methods:
+              - GET       
+
+      - name: miiify
+        url: https://miiify
+        port: 8080
+        routes:
+          - name: miiify
+            paths:
+              - /v1
+              - /
+            preserve_host: true
+            methods:
+              - GET
+              - HEAD
+              - OPTIONS
+
+      - name: iiifgenerator
+        url: http://iiifgenerator
+        port: 5000
+        routes:
+          - name: iiifgenerator
+            paths:
+              - /annotation
+            preserve_host: true
+            methods:
+              - POST
+              - GET
+        
+      - name: vue-frontend
+        url: http://vue-frontend
+        port: 3000
+        routes:
+          - name: vue-frontend
+            paths:
+              - /vue-frontend
+            preserve_host: true
+            methods:
+              - GET
+      
+      - name: react-frontend
+        url: http://react-frontend
+        port: 3001
+        routes:
+          - name: react-frontend
+            paths:
+              - /react/
+            strip_path: true
+            preserve_host: true
+            methods:
+              - GET
+
+      - name: goapi
+        url: https://goapi
+        port: 9090
+        routes:
+          - name: goapi
+            paths:
+              - /go
+            preserve_host: true
+            methods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+    plugins:
+
+      - name: cors
+        service: miiify
+        config:
+          origins:
+            - '*'
+          methods:
+            - GET
+            - HEAD
+            - OPTIONS
+          credentials: true
+          max_age: 3600
+        

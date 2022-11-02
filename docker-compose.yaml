@@ -4,7 +4,7 @@ networks:
     name: kong-net
 services:
   kong:
-    image: kong:2.8.0-alpine
+    image: kong:2.8.1-alpine
     hostname: ohos_observatory_kong
     container_name: ohos_observatory_kong
     environment:

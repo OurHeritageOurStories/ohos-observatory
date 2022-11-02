@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "dotenv": "^16.0.1",
     "oatts": "^1.6.0",
     "react-router-dom": "^6.4.0",
     "redaxios": "^0.4.1",

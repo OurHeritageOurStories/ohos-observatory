@@ -50,6 +50,7 @@ export default{
                     }
                 );
             } else {
+                console.log("Error in insert a triple in the build alert promise method. This should have sent a POST request to the graph database, but didn't somehow");
                 throw "Please ensure you have put text in each of the three boxes.";
             }
         },

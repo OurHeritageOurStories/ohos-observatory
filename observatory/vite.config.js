@@ -14,9 +14,9 @@ export default defineConfig({
   server:{
     host: true,
     proxy:{
-      '/foo':'http://ohos_observatory_kong:8000',
+      '/foo':'http://cgdc-observatory.net/bigdata/sparql?',
       '/api':{
-        target:'http://ohos_observatory_kong:8000',
+        target:'http://cgdc-observatory.net/bigdata/sparql?',
         changeOrigin:true,
         secure:false,
         ws:true,

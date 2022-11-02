@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blazegraph
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blazegraph
+  template:
+    metadata:
+      labels:
+        app: blazegraph
+    spec:
+      containers:
+        - name: blazegraph
+          image: 259004456259.dkr.ecr.eu-west-2.amazonaws.com/lyrasis-blazegraph:latest
+          ports:
+            - containerPort: 8080
+              name: blazegraph
+      securityContext:
+        runAsUser: 000
+        runAsGroup: 000
+        fsGroup: 000

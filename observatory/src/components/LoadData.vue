@@ -33,10 +33,12 @@ export default{
                         if(response.status==200){
                             resolve()
                         } else {
+                            console.log("response code not 200 data error in LoadData - delete data promise stage: " + response);
                             reject("Non-200 response from the server")
                         }
                     })
                     .catch(error=>{
+                        console.log("delete data error in LoadData - delete data promise stage: " + error);
                         reject(error)
                     })
             });
@@ -56,6 +58,8 @@ export default{
                                 .then(function(response){
                                     if (response.status==200){
                                         alert("Data updated")
+                                    } else {
+                                        console.log("load data non 200 response from inserting data - post request stage - manufactured data")
                                     }
                                 })
                             break;
@@ -68,6 +72,8 @@ export default{
                                 .then(function(response){
                                     if (response.status==200){
                                         alert("Data updated")
+                                    } else {
+                                        console.log("load data non 200 response from inserting data - post request stage - manufactured data")
                                     }
                                 })
                             break;
@@ -80,6 +86,8 @@ export default{
                                 .then(function(response){
                                     if (response.status==200){
                                         alert("Data updated")
+                                    } else {
+                                        console.log("load data non 200 response from inserting data - post request stage - manufactured data")
                                     }
                                 })
                             break;
@@ -92,6 +100,8 @@ export default{
                                 .then(function(response){
                                     if (response.status==200){
                                         alert("Data updated")
+                                    } else {
+                                        console.log("load data non 200 response from inserting data - post request stage - manufactured data")
                                     }
                                 })
                             break;

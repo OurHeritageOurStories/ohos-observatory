@@ -1,0 +1,190 @@
+apiVersion: v1
+kind: Service
+metadata:
+  #namespace: ohos-dev
+  namespace: default
+  name: service-kong
+spec:
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: vue-frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  #namespace: ohos-dev
+  namespace: default
+  name: service-kong-react
+spec:
+  ports:
+    - port: 3001
+      targetPort: 3000
+      protocol: TCP
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: react-frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  #namespace: ohos-dev
+  namespace: default
+  name: service-api-kong
+spec:
+  ports:
+    - port: 8001
+      targetPort: 8001
+      protocol: TCP
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: kong
+---
+apiVersion: v1
+kind: Service
+metadata:
+  #namespace: ohos-dev
+  namespace: default
+  name: service-api-kong8000
+spec:
+  ports:
+    - port: 8000
+      targetPort: 8000
+      protocol: TCP
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: kong
+---
+apiVersion: v1
+kind: Service
+metadata:
+  #namespace: ohos-dev
+  namespace: default
+  name: service-api-blazegraph
+spec:
+  ports:
+    - port: 8088
+      targetPort: 8088
+      protocol: TCP
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: blazegraph
+---
+apiVersion: v1
+kind: Service
+metadata:
+  #namespace: ohos-dev
+  namespace: default
+  name: service-api-miiify
+spec:
+  ports:
+    - port: 8086
+      targetPort: 8080
+      protocol: TCP
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: miiify
+---
+apiVersion: v1
+kind: Service
+metadata:
+  #namespace: ohos-dev
+  namespace: default
+  name: service-blazegraph-test
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: blazegraph
+---
+apiVersion: v1
+kind: Service
+metadata:
+  #namespace: ohos-dev
+  namespace: default
+  name: service-iiif-test
+spec:
+  ports:
+    - port: 5000
+      targetPort: 5000
+      protocol: TCP
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: iiif-generator
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  #namespace: ohos-dev
+  namespace: default
+  name: ingress-kong
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+        - path: /config
+          pathType: Prefix
+          backend:
+            service:
+              name: service-api-kong
+              port:
+                number: 8001
+        - path: /kong8000
+          pathType: Prefix
+          backend:
+            service:
+              name: service-api-kong8000
+              port:
+                number: 8000
+        - path: /blazegraphconfig
+          pathType: Prefix
+          backend:
+            service:
+              name: service-api-blazegraph
+              port:
+                number: 8088
+        - path: /annotations
+          pathType: Prefix
+          backend:
+            service:
+              name: service-api-miiify
+              port:
+                number: 8086
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: service-kong
+              port:
+                number: 3000
+        - path: /react
+          pathType: Prefix
+          backend:
+            service:
+              name: service-kong-react
+              port:
+                number: 3001
+        - path: /bigdata
+          pathType: Prefix
+          backend:
+            service:
+              name: service-blazegraph-test
+              port:
+                number: 8080
+        - path: /manifest
+          pathType: Prefix
+          backend:
+            service:
+              name: service-iiif-test
+              port:
+                number: 5000
