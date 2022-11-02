@@ -42,7 +42,7 @@ services:
     routes:
       - name: kong_miiify_routes_home
         paths:
-            - /annotation/hello
+            - /annotation_server/hello
         strip_path: true
         methods:
         - GET
@@ -52,7 +52,7 @@ services:
     routes:
       - name: kong_miiify_routes_add_annotation
         paths:
-          - /annotation/
+          - /annotation_server/
         strip_path: true
         preserve_host: true        
         methods:
