@@ -9,6 +9,9 @@ const Navbar = () => {
                     <NavLink to="/" activeStyle>
                         Home
                     </NavLink>
+                    <NavLink to="/query" activeStyle>
+                        Query
+                    </NavLink>
                     <NavLink to="/upload" activeStyle>
                         Upload
                     </NavLink>
